@@ -5,7 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calliope</title>
 <meta name="description" content="Calliope — éditeur Markdown sans distraction, en HTML/CSS/JS pur.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>&#9998;</text></svg>">
+<meta name="theme-color" content="#f6f5f4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Calliope">
+<meta name="application-name" content="Calliope">
+<!-- Icône, icône Apple et manifeste sont posés au démarrage à partir du logo
+     vectoriel unique : voir la section « Identité visuelle et installation ». -->
 <style>
 /* =========================================================================
  * app.css — Apostrophe Vanilla
@@ -932,12 +938,10 @@ body.zen .toolbar { display: none; }
 .apropos-sceau {
   flex: none;
   width: 52px; height: 52px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 26px;
-  color: var(--accent);
-  background: var(--accent-bg);
   border-radius: 14px;
+  overflow: hidden;
 }
+.apropos-sceau svg { display: block; width: 100%; height: 100%; }
 .apropos-tete h2 {
   margin: 0;
   font-size: 21px;
@@ -1959,6 +1963,7 @@ body.zen .toolbar { display: none; }
     var t = state.theme === 'auto' ? (mql.matches ? 'dark' : 'light') : state.theme;
     document.documentElement.setAttribute('data-theme', t);
     mark('#segTheme', 'theme', state.theme);
+    majCouleurTheme();
   }
   mql.addEventListener('change', function () { if (state.theme === 'auto') applyTheme(); });
 
@@ -2970,7 +2975,7 @@ body.zen .toolbar { display: none; }
       '<head>',
       '<meta charset="utf-8">',
       '<meta name="viewport" content="width=device-width, initial-scale=1">',
-      '<meta name="generator" content="Calliope 1.0.0">',
+      '<meta name="generator" content="Calliope 1.1.0">',
       '<title>' + Markdown.escapeHtml(title) + '</title>',
       '<style>',
       window.EXPORT_CSS,
@@ -3245,7 +3250,7 @@ body.zen .toolbar { display: none; }
    * est donc regenere depuis AppInfo.json a chaque changement de version. */
   var INFOS = {
     nom: 'Calliope',
-    version: '1.0.0',
+    version: '1.1.0',
     resume: 'Éditeur Markdown',
     origine: 'Calliope, muse de l\'éloquence et de la poésie épique, la première des ' +
              'neuf Muses, sœur de Clio.',
@@ -3290,7 +3295,7 @@ body.zen .toolbar { display: none; }
   function showAbout() {
     ouvrirModale(
       '<div class="apropos-tete">' +
-        '<div class="apropos-sceau">\u270e</div>' +
+        '<div class="apropos-sceau">' + LOGO + '</div>' +
         '<div>' +
           '<h2>' + INFOS.nom + ' <span class="version">' + INFOS.version + '</span></h2>' +
           '<p>' + INFOS.resume + '</p>' +
@@ -3496,7 +3501,98 @@ body.zen .toolbar { display: none; }
   ].join('\n');
 
   /* =====================================================================
-   * 11. Demarrage
+   * 11. Identite visuelle et installation
+   *
+   * Le logo est un trace vectoriel unique, decline en icone d'onglet, en
+   * icone Apple et en icones du manifeste. Le manifeste est fabrique au
+   * demarrage et servi par une URL blob : une URL « data: » aurait une
+   * origine opaque, l'adresse de depart ne s'y resoudrait pas, et le
+   * navigateur refuserait l'installation. Un blob, lui, partage l'origine
+   * du document — un fichier unique reste donc installable.
+   *
+   * L'installation exige une origine sure : elle fonctionne en https et sur
+   * localhost, jamais en file:// — un fichier ouvert par double-clic peut
+   * s'utiliser, pas s'installer.
+   * ===================================================================== */
+
+  var LOGO =
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
+      '<rect width="64" height="64" rx="14" fill="#1c71d8"/>' +
+      '<path fill="#fff" d="M45.6 21.8 C40.4 16.6 32.2 15 26 18.6 ' +
+        'C17.4 23.6 16.4 39.6 25.4 45.6 C31.4 49.6 40 48.4 45.6 43.4 ' +
+        'L43.2 40.2 C38.4 43.8 32.2 44.6 28 41.6 ' +
+        'C21.8 37.2 21.8 27 28 22.6 C32.2 19.6 38.6 20.6 43 24.4 Z"/>' +
+    '</svg>';
+
+  var LOGO_URL = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(LOGO);
+
+  function poserLien(rel, href, extra) {
+    var l = document.querySelector('link[rel="' + rel + '"]');
+    if (!l) { l = document.createElement('link'); l.rel = rel; document.head.appendChild(l); }
+    l.href = href;
+    if (extra) Object.keys(extra).forEach(function (k) { l.setAttribute(k, extra[k]); });
+    return l;
+  }
+
+  function rasteriser(img, taille) {
+    var c = document.createElement('canvas');
+    c.width = c.height = taille;
+    c.getContext('2d').drawImage(img, 0, 0, taille, taille);
+    return c.toDataURL('image/png');
+  }
+
+  function enHexa(couleur) {
+    var m = String(couleur).match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+    if (!m) return couleur;
+    return '#' + [m[1], m[2], m[3]].map(function (v) {
+      return ('0' + (+v).toString(16)).slice(-2);
+    }).join('');
+  }
+
+  function majCouleurTheme() {
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.content = enHexa(getComputedStyle(document.body).backgroundColor);
+  }
+
+  function preparerInstallation() {
+    poserLien('icon', LOGO_URL, { type: 'image/svg+xml' });
+
+    var img = new Image();
+    img.onload = function () {
+      var png192, png512, png180;
+      try {
+        png192 = rasteriser(img, 192);
+        png512 = rasteriser(img, 512);
+        png180 = rasteriser(img, 180);
+      } catch (e) { return; }                 // rasterisation refusee : on s'en tient au SVG
+
+      poserLien('apple-touch-icon', png180, { sizes: '180x180' });
+
+      var manifeste = {
+        name: 'Calliope — Éditeur Markdown',
+        short_name: 'Calliope',
+        description: 'Éditeur Markdown sans distraction, en un seul fichier.',
+        lang: 'fr',
+        dir: 'ltr',
+        start_url: location.href,
+        display: 'standalone',
+        theme_color: enHexa(getComputedStyle(document.body).backgroundColor),
+        background_color: enHexa(getComputedStyle(document.body).backgroundColor),
+        icons: [
+          { src: png192, sizes: '192x192', type: 'image/png', purpose: 'any' },
+          { src: png512, sizes: '512x512', type: 'image/png', purpose: 'any' },
+          { src: png512, sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+        ]
+      };
+
+      var blob = new Blob([JSON.stringify(manifeste)], { type: 'application/manifest+json' });
+      poserLien('manifest', URL.createObjectURL(blob));
+    };
+    img.src = LOGO_URL;
+  }
+
+  /* =====================================================================
+   * 12. Demarrage
    * ===================================================================== */
 
   loadPrefs();
@@ -3504,6 +3600,7 @@ body.zen .toolbar { display: none; }
   applyLook();
   applyModes();
   initTooltips();
+  preparerInstallation();
   afficherRecents();
   if (!ta.value) ta.value = SAMPLE;
   setDirty(false);

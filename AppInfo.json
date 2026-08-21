@@ -2,7 +2,7 @@
   "app": {
     "name": "Calliope",
     "id": "com.europasoft.calliope",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "tagline": "Éditeur Markdown sans distraction, en HTML/CSS/JS pur",
     "description": "Calliope est un éditeur Markdown sans distraction qui tourne dans n'importe quel navigateur, sans installation : coloration syntaxique dans l'éditeur avec une couleur propre à chaque niveau de titre, barre de mise en forme (titres, listes, cases à cocher, tableaux, blocs de code, liens, images, notes), mode Focus, mode Hemingway, mode Machine à écrire, aperçu HTML en direct, ouverture et enregistrement de fichiers, statistiques de texte, thèmes clair/sombre/sépia et export Markdown/HTML/PDF. Aucune dépendance externe, aucun build, aucun appel réseau : le parseur Markdown et le moteur de coloration sont écrits à la main.",
     "naming": "Calliope, muse de l'éloquence et de la poésie épique, sœur de Clio — dans la lignée des noms mythologiques des projets EuropaSoft."
@@ -29,6 +29,17 @@
     "fichiers": "Calliope.html — application entière : structure, feuille de style, parseur Markdown, moteur de coloration et test de régression"
   },
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-08-21",
+      "changes": [
+        "Logo vectoriel propre à l'application : un C calligraphique, tracé au plein et au délié comme au calame, lisible jusqu'à 16 pixels",
+        "Le logo sert d'icône d'onglet, d'icône Apple et d'icônes d'application, toutes dérivées du même tracé — aucune image n'est stockée dans le fichier",
+        "Manifeste d'application fabriqué au démarrage et servi par une URL blob : l'application peut être installée comme un logiciel, tout en restant un fichier unique",
+        "La couleur de la barre système suit le thème actif",
+        "Le sceau de la fenêtre À propos porte le logo"
+      ]
+    },
     {
       "version": "1.0.0",
       "date": "2026-08-21",

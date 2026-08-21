@@ -29,6 +29,24 @@ python3 -m http.server 8765
 
 Puis ouvrir `http://localhost:8765/Calliope.html`.
 
+## Installer comme une application
+
+Le fichier déclare un manifeste d'application, fabriqué au démarrage à partir de son
+logo. Là où c'est possible, Calliope s'installe donc comme un logiciel : fenêtre
+propre, sans barre d'adresse, icône dans le dock ou le menu Démarrer.
+
+| Contexte | Résultat |
+|---|---|
+| Servi en **https** ou sur **localhost** | Installable — Chrome et Edge proposent « Installer » dans la barre d'adresse ; Safari (macOS 14+) propose « Ajouter au Dock » ; Android et iOS, « Ajouter à l'écran d'accueil » |
+| Ouvert en **`file://`** (double-clic) | Pleinement utilisable, mais **non installable** : les navigateurs réservent l'installation aux origines sûres |
+
+L'icône d'onglet, elle, s'affiche partout, y compris en `file://`.
+
+> **À savoir** : l'icône du fichier `.html` dans le Finder ou l'Explorateur ne peut pas
+> être changée depuis le fichier lui-même — c'est une propriété du système, pas du
+> document. Sur macOS, se faire sa propre icône passe par *Lire les informations* puis
+> un collage d'image.
+
 ## Fonctionnalités
 
 ### Les quatre modes
