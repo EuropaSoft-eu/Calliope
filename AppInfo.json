@@ -1,0 +1,268 @@
+{
+  "app": {
+    "name": "Calliope",
+    "id": "com.europasoft.calliope",
+    "version": "1.0.0",
+    "tagline": "Éditeur Markdown sans distraction, en HTML/CSS/JS pur",
+    "description": "Calliope est un éditeur Markdown sans distraction qui tourne dans n'importe quel navigateur, sans installation : coloration syntaxique dans l'éditeur avec une couleur propre à chaque niveau de titre, barre de mise en forme (titres, listes, cases à cocher, tableaux, blocs de code, liens, images, notes), mode Focus, mode Hemingway, mode Machine à écrire, aperçu HTML en direct, ouverture et enregistrement de fichiers, statistiques de texte, thèmes clair/sombre/sépia et export Markdown/HTML/PDF. Aucune dépendance externe, aucun build, aucun appel réseau : le parseur Markdown et le moteur de coloration sont écrits à la main.",
+    "naming": "Calliope, muse de l'éloquence et de la poésie épique, sœur de Clio — dans la lignée des noms mythologiques des projets EuropaSoft."
+  },
+  "company": "EuropaSoft",
+  "developer": "Yoann CRAMATTE",
+  "website": "https://europasoft.com",
+  "contact": "contact@europasoft.eu",
+  "copyright": "© 2026 EuropaSoft — Yoann CRAMATTE",
+  "license": "MIT",
+  "credits": {
+    "inspiration": "Interface et modes inspirés d'Apostrophe (GNOME) par Manuel Genovés, anciennement UberWriter par Wolf Vollprecht",
+    "note": "Aucun code de l'application originale n'est réutilisé : implémentation entièrement indépendante."
+  },
+  "stack": {
+    "runtime": "Navigateur (file:// ou http://)",
+    "languages": [
+      "HTML5",
+      "CSS3",
+      "JavaScript ES2020"
+    ],
+    "dependencies": [],
+    "build": "aucun",
+    "fichiers": "Calliope.html — application entière : structure, feuille de style, parseur Markdown, moteur de coloration et test de régression"
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-21",
+      "statut": "première version de production",
+      "changes": [
+        "Éditeur Markdown sans distraction tenant dans un seul fichier autonome, sans dépendance, sans construction et sans appel réseau",
+        "Parseur Markdown écrit à la main : titres, gras, italique, barré, surligné, code en ligne et blocs clôturés, citations imbriquées, listes à puces, numérotées et de tâches, tableaux alignés, liens, images, notes de bas de page numérotées, règles horizontales, formules",
+        "Coloration syntaxique dans l'éditeur, avec une couleur par niveau de titre, alignée au caractère près sur la zone de saisie",
+        "Quatre modes d'écriture : Focus, Hemingway, Machine à écrire, Aperçu synchronisé par ancres",
+        "Barre de mise en forme de vingt-cinq boutons, à bascule, s'allumant selon le contexte du curseur",
+        "Documents récents rouvrant réellement les fichiers depuis le disque là où le navigateur le permet",
+        "Quatre thèmes, trois polices, taille et largeur de colonne réglables, mode sans distraction",
+        "Ouverture, enregistrement, export Markdown, HTML autonome et PDF",
+        "Test de régression embarqué, accessible par le fragment #test-alignement"
+      ]
+    }
+  ],
+  "intelligence_artificielle": {
+    "assistance": "Claude Opus 5 (Anthropic)",
+    "portee": "Intégralité du code — structure HTML, feuille de style, jeu d'icônes, parseur Markdown, moteur de coloration syntaxique, logique applicative, tests de régression — ainsi que la documentation du projet (README, changelog).",
+    "supervision_humaine": "Yoann CRAMATTE a défini le besoin, arbitré les choix de conception et le nom, éprouvé chaque version à l'usage, signalé les défauts et validé le résultat. Aucune partie n'a été retenue sans relecture humaine.",
+    "periode": "19 au 21 août 2026",
+    "donnees_utilisateur": "L'application n'effectue aucun appel réseau : le texte écrit avec Calliope n'est ni analysé ni transmis.",
+    "note_reglementaire": "Mention volontaire. Les obligations de transparence du règlement (UE) 2024/1689 sur l'intelligence artificielle, applicables depuis le 2 août 2026, portent sur les systèmes d'IA et les contenus générés diffusés, non sur un logiciel dont le code a été écrit avec l'assistance d'une IA."
+  },
+  "changelog_developpement": {
+    "note": "Itérations internes antérieures à la première version de production. Leur numérotation (1.0.0 à 2.2.0) est celle du développement et ne correspond pas aux versions publiées.",
+    "entrees": [
+      {
+        "version": "2.2.0",
+        "date": "2026-08-21",
+        "changes": [
+          "Mention de transparence sur l'intelligence artificielle dans la fenêtre À propos : le modèle employé, ce qu'il a produit, ce que l'auteur a dirigé et validé, la période de développement",
+          "Précision que le texte écrit avec Calliope n'est ni analysé ni transmis, l'application ne faisant aucun appel réseau",
+          "Ligne « Assistance IA » ajoutée à la fiche, sous « Auteur »",
+          "Section intelligence_artificielle ajoutée à AppInfo.json, avec une note sur la portée réelle du règlement (UE) 2024/1689",
+          "Adresse de contact : contact@europasoft.eu, avec l'objet « Calliope » pré-rempli"
+        ]
+      },
+      {
+        "version": "2.1.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Fenêtre « À propos » digne de ce nom, à la place de la boîte système : sceau, nom et version, origine du nom, fiche technique (fichier unique, dépendances, réseau, construction), auteur, licence et crédits",
+          "Dialogue des raccourcis refait sur le même modèle : 22 raccourcis en 4 groupes, touches présentées en pastilles et adaptées à la plateforme (⌘⇧1 sur macOS, Ctrl+Maj+1 ailleurs)",
+          "Les deux fenêtres se répondent : un bouton mène de l'une à l'autre",
+          "Fermeture par la croix, par Échap ou par un clic hors de la fenêtre ; le curseur revient ensuite dans le texte",
+          "Les fenêtres suivent le thème actif, y compris Nuit bleue et Sépia",
+          "La fiche d'identité affichée est recopiée depuis AppInfo.json, qui reste la source : un fichier unique ne peut pas lire un JSON voisin hors ligne"
+        ]
+      },
+      {
+        "version": "2.0.0",
+        "date": "2026-08-20",
+        "changes": [
+          "L'application tient désormais dans un seul fichier : Calliope.html, 131 Ko, qui contient la structure, la feuille de style, les icônes, le parseur Markdown, le moteur de coloration et la logique — plus aucune ressource externe, ni relative ni distante",
+          "Un fichier à copier, envoyer ou mettre sur une clé : il s'ouvre au double-clic depuis n'importe où, sans dossier compagnon",
+          "Le test de régression de l'alignement est embarqué : ouvrir le fichier avec le fragment #test-alignement lance les treize mesures sur l'éditeur réel, puis restaure le document en cours et sa sauvegarde locale",
+          "Le contenu des anciens fichiers est repris à l'identique, vérifié octet par octet ; les sections restent délimitées et commentées à l'intérieur du fichier"
+        ]
+      },
+      {
+        "version": "1.9.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Correction : on ne pouvait pas sortir d'une liste de tâches. Entrée sur une case vide en créait une nouvelle, indéfiniment — la condition de sortie exigeait une ligne vide sans case à cocher, ce qu'une case à cocher vide n'est jamais",
+          "Les boutons de la barre s'allument selon le contexte du curseur : titre, liste, liste de tâches, citation, bloc de code, tableau, ainsi que gras, italique, barré, surligné, code et formule",
+          "Un bouton allumé signale un état actif : le recliquer fait sortir du contexte et revenir au texte normal",
+          "La barre d'état nomme le contexte d'écriture et rappelle, pour les listes et les citations, qu'une ligne vide suivie d'Entrée en fait sortir"
+        ]
+      },
+      {
+        "version": "1.8.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Réglage « Retour à la ligne » : par défaut, chaque touche Entrée produit maintenant un vrai retour à la ligne dans l'aperçu et les exports. En Markdown strict, un retour isolé ne vaut qu'un espace et la ligne suivante se recolle à la précédente — exact, mais déroutant dans un éditeur de prose",
+          "L'option « Markdown strict » reste disponible dans le menu pour qui veut un fichier portable au sens littéral de la spécification",
+          "La conversion épargne le code en ligne, les listes, les tableaux et les blocs de code",
+          "Le réglage vaut pour l'aperçu, l'export HTML, l'export PDF et la copie du HTML"
+        ]
+      },
+      {
+        "version": "1.7.1",
+        "date": "2026-08-20",
+        "changes": [
+          "Correction : mettre en italique un mot déjà en gras supprimait le gras. La bascule comparait le texte collé à la sélection sans compter les marqueurs — les deux étoiles du gras étaient prises pour l'étoile unique de l'italique",
+          "Correction : sélectionner un mot avec ses étoiles puis cliquer sur Gras ajoutait une seconde paire (« ****mot**** ») au lieu de la retirer",
+          "La bascule compte désormais les marqueurs accolés à la sélection : deux étoiles pour le gras, une pour l'italique, trois pour les deux, et retire ce qu'il faut sans toucher au reste",
+          "Même traitement pour le barré, le surligné, le code en ligne et les formules"
+        ]
+      },
+      {
+        "version": "1.7.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Bouton Formule : insère $E = mc^2$ prêt à être remplacé, ou entoure la sélection de $…$ (Ctrl/Cmd+Maj+M). La formule était citée dans le document d'exemple sans avoir de bouton",
+          "Boutons Indenter et Désindenter : imbriquer ou sortir d'un niveau de liste sans connaître Tab et Maj+Tab, sur une ligne comme sur une sélection",
+          "Vingt-cinq boutons désormais, tous les éléments cités dans le document d'exemple ayant leur commande"
+        ]
+      },
+      {
+        "version": "1.6.2",
+        "date": "2026-08-20",
+        "changes": [
+          "Correction du placement des notes, la 1.6.1 étant incomplète : elle cherchait où commençait le bloc des définitions, repère qu'une ligne parasite suffisait à fausser — la référence retombait alors juste sous la note 1",
+          "Le critère est désormais direct : la ligne du curseur est-elle une phrase ? Ne comptent pas comme telles une ligne vide, une définition de note, une ligne faite uniquement de renvois, une règle horizontale, une ligne de tableau, ni quoi que ce soit dans un bloc de code",
+          "Quand le curseur n'est pas dans une phrase, la note rejoint la phrase la plus proche au-dessus de lui, et non la fin du document",
+          "Le message dit lorsque la note a été déplacée, et pourquoi"
+        ]
+      },
+      {
+        "version": "1.6.1",
+        "date": "2026-08-20",
+        "changes": [
+          "Correction : ajouter une seconde note de bas de page écrasait le texte de la première. Après une insertion, le curseur restait en bas sur le texte de la note, encore sélectionné ; un nouveau clic y plaçait la référence suivante, qui remplaçait la sélection — le document se retrouvait avec « [^1]: [^2] »",
+          "Une référence de note est désormais toujours posée dans le corps du texte, jamais dans le bloc des définitions",
+          "Si le curseur se trouve dans ce bloc, la référence rejoint la dernière ligne de prose : une règle horizontale, une clôture de bloc de code ou une ligne de tableau ne sont pas des emplacements valides et sont ignorées",
+          "Quand aucun emplacement ne convient, rien n'est modifié et l'application le dit",
+          "Après insertion, le curseur revient juste après la référence : on continue d'écrire là où on en était, au lieu d'être expédié en bas du document",
+          "Une sélection n'est plus remplacée : la marque de note se pose après elle",
+          "Aperçu : la flèche de retour d'une note passe dans le dernier paragraphe de celle-ci, au lieu de former un bloc isolé et de tomber à la ligne"
+        ]
+      },
+      {
+        "version": "1.6.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Documents récents : le bouton Ouvrir déroule la liste des douze derniers fichiers ouverts, avec leur date relative (à l'instant, il y a 3 h, hier…)",
+          "Sur Chrome et Edge, le descripteur du fichier est conservé dans IndexedDB : un clic rouvre réellement le document depuis le disque, après une demande d'autorisation du navigateur",
+          "Sur Safari et Firefox, faute d'API équivalente, les entrées restent un historique de noms et renvoient vers le sélecteur ; elles sont signalées comme telles",
+          "Un fichier déplacé ou supprimé est signalé et son entrée se retire d'elle-même",
+          "Le glisser-déposer réclame lui aussi le descripteur quand le navigateur le propose : un fichier déposé pourra être rouvert plus tard",
+          "Chaque entrée peut être retirée individuellement, et la liste entièrement vidée",
+          "Enregistrer sous ajoute le nouveau fichier à la liste"
+        ]
+      },
+      {
+        "version": "1.5.0",
+        "date": "2026-08-20",
+        "changes": [
+          "Correction grave : masquer la barre de mise en forme réduisait la zone d'édition à zéro pixel — l'écran se vidait. La mise en page reposait sur une grille à rangées fixes, où retirer un élément faisait glisser l'éditeur dans une rangée de hauteur automatique. Elle est désormais une colonne souple, insensible au nombre d'éléments présents",
+          "Nouveau thème « Nuit bleue » : fond bleu nuit, accents et couleurs de titre un cran plus vifs",
+          "Le bouton de thème ne propose plus « Auto » dans sa rotation : ce réglage reprend l'apparence du système et faisait donc doublon avec « Clair » ou « Sombre » un clic sur deux. Quatre apparences réellement distinctes se succèdent, « Auto » reste dans le menu",
+          "Mode sans distraction repensé : l'ancienne version basculait l'affichage puis le rebasculait depuis l'événement de plein écran, et la touche Échap relançait le plein écran qu'elle venait de quitter",
+          "La barre de titre y est escamotée et non supprimée : amener le pointeur sur le bord haut la fait revenir, de sorte que le mode ne soit plus un cul-de-sac",
+          "Quand le navigateur refuse le plein écran (page en cadre, réglage de sécurité), l'application le dit et masque l'interface malgré tout",
+          "Bouton renommé « Sans distraction », son effet réel"
+        ]
+      },
+      {
+        "version": "1.4.0",
+        "date": "2026-08-19",
+        "changes": [
+          "Correction : le défilement synchronisé se figeait définitivement dès que l'onglet passait en arrière-plan — le verrou anti-boucle était libéré par requestAnimationFrame, qui ne se déclenche pas sur un onglet caché. Il repose désormais sur une temporisation",
+          "Défilement synchronisé par ancres : chaque bloc de l'aperçu porte sa ligne de source, et les deux panneaux s'alignent sur la ligne réellement affichée au lieu d'un simple pourcentage. Sur un long document l'aperçu est jusqu'à 17 % plus haut que l'éditeur, ce qui décalait la lecture de plusieurs dizaines de lignes",
+          "Correction du mode Focus : curseur sur une ligne vide, tout le document s'éteignait ; le paragraphe le plus proche reste maintenant net",
+          "Correction du mode Machine à écrire : sans marge haute, les premières lignes ne pouvaient pas être centrées et le mode semblait inopérant tant qu'on n'avait pas écrit une pleine page",
+          "Chaque mode annonce ce qu'il fait quand on l'active, et les bulles d'aide décrivent l'effet au lieu de répéter le nom du mode",
+          "Bouton « Barre » renommé « Format », plus explicite"
+        ]
+      },
+      {
+        "version": "1.3.1",
+        "date": "2026-08-19",
+        "changes": [
+          "Libellés également sous les icônes de la barre de titre (Nouveau, Ouvrir, Enregistrer, Focus, Aperçu…), pilotés par le même réglage que la barre de mise en forme",
+          "Bouton « Bloc code » déplacé auprès de « Code en ligne », les deux notions allant de pair",
+          "Libellés repliés automatiquement sur écran étroit, où la place manque"
+        ]
+      },
+      {
+        "version": "1.3.0",
+        "date": "2026-08-19",
+        "changes": [
+          "Le projet prend son nom : Calliope — identité, titre, dialogue À propos, document d'exemple et documentation",
+          "Nouvel identifiant applicatif com.europasoft.calliope et nouvelle clé de stockage local « calliope »",
+          "Projet installé dans EuropaSoft/06_PROJETS_INTERNE, aux côtés de Clio, Morphée et Oralia"
+        ]
+      },
+      {
+        "version": "1.2.1",
+        "date": "2026-08-19",
+        "changes": [
+          "Correction majeure : le curseur se désalignait du texte affiché. Trois causes cumulées — les titres 1 à 3 étaient agrandis dans le calque de coloration alors qu'une zone de saisie n'a qu'une seule hauteur de ligne ; la barre de défilement native réduisait de 11 px la largeur utile de la saisie sans réduire celle du calque, décalant les coupures de ligne ; le gras et l'italique en police proportionnelle (serif, sans) élargissaient les glyphes jusqu'à 82 px de dérive horizontale",
+          "Le calque ne modifie plus aucune métrique du texte : hiérarchie des titres portée uniquement par la couleur",
+          "Barre de défilement de la zone de saisie masquée pour que les deux couches aient exactement la même largeur",
+          "Gras et italique du calque neutralisés en police proportionnelle, conservés en police à chasse fixe",
+          "Nouvelle page de test de régression tests/alignement.html : 13 mesures caractère par caractère, sur les trois polices, trois tailles et trois largeurs de colonne",
+          "Libellés des boutons affichés par défaut sous les icônes (le réglage reste disponible dans le menu)"
+        ]
+      },
+      {
+        "version": "1.2.0",
+        "date": "2026-08-19",
+        "changes": [
+          "Bulles d'aide maison sur tous les boutons : libellé complet et raccourci, affichés après un court délai",
+          "Raccourcis mis en forme selon la plateforme : ⌘⇧1 sur macOS, Ctrl+Maj+1 ailleurs",
+          "Option « Libellés visibles » : le nom de chaque bouton s'affiche en permanence sous son icône (menu → Barre de mise en forme), état mémorisé",
+          "Interface entièrement accentuée : tous les textes de l'application, le document d'exemple et les messages respectent l'orthographe française"
+        ]
+      },
+      {
+        "version": "1.1.0",
+        "date": "2026-08-19",
+        "changes": [
+          "Barre de mise en forme : 6 niveaux de titre, gras, italique, barré, surligné, code en ligne, liste à puces, liste numérotée, case à cocher, citation, tableau, bloc de code, ligne de séparation, lien, image, note de bas de page",
+          "Boutons de titre et de liste à bascule : un second clic retire le marquage",
+          "Insertion de tableau paramétrable (colonnes et lignes) avec le premier en-tête présélectionné",
+          "Notes de bas de page numérotées automatiquement, définition ajoutée en fin de document",
+          "Couleur distincte par niveau de titre dans l'éditeur (H1 à H6), reprise sur les boutons de la barre ; l'aperçu et les fichiers exportés restent neutres",
+          "Enregistrer sous… (Cmd/Ctrl+Maj+S) et entrées Fichier dans le menu principal",
+          "Barre de mise en forme masquable (Cmd/Ctrl+Maj+B), état mémorisé",
+          "Correction : Cmd+Maj+1 à 6 lus via le code physique de touche (fiables sur clavier AZERTY et macOS)",
+          "Correction : Cmd+B ne déclenche plus le gras quand Maj est enfoncée"
+        ]
+      },
+      {
+        "version": "1.0.0",
+        "date": "2026-08-19",
+        "changes": [
+          "Version initiale",
+          "Parseur Markdown maison : titres ATX/Setext, listes imbriquées, listes de tâches, citations, blocs de code clôturés, tableaux, notes de bas de page, liens, images, règles horizontales",
+          "Coloration syntaxique en ligne dans l'éditeur (calque de surbrillance synchronisé avec la zone de saisie)",
+          "Mode Focus (atténuation de tout sauf le paragraphe courant)",
+          "Mode Hemingway (retour arrière et suppression désactivés)",
+          "Mode Machine à écrire (ligne courante centrée verticalement)",
+          "Aperçu HTML en direct avec défilement synchronisé",
+          "Statistiques : mots, caractères, phrases, paragraphes, temps de lecture",
+          "Thèmes clair, sombre, sépia + suivi du thème système",
+          "Export .md, export HTML autonome, export PDF via impression",
+          "Ouverture par sélecteur de fichier ou glisser-déposer, sauvegarde automatique locale",
+          "Raccourcis clavier complets et plein écran"
+        ]
+      }
+    ]
+  }
+}

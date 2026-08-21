@@ -1,0 +1,3703 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calliope</title>
+<meta name="description" content="Calliope — éditeur Markdown sans distraction, en HTML/CSS/JS pur.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>&#9998;</text></svg>">
+<style>
+/* =========================================================================
+ * app.css — Apostrophe Vanilla
+ * Esthetique libadwaita / GNOME, sans aucune ressource externe.
+ * ========================================================================= */
+
+/* ---------- theme ---------- */
+:root {
+  --bg:        #f6f5f4;
+  --view:      #ffffff;
+  --header:    #ebebeb;
+  --fg:        #202020;
+  --fg-dim:    #6a6a6a;
+  --fg-faint:  #9a9a9a;
+  --accent:    #1c71d8;
+  --accent-bg: rgba(28,113,216,.12);
+  --border:    rgba(0,0,0,.10);
+  --shadow:    0 1px 3px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
+  --hover:     rgba(0,0,0,.06);
+  --active:    rgba(0,0,0,.12);
+  --code-bg:   rgba(0,0,0,.05);
+  --mark-bg:   #fdf2a4;
+  --sel:       rgba(28,113,216,.22);
+
+  --hl-punct:  #b0b0b0;
+  --hl-h:      #1c71d8;
+  --hl-em:     #6d3fb8;
+  --hl-strong: #17548f;
+  --hl-link:   #1c71d8;
+  --hl-url:    #7a8b99;
+  --hl-code:   #c0392b;
+  --hl-quote:  #5c8a5c;
+  --hl-bullet: #e07000;
+
+  --ed-font:   "SF Mono", "JetBrains Mono", "Fira Mono", ui-monospace, Menlo, Consolas, monospace;
+  --pv-font:   -apple-system, BlinkMacSystemFont, "Segoe UI", Cantarell, Inter, system-ui, sans-serif;
+  --ui-font:   -apple-system, BlinkMacSystemFont, "Segoe UI", Cantarell, Inter, system-ui, sans-serif;
+  --ed-size:   16px;
+  --ed-lh:     1.75;
+  --ed-col:    46rem;
+  --dim-op:    .25;
+  --radius:    8px;
+}
+
+[data-theme="dark"] {
+  --bg:        #1d1d1d;
+  --view:      #242424;
+  --header:    #303030;
+  --fg:        #e6e6e6;
+  --fg-dim:    #a0a0a0;
+  --fg-faint:  #6f6f6f;
+  --accent:    #78aeed;
+  --accent-bg: rgba(120,174,237,.16);
+  --border:    rgba(255,255,255,.10);
+  --shadow:    0 1px 3px rgba(0,0,0,.5);
+  --hover:     rgba(255,255,255,.08);
+  --active:    rgba(255,255,255,.14);
+  --code-bg:   rgba(255,255,255,.07);
+  --mark-bg:   #6b5d17;
+  --sel:       rgba(120,174,237,.28);
+
+  --hl-punct:  #6a6a6a;
+  --hl-h:      #78aeed;
+  --hl-em:     #c297f5;
+  --hl-strong: #9ec9ff;
+  --hl-link:   #78aeed;
+  --hl-url:    #7f9099;
+  --hl-code:   #f08c78;
+  --hl-quote:  #8bc48b;
+  --hl-bullet: #f8b24a;
+}
+
+[data-theme="sepia"] {
+  --bg:        #ece3ce;
+  --view:      #f7f1e0;
+  --header:    #e4d9bf;
+  --fg:        #453325;
+  --fg-dim:    #7a6650;
+  --fg-faint:  #a08b72;
+  --accent:    #9c5a2b;
+  --accent-bg: rgba(156,90,43,.14);
+  --border:    rgba(69,51,37,.16);
+  --hover:     rgba(69,51,37,.07);
+  --active:    rgba(69,51,37,.14);
+  --code-bg:   rgba(69,51,37,.08);
+  --mark-bg:   #e8d48a;
+  --sel:       rgba(156,90,43,.22);
+
+  --hl-punct:  #b5a288;
+  --hl-h:      #9c5a2b;
+  --hl-em:     #7a4b8c;
+  --hl-strong: #6b4326;
+  --hl-link:   #8a5a2b;
+  --hl-url:    #9c8a70;
+  --hl-code:   #a83c2b;
+  --hl-quote:  #5f7a4b;
+  --hl-bullet: #b06a1a;
+}
+
+[data-theme="blue"] {
+  --bg:        #0f1524;
+  --view:      #141b2d;
+  --header:    #1a2338;
+  --fg:        #dde5f2;
+  --fg-dim:    #98a6be;
+  --fg-faint:  #647492;
+  --accent:    #4d9fff;
+  --accent-bg: rgba(77,159,255,.18);
+  --border:    rgba(140,170,220,.16);
+  --shadow:    0 1px 3px rgba(0,0,0,.55);
+  --hover:     rgba(140,170,220,.10);
+  --active:    rgba(140,170,220,.18);
+  --code-bg:   rgba(140,170,220,.10);
+  --mark-bg:   #5b4f1e;
+  --sel:       rgba(77,159,255,.30);
+
+  --hl-punct:  #5d6b85;
+  --hl-h:      #4d9fff;
+  --hl-em:     #c9a4ff;
+  --hl-strong: #9fd0ff;
+  --hl-link:   #4d9fff;
+  --hl-url:    #6f8199;
+  --hl-code:   #ff9b7a;
+  --hl-quote:  #6fd6a8;
+  --hl-bullet: #ffc14d;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--ui-font);
+  font-size: 14px;
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--sel); }
+
+/* Colonne souple, et non grille a rangees fixes : masquer la barre de mise en
+ * forme ou sortir l'en-tete du flux (mode sans distraction) supprimait des
+ * elements de la grille, et le placement automatique faisait glisser la zone
+ * d'edition dans une rangee « auto » — ou elle se reduisait a zero pixel.
+ * En colonne flex, chaque element garde son role quel que soit le nombre
+ * d'elements presents. */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.app > .headerbar,
+.app > .toolbar,
+.app > .statusbar { flex: none; }
+.app > .main { flex: 1 1 auto; }
+
+/* ---------- barre de titre ---------- */
+.headerbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  min-height: 46px;
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+  z-index: 20;
+}
+
+.headerbar .spacer { flex: 1; }
+
+.doc-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+  min-width: 0;
+  pointer-events: none;
+}
+.doc-title strong {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 46vw;
+}
+.doc-title span { font-size: 11px; color: var(--fg-dim); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 8px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.btn:hover  { background: var(--hover); }
+.btn:active { background: var(--active); }
+.btn.on     { background: var(--accent-bg); color: var(--accent); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+.btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+.sep { width: 1px; height: 20px; background: var(--border); margin: 0 3px; }
+
+/* ---------- menu ---------- */
+.menu-wrap { position: relative; }
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 246px;
+  padding: 6px;
+  background: var(--view);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow), 0 8px 24px rgba(0,0,0,.14);
+  z-index: 60;
+  display: none;
+}
+.menu.open { display: block; }
+.menu h6 {
+  margin: 8px 8px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+.menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 7px 10px;
+  font: inherit;
+  text-align: left;
+  color: var(--fg);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.menu button:hover { background: var(--hover); }
+.menu button kbd {
+  font-family: var(--ui-font);
+  font-size: 11px;
+  color: var(--fg-faint);
+}
+.menu hr { height: 1px; margin: 6px 4px; border: 0; background: var(--border); }
+
+.seg { display: flex; flex-wrap: wrap; gap: 4px; padding: 2px 6px 6px; }
+.seg button {
+  flex: 1 1 4.2rem;
+  justify-content: center;
+  padding: 6px 4px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+}
+.seg button.on { background: var(--accent-bg); color: var(--accent); border-color: transparent; }
+
+/* ---------- zone principale ---------- */
+.main {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 0;
+  background: var(--view);
+}
+.main.split { grid-template-columns: 1fr 1fr; }
+
+.pane { position: relative; min-width: 0; overflow: hidden; }
+.pane + .pane { border-left: 1px solid var(--border); }
+
+/* ---------- editeur : calque + saisie superposes ---------- */
+#hl, #editor {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 3.25rem max(1.5rem, calc(50% - var(--ed-col) / 2));
+  font-family: var(--ed-font);
+  font-size: var(--ed-size);
+  font-weight: 400;
+  line-height: var(--ed-lh);
+  letter-spacing: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  tab-size: 4;
+  border: 0;
+  background: transparent;
+}
+
+#hl {
+  overflow: hidden;
+  color: var(--fg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#editor {
+  z-index: 2;
+  overflow-y: auto;
+  color: transparent;
+  caret-color: var(--accent);
+  resize: none;
+  outline: 0;
+
+  /* La barre de defilement native prend 11 a 15 px de largeur utile a la
+   * zone de saisie, mais pas au calque : le texte ne se coupe alors pas au
+   * meme endroit et le curseur derive sur les lignes longues.
+   * On la masque pour que les deux couches aient exactement la meme largeur. */
+  scrollbar-width: none;
+}
+#editor::-webkit-scrollbar { width: 0; height: 0; }
+#editor::placeholder { color: var(--fg-faint); }
+
+/* Machine a ecrire : sans marge HAUTE, les premieres lignes du document ne
+ * peuvent pas etre centrees (le defilement ne descend pas sous zero) et le
+ * mode semble inoperant tant qu'on n'a pas ecrit une pleine page. */
+.typewriter #editor, .typewriter #hl { padding-top: 42vh; padding-bottom: 45vh; }
+
+/* -------------------------------------------------------------------------
+ * REGLE ABSOLUE DU CALQUE DE COLORATION
+ * Une zone de saisie n'a qu'une seule hauteur de ligne et une seule fonte.
+ * Toute regle qui modifie les METRIQUES du texte colore (font-size,
+ * letter-spacing, word-spacing, text-transform, padding/margin en ligne)
+ * desaligne le curseur du texte affiche, cumulativement, ligne apres ligne.
+ * Seules sont autorisees ici : la couleur, le fond, le soulignement,
+ * la graisse et l'italique (les fontes a chasse fixe conservent la meme
+ * avance pour leurs variantes ; font-synthesis est desactivee pour ne pas
+ * dependre d'une graisse simulee).
+ * ---------------------------------------------------------------------- */
+#hl { font-synthesis: none; }
+
+/* Une fonte a chasse fixe donne la meme avance a ses variantes grasse et
+ * italique : le gras et l'italique y sont sans danger. Une fonte
+ * proportionnelle, non — le curseur deriverait horizontalement jusqu'a
+ * plusieurs dizaines de pixels sur une ligne. Dans ce cas, la coloration
+ * se limite strictement a la couleur. */
+body:not([data-edfont="mono"]) #hl span {
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* jetons de coloration */
+.ed-line { display: inline; transition: opacity .18s ease; }
+.ed-line.dim { opacity: var(--dim-op); }
+
+.hl-punct  { color: var(--hl-punct); }
+.hl-h      { color: var(--hl-h); font-weight: 700; }
+.hl-em     { font-style: italic; color: var(--hl-em); }
+.hl-strong { font-weight: 700; color: var(--hl-strong); }
+.hl-del    { text-decoration: line-through; color: var(--fg-dim); }
+.hl-mark   { background: var(--mark-bg); border-radius: 2px; }
+.hl-link   { color: var(--hl-link); text-decoration: underline; text-underline-offset: 2px; }
+.hl-url    { color: var(--hl-url); }
+.hl-code, .hl-fence { color: var(--hl-code); }
+.hl-quote  { color: var(--hl-quote); font-style: italic; }
+.hl-bullet { color: var(--hl-bullet); font-weight: 700; }
+.hl-rule   { color: var(--hl-punct); }
+.hl-math   { color: var(--hl-em); }
+.hl-task   { color: var(--hl-bullet); font-weight: 700; }
+.hl-task.done { color: var(--fg-faint); }
+
+/* ---------- apercu ---------- */
+#preview {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 3.25rem max(1.5rem, calc(50% - var(--ed-col) / 2));
+  font-family: var(--pv-font);
+  font-size: 16.5px;
+  line-height: 1.72;
+  color: var(--fg);
+  scrollbar-width: thin;
+}
+
+#preview > :first-child { margin-top: 0; }
+#preview h1, #preview h2, #preview h3,
+#preview h4, #preview h5, #preview h6 {
+  margin: 1.9em 0 .55em;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+#preview h1 { font-size: 2em; }
+#preview h2 { font-size: 1.55em; }
+#preview h3 { font-size: 1.28em; }
+#preview h4 { font-size: 1.1em; }
+#preview h5 { font-size: 1em; color: var(--fg-dim); }
+#preview h6 { font-size: .92em; color: var(--fg-dim); text-transform: uppercase; letter-spacing: .05em; }
+#preview p  { margin: 0 0 1.15em; }
+#preview a  { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+#preview strong { font-weight: 700; }
+#preview mark { background: var(--mark-bg); color: inherit; padding: 0 .15em; border-radius: 2px; }
+#preview img { max-width: 100%; height: auto; border-radius: var(--radius); }
+
+#preview code {
+  padding: .15em .38em;
+  font-family: var(--ed-font);
+  font-size: .87em;
+  background: var(--code-bg);
+  border-radius: 4px;
+}
+#preview pre.code-block {
+  position: relative;
+  margin: 0 0 1.3em;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  line-height: 1.55;
+}
+#preview pre.code-block code { padding: 0; background: none; font-size: .86em; }
+#preview pre.code-block[data-lang]::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: .5rem; right: .7rem;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+#preview blockquote {
+  margin: 0 0 1.2em;
+  padding: .1em 0 .1em 1.15em;
+  border-left: 3px solid var(--accent);
+  color: var(--fg-dim);
+  font-style: italic;
+}
+#preview blockquote p:last-child { margin-bottom: 0; }
+
+#preview ul, #preview ol { margin: 0 0 1.15em; padding-left: 1.5em; }
+#preview li { margin: .28em 0; }
+#preview li.task-item { list-style: none; margin-left: -1.35em; }
+#preview li.task-item input { margin-right: .5em; accent-color: var(--accent); }
+
+#preview hr { height: 1px; margin: 2.2em 0; border: 0; background: var(--border); }
+
+#preview .table-wrap { overflow-x: auto; margin: 0 0 1.3em; }
+#preview table { border-collapse: collapse; width: 100%; font-size: .93em; }
+#preview th, #preview td { padding: .5em .8em; border: 1px solid var(--border); }
+#preview th { background: var(--code-bg); font-weight: 700; text-align: left; }
+#preview tbody tr:nth-child(even) { background: rgba(127,127,127,.045); }
+
+#preview .math {
+  padding: 0 .2em;
+  font-family: "STIX Two Math", Georgia, serif;
+  font-style: italic;
+  color: var(--hl-em);
+}
+#preview .math-block { display: block; margin: 1em 0; text-align: center; font-size: 1.1em; }
+
+#preview .footnotes { font-size: .9em; color: var(--fg-dim); }
+#preview .fn-ref a { text-decoration: none; }
+#preview .fn-back { text-decoration: none; }
+
+/* ---------- barre d'etat ---------- */
+.statusbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-dim);
+  background: var(--header);
+  border-top: 1px solid var(--border);
+  user-select: none;
+}
+.statusbar .spacer { flex: 1; }
+.statusbar b { font-weight: 700; color: var(--fg); }
+.statusbar .badge {
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ---------- notification ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 46px;
+  transform: translate(-50%, 20px);
+  padding: 9px 16px;
+  font-size: 13px;
+  color: var(--view);
+  background: var(--fg);
+  border-radius: 99px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 90;
+}
+.toast.show { opacity: .94; transform: translate(-50%, 0); }
+
+/* ---------- glisser-deposer ---------- */
+.drop-hint {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-bg);
+  backdrop-filter: blur(2px);
+  border: 3px dashed var(--accent);
+  z-index: 100;
+}
+body.dragging .drop-hint { display: flex; }
+
+/* ---------- mode sans distraction ----------
+ * La barre de titre n'est pas supprimee mais escamotee : amener le pointeur
+ * tout en haut la fait revenir. Sans cela, le mode est un piege — plus aucun
+ * bouton, et rien n'indique comment revenir. */
+body.zen .toolbar,
+body.zen .statusbar { display: none; }
+
+body.zen .headerbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  transform: translateY(-102%);
+  transition: transform .18s ease;
+  box-shadow: var(--shadow);
+}
+body.zen.zen-reveal .headerbar { transform: translateY(0); }
+
+/* ---------- impression (export PDF) ---------- */
+@media print {
+  html, body { height: auto; overflow: visible; background: #fff; }
+  .headerbar, .statusbar, .toast, .drop-hint, .pane.editor-pane { display: none !important; }
+  .app { display: block; }
+  .main, .main.split { display: block; }
+  .pane { position: static; overflow: visible; }
+  #preview {
+    position: static;
+    padding: 0;
+    overflow: visible;
+    color: #000;
+    font-size: 11.5pt;
+  }
+  #preview a { color: #000; }
+  #preview pre.code-block, #preview th { background: #f4f4f4; }
+  #preview h1, #preview h2, #preview h3 { break-after: avoid; }
+  #preview pre, #preview blockquote, #preview table { break-inside: avoid; }
+}
+
+/* ---------- ecrans etroits ---------- */
+@media (max-width: 760px) {
+  .main.split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .pane + .pane { border-left: 0; border-top: 1px solid var(--border); }
+  .hide-sm { display: none; }
+  #hl, #editor, #preview { padding: 1.75rem 1.1rem; }
+}
+
+/* =========================================================================
+ * Couleurs par niveau de titre — EDITEUR UNIQUEMENT.
+ * Aucune de ces regles ne touche #preview ni les fichiers exportes :
+ * le document produit reste en noir sur blanc.
+ * ========================================================================= */
+:root {
+  --h1: #1a5fb4;
+  --h2: #613583;
+  --h3: #167e4b;
+  --h4: #b5540a;
+  --h5: #a51d2d;
+  --h6: #0b6a72;
+}
+[data-theme="dark"] {
+  --h1: #7bb2f0;
+  --h2: #d5a6f7;
+  --h3: #74dfa2;
+  --h4: #f8b24a;
+  --h5: #ff8f8f;
+  --h6: #5fd6dd;
+}
+[data-theme="sepia"] {
+  --h1: #8f3f16;
+  --h2: #6f4080;
+  --h3: #4a6f38;
+  --h4: #a06414;
+  --h5: #96302c;
+  --h6: #3a666b;
+}
+
+[data-theme="blue"] {
+  --h1: #58aaff;
+  --h2: #cba0ff;
+  --h3: #4fe3a3;
+  --h4: #ffc14d;
+  --h5: #ff8d9b;
+  --h6: #45dbe6;
+}
+
+.hl-h1 { color: var(--h1); }
+.hl-h2 { color: var(--h2); }
+.hl-h3 { color: var(--h3); }
+.hl-h4 { color: var(--h4); }
+.hl-h5 { color: var(--h5); }
+.hl-h6 { color: var(--h6); }
+
+/* Le marqueur # reprend la teinte du niveau, en plus discret. */
+.ed-line .hl-punct { transition: color .12s ease; }
+
+/* =========================================================================
+ * Barre de mise en forme
+ * ========================================================================= */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  background: var(--header);
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+  z-index: 15;
+}
+.toolbar::-webkit-scrollbar { display: none; }
+.toolbar[hidden] { display: none; }
+.toolbar .sep { flex: none; }
+.tb-spacer { flex: 1; min-width: 8px; }
+
+.tb-group[hidden] { display: none; }
+
+.tb-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+}
+
+.tb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  min-width: 28px;
+  padding: 0 6px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-dim);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.tb:hover  { background: var(--hover); color: var(--fg); }
+.tb:active { background: var(--active); }
+.tb:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
+.tb svg { width: 15px; height: 15px; fill: currentColor; }
+.tb b, .tb i, .tb s { font-size: 14px; }
+.tb i { font-family: Georgia, serif; padding-right: 2px; }
+
+/* Chaque bouton de titre porte la couleur exacte du niveau dans l'editeur. */
+.tb.lvl { font-size: 12px; font-weight: 700; letter-spacing: -.01em; }
+.tb.h1 { color: var(--h1); }
+.tb.h2 { color: var(--h2); }
+.tb.h3 { color: var(--h3); }
+.tb.h4 { color: var(--h4); }
+.tb.h5 { color: var(--h5); }
+.tb.h6 { color: var(--h6); }
+.tb.lvl:hover { background: var(--hover); }
+.tb.lvl.on, .tb.on { background: var(--accent-bg); }
+
+.tb-text { padding: 0 10px; color: var(--accent); }
+
+.tb-table-size { gap: 8px; font-size: 12px; color: var(--fg-dim); }
+.tb-table-size label { display: inline-flex; align-items: center; gap: 5px; }
+.tb-table-size input {
+  width: 46px;
+  height: 26px;
+  padding: 0 4px;
+  font: inherit;
+  color: var(--fg);
+  background: var(--view);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+body.zen .toolbar { display: none; }
+
+@media print { .toolbar { display: none !important; } }
+
+@media (max-width: 760px) {
+  .toolbar { padding: 4px 6px; }
+  .tb-table-size { display: none; }
+}
+
+/* =========================================================================
+ * Bulles d'aide
+ * Element unique positionne en JS : il echappe au debordement de la barre
+ * d'outils, qui defile horizontalement.
+ * ========================================================================= */
+.tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  max-width: 18rem;
+  padding: 5px 9px;
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: normal;
+  color: var(--view);
+  background: var(--fg);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.24);
+  opacity: 0;
+  transform: translateY(-3px);
+  pointer-events: none;
+  transition: opacity .12s ease, transform .12s ease;
+}
+.tooltip.show { opacity: .96; transform: translateY(0); }
+.tooltip .keys {
+  flex: none;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  opacity: .62;
+  letter-spacing: .02em;
+}
+
+/* =========================================================================
+ * Libelles permanents sous les boutons
+ * ========================================================================= */
+.toolbar.labels { padding-bottom: 3px; }
+
+.toolbar.labels .tb {
+  flex-direction: column;
+  gap: 1px;
+  height: auto;
+  min-width: 42px;
+  padding: 4px 7px 3px;
+  line-height: 1.1;
+}
+.toolbar.labels .tb::after {
+  content: attr(data-label);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: var(--fg-faint);
+}
+.toolbar.labels .tb:hover::after { color: var(--fg-dim); }
+.toolbar.labels .tb.lvl::after { color: inherit; opacity: .72; }
+.toolbar.labels .tb-text::after { content: none; }
+.toolbar.labels .tb-table-size { align-self: center; }
+
+/* =========================================================================
+ * Libellés sous les icônes de la barre de titre
+ * Même réglage que la barre de mise en forme, pour que les deux rangées
+ * se lisent de la même façon.
+ * ========================================================================= */
+.headerbar.labels { padding-top: 4px; padding-bottom: 3px; }
+
+.headerbar.labels .btn {
+  flex-direction: column;
+  gap: 1px;
+  height: auto;
+  min-width: 44px;
+  padding: 4px 7px 3px;
+  line-height: 1.1;
+}
+.headerbar.labels .btn::after {
+  content: attr(data-label);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  color: var(--fg-faint);
+}
+.headerbar.labels .btn:hover::after,
+.headerbar.labels .btn.on::after { color: currentColor; }
+.headerbar.labels .sep { height: 28px; }
+.headerbar.labels .doc-title { padding-bottom: 2px; }
+
+@media (max-width: 760px) {
+  .headerbar.labels .btn::after { display: none; }
+  .headerbar.labels .btn { flex-direction: row; min-width: 32px; padding: 0 8px; height: 32px; }
+}
+
+/* =========================================================================
+ * Documents récents
+ * ========================================================================= */
+.menu-left {
+  left: 0;
+  right: auto;
+  min-width: 19rem;      /* les noms de fichiers ont besoin de place */
+  max-width: 24rem;
+}
+
+#listeRecents:empty::after {
+  content: "Aucun document ouvert pour l'instant";
+  display: block;
+  padding: 6px 10px 10px;
+  font-size: 12px;
+  color: var(--fg-faint);
+}
+
+.recent {
+  display: flex !important;
+  align-items: baseline;
+  gap: 10px;
+}
+.recent .nom {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.recent .quand {
+  flex: none;
+  font-size: 11px;
+  color: var(--fg-faint);
+  font-variant-numeric: tabular-nums;
+}
+.recent .oubli {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 4px;
+  color: var(--fg-faint);
+  opacity: 0;
+  transition: opacity .12s ease, background .12s ease;
+}
+.recent:hover .oubli { opacity: 1; }
+.recent .oubli:hover { background: var(--active); color: var(--fg); }
+
+/* Entrée dont le fichier ne peut pas être rouvert directement par ce navigateur. */
+.recent.sans-acces .nom { color: var(--fg-dim); }
+.recent.sans-acces .nom::after {
+  content: " ·";
+  color: var(--fg-faint);
+}
+
+/* =========================================================================
+ * Fenêtres de dialogue — À propos, raccourcis
+ * ========================================================================= */
+.modale[hidden] { display: none; }
+
+.modale {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vh 1.5rem;
+}
+.modale-fond {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.42);
+  backdrop-filter: blur(3px);
+  animation: modale-apparait .16s ease;
+}
+.modale-boite {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.9rem 2rem 1.6rem;
+  background: var(--view);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0,0,0,.35);
+  animation: modale-monte .18s ease;
+  scrollbar-width: thin;
+}
+@keyframes modale-apparait { from { opacity: 0 } to { opacity: 1 } }
+@keyframes modale-monte { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
+
+.modale-fermer {
+  position: absolute;
+  top: .8rem; right: .8rem;
+  width: 28px; height: 28px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--fg-faint);
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.modale-fermer:hover { background: var(--hover); color: var(--fg); }
+
+/* En-tête de la fenêtre À propos */
+.apropos-tete { display: flex; align-items: center; gap: .9rem; margin-bottom: 1.2rem; }
+.apropos-sceau {
+  flex: none;
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border-radius: 14px;
+}
+.apropos-tete h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+}
+.apropos-tete .version {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  letter-spacing: .02em;
+}
+.apropos-tete p { margin: .2rem 0 0; font-size: 13px; color: var(--fg-dim); }
+
+.apropos-citation {
+  margin: 0 0 1.3rem;
+  padding: .1em 0 .1em 1rem;
+  border-left: 3px solid var(--accent);
+  font-style: italic;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+.apropos-fiche {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 1.3rem;
+}
+.apropos-fiche th {
+  width: 9.5rem;
+  padding: .38em .2em .38em 0;
+  font-weight: 400;
+  text-align: left;
+  color: var(--fg-dim);
+  vertical-align: top;
+}
+.apropos-fiche td {
+  padding: .38em 0;
+  vertical-align: top;
+  line-height: 1.5;
+}
+.apropos-fiche tr + tr th, .apropos-fiche tr + tr td { border-top: 1px solid var(--border); }
+.apropos-fiche b { font-weight: 700; }
+.apropos-fiche a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.apropos-fiche a:hover { border-bottom-color: currentColor; }
+
+.apropos-retour {
+  margin: 0 0 1.1rem;
+  padding: .8rem 1rem;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  background: var(--accent-bg);
+  border-radius: 9px;
+}
+.apropos-retour b { color: var(--fg); font-weight: 600; }
+.apropos-retour a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.apropos-retour a:hover { border-bottom-color: currentColor; }
+
+.apropos-note {
+  margin: 0 0 1.4rem;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--fg-faint);
+}
+
+.modale-pied { display: flex; gap: .5rem; justify-content: flex-end; }
+.modale-pied button {
+  padding: .5em 1.1em;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.modale-pied button:hover { background: var(--hover); }
+.modale-pied button.principal {
+  color: #fff;
+  background: var(--accent);
+  border-color: transparent;
+}
+.modale-pied button.principal:hover { filter: brightness(1.08); }
+
+/* Tableau des raccourcis */
+.raccourcis h3 {
+  margin: 1.4rem 0 .5rem;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+.raccourcis h3:first-child { margin-top: 0; }
+.raccourcis table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.raccourcis td { padding: .3em 0; vertical-align: baseline; }
+.raccourcis td.touche { width: 9rem; }
+.raccourcis kbd {
+  display: inline-block;
+  padding: 2px 7px;
+  font-family: var(--ui-font);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--fg);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+}
+
+/* =========================================================================
+ * Contexte d'écriture
+ * ========================================================================= */
+.statusbar .contexte {
+  padding: 1px 8px;
+  border-radius: 99px;
+  background: var(--code-bg);
+  color: var(--fg-dim);
+  white-space: nowrap;
+}
+.statusbar .contexte:empty { display: none; }
+
+/* Un bouton actif signale : « vous y êtes — recliquez pour en sortir ». */
+.tb.on {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.tb.lvl.on { background: var(--accent-bg); }
+.tb.on::before {
+  content: "";
+  position: absolute;
+  left: 6px; right: 6px; bottom: 1px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+.tb { position: relative; }
+</style>
+</head>
+<body>
+
+<!-- ================= icones ================= -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-open" viewBox="0 0 16 16"><path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3l1.4 1.5H13A1.5 1.5 0 0 1 14.5 5v.5h-13Zm0 2h13.2l-1.5 7.1a1.5 1.5 0 0 1-1.5 1.2H3.3a1.5 1.5 0 0 1-1.5-1.2Z"/></symbol>
+  <symbol id="i-save" viewBox="0 0 16 16"><path d="M7.3 1h1.4v7.2l2.3-2.3 1 1L8 11l-4-4 1-1 2.3 2.3ZM2.5 12h11v2.5h-11Z"/></symbol>
+  <symbol id="i-new" viewBox="0 0 16 16"><path d="M3.5 1.5h6L13 5v9.5H3.5Zm5.5 1v3h3ZM7.3 7h1.4v2h2v1.4h-2v2H7.3v-2h-2V9h2Z"/></symbol>
+  <symbol id="i-split" viewBox="0 0 16 16"><path d="M1.5 2.5h13v11h-13Zm1.4 1.4v8.2h4V3.9Zm5.4 0v8.2h4.3V3.9Z"/></symbol>
+  <symbol id="i-focus" viewBox="0 0 16 16"><path d="M8 3.2c-3 0-5.5 2-6.6 4.8C2.5 10.8 5 12.8 8 12.8s5.5-2 6.6-4.8C13.5 5.2 11 3.2 8 3.2Zm0 8a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm0-1.6a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2Z"/></symbol>
+  <symbol id="i-hemingway" viewBox="0 0 16 16"><path d="M6 2.5h8v11H6L1 8Zm6.9 3-1-1L10 6.4 8.1 4.5l-1 1L9 7.4 7.1 9.3l1 1L10 8.4l1.9 1.9 1-1L11 7.4Z"/></symbol>
+  <symbol id="i-typewriter" viewBox="0 0 16 16"><path d="M2 3h12v1.5H2Zm2 3.2h8v1.5H4ZM2 9.4h12v1.5H2Zm2 3.1h8V14H4Z"/></symbol>
+  <symbol id="i-theme" viewBox="0 0 16 16"><path d="M8 1.2A6.8 6.8 0 1 0 8 14.8Zm0 1.6v10.4a5.2 5.2 0 0 1 0-10.4Z"/></symbol>
+  <symbol id="i-full" viewBox="0 0 16 16"><path d="M2 2h5v1.6H3.6V7H2Zm7 0h5v5h-1.6V3.6H9Zm3.4 7H14v5H9v-1.6h3.4ZM2 9h1.6v3.4H7V14H2Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2 3.6h12v1.6H2Zm0 3.6h12v1.6H2Zm0 3.6h12v1.6H2Z"/></symbol>
+  <symbol id="i-format" viewBox="0 0 16 16"><path d="M2 2.5h12v2.4H9.2v8.6H6.8V4.9H2Z"/></symbol>
+  <symbol id="i-ul" viewBox="0 0 16 16"><path d="M2 3.2h1.8V5H2Zm3.6.1H14v1.6H5.6ZM2 7.1h1.8v1.8H2Zm3.6.1H14v1.6H5.6ZM2 11h1.8v1.8H2Zm3.6.1H14v1.6H5.6Z"/></symbol>
+  <symbol id="i-ol" viewBox="0 0 16 16"><path d="M5.6 3.3H14v1.6H5.6Zm0 3.9H14v1.6H5.6Zm0 3.9H14v1.6H5.6ZM1.6 2.6h1.5v3.1h-.9V3.4h-.6Zm0 4.3h2v.9l-1 1.1h1v.8H1.5v-.9l1-1.1h-.9Zm0 4.2h2v.7l-.6.5.6.4v.9H1.5v-.8h1l-.6-.4.6-.5h-.9Z"/></symbol>
+  <symbol id="i-task" viewBox="0 0 16 16"><path d="M1.4 2.6h5.9v1.5H2.9v3.3H1.4Zm7.4.6H14v1.6H8.8ZM1.4 9.1l1.1-1.1 1.5 1.5 2.9-2.9 1.1 1.1-4 4Zm7.4 1.5H14v1.6H8.8Z"/></symbol>
+  <symbol id="i-quote" viewBox="0 0 16 16"><path d="M1.8 3h1.9v10H1.8Zm4.4 1.2H14v1.6H6.2Zm0 3.3H14v1.6H6.2Zm0 3.3h5.4v1.6H6.2Z"/></symbol>
+  <symbol id="i-table" viewBox="0 0 16 16"><path d="M1.4 2.6h13.2v10.8H1.4Zm1.5 1.5v1.8h3.4V4.1Zm4.9 0v1.8h3.3V4.1Zm4.8 0v1.8h1v-1.8ZM2.9 7.4v1.6h3.4V7.4Zm4.9 0v1.6h3.3V7.4Zm4.8 0v1.6h1V7.4ZM2.9 10.4v1.5h3.4v-1.5Zm4.9 0v1.5h3.3v-1.5Zm4.8 0v1.5h1v-1.5Z"/></symbol>
+  <symbol id="i-link" viewBox="0 0 16 16"><path d="M6.5 9.5a2.7 2.7 0 0 1 0-3.8l2.4-2.4a2.7 2.7 0 0 1 3.8 3.8l-1.1 1.1-1.1-1.1 1.1-1.1a1.1 1.1 0 0 0-1.6-1.6L7.6 6.8a1.1 1.1 0 0 0 0 1.6Zm3-3a2.7 2.7 0 0 1 0 3.8l-2.4 2.4a2.7 2.7 0 1 1-3.8-3.8l1.1-1.1 1.1 1.1-1.1 1.1a1.1 1.1 0 0 0 1.6 1.6l2.4-2.4a1.1 1.1 0 0 0 0-1.6Z"/></symbol>
+  <symbol id="i-image" viewBox="0 0 16 16"><path d="M1.4 2.8h13.2v10.4H1.4Zm1.5 1.5v5.4l2.9-2.9 2.2 2.2 2.4-2.4 2.3 2.3V4.3Zm7.5 1a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z"/></symbol>
+  <symbol id="i-code" viewBox="0 0 16 16"><path d="M5.3 3.5 6.4 4.6 3 8l3.4 3.4-1.1 1.1L.8 8Zm5.4 0L15.2 8l-4.5 4.5-1.1-1.1L13 8 9.6 4.6Z"/></symbol>
+  <symbol id="i-codeblock" viewBox="0 0 16 16"><path d="M1.4 2.4h13.2v11.2H1.4Zm1.5 1.5v8.2h10.2V3.9Zm2.5 1.5 1 1L5 8l1.4 1.4-1 1L2.6 8Zm5 0L13.4 8l-2.9 2.4-1-1L11 8 9.5 6.4Z"/></symbol>
+  <symbol id="i-hr" viewBox="0 0 16 16"><path d="M1.6 7.2h12.8v1.6H1.6Z"/></symbol>
+  <symbol id="i-mark" viewBox="0 0 16 16"><path d="M2.6 10.4 9.2 3.8l2.7 2.7-6.6 6.6H2.6Zm7.7-7.7 1.3-1.3 2.7 2.7-1.3 1.3ZM1.4 14.2h13.2v1.4H1.4Z"/></symbol>
+  <symbol id="i-math" viewBox="0 0 16 16"><path d="M.8 7.6h2.4l1.9 4.6L8.6 1.6h6.6v1.6h-5.4L6 15.2H4.1L1.9 9.2H.8Z"/></symbol>
+  <symbol id="i-indent" viewBox="0 0 16 16"><path d="M6.2 2.6H15v1.6H6.2Zm0 4.6H15v1.6H6.2Zm0 4.6H15v1.6H6.2ZM1 4.1 4.4 7 1 9.9Z"/></symbol>
+  <symbol id="i-outdent" viewBox="0 0 16 16"><path d="M6.2 2.6H15v1.6H6.2Zm0 4.6H15v1.6H6.2Zm0 4.6H15v1.6H6.2ZM4.4 4.1 1 7l3.4 2.9Z"/></symbol>
+  <symbol id="i-fn" viewBox="0 0 16 16"><path d="M1.6 3.6h7.2v1.6H1.6Zm0 3.6h7.2v1.6H1.6Zm0 3.6h5.2v1.6H1.6Zm9.9-8h2.6v.9l-1.5 1.5h1.6v1.1h-3.2v-1l1.5-1.5h-1Z"/></symbol>
+</svg>
+
+<div class="app">
+
+  <!-- ================= barre de titre ================= -->
+  <header class="headerbar">
+    <button class="btn" id="btnNew" data-label="Nouveau"  title="Nouveau document (Ctrl/Cmd+N)"><svg><use href="#i-new"/></svg></button>
+    <div class="menu-wrap">
+      <button class="btn" id="btnOpen" data-label="Ouvrir" title="Ouvrir un fichier, ou reprendre un document récent (Ctrl/Cmd+O)"><svg><use href="#i-open"/></svg></button>
+      <div class="menu menu-left" id="menuRecents" role="menu">
+        <h6>Documents récents</h6>
+        <div id="listeRecents"></div>
+        <hr>
+        <button data-act="parcourir">Parcourir&#8230;<kbd>Ctrl/Cmd+O</kbd></button>
+        <button data-act="vider">Vider la liste</button>
+      </div>
+    </div>
+    <button class="btn" id="btnSave" data-label="Enregistrer" title="Enregistrer (Ctrl/Cmd+S)"><svg><use href="#i-save"/></svg></button>
+
+    <span class="sep hide-sm"></span>
+
+    <button class="btn hide-sm" id="btnToolbar" data-label="Format"    title="Afficher ou masquer la barre de mise en forme (Ctrl/Cmd+Maj+B)"><svg><use href="#i-format"/></svg></button>
+    <button class="btn hide-sm" id="btnFocus" data-label="Focus"      title="Mode Focus — tout s'estompe sauf le paragraphe du curseur (Ctrl/Cmd+D)"><svg><use href="#i-focus"/></svg></button>
+    <button class="btn hide-sm" id="btnHemingway" data-label="Hemingway"  title="Mode Hemingway — effacer et annuler sont bloqués (Ctrl/Cmd+H)"><svg><use href="#i-hemingway"/></svg></button>
+    <button class="btn hide-sm" id="btnTypewriter" data-label="Machine" title="Machine à écrire — la ligne en cours reste centrée à l'écran (Ctrl/Cmd+T)"><svg><use href="#i-typewriter"/></svg></button>
+
+    <span class="spacer"></span>
+    <div class="doc-title">
+      <strong id="docName">Sans titre.md</strong>
+      <span id="docState">enregistré</span>
+    </div>
+    <span class="spacer"></span>
+
+    <button class="btn" id="btnPreview" data-label="Aperçu" title="Aperçu du rendu à droite, défilement synchronisé (Ctrl/Cmd+P)"><svg><use href="#i-split"/></svg></button>
+    <button class="btn" id="btnTheme" data-label="Thème"   title="Changer de thème"><svg><use href="#i-theme"/></svg></button>
+    <button class="btn hide-sm" id="btnFull" data-label="Sans distraction" title="Masque toute l'interface et passe en plein écran (F11, Échap pour revenir)"><svg><use href="#i-full"/></svg></button>
+
+    <div class="menu-wrap">
+      <button class="btn" id="btnMenu" data-label="Menu" title="Menu principal" aria-haspopup="true"><svg><use href="#i-menu"/></svg></button>
+      <div class="menu" id="menu" role="menu">
+        <h6>Fichier</h6>
+        <button data-act="open">Ouvrir&#8230;<kbd>Ctrl/Cmd+O</kbd></button>
+        <button data-act="save">Enregistrer<kbd>Ctrl/Cmd+S</kbd></button>
+        <button data-act="save-as">Enregistrer sous&#8230;<kbd>Ctrl/Cmd+Maj+S</kbd></button>
+        <hr>
+        <h6>Exporter</h6>
+        <button data-act="export-html">Page HTML autonome</button>
+        <button data-act="export-pdf">PDF (impression)<kbd>Ctrl/Cmd+Maj+P</kbd></button>
+        <button data-act="copy-html">Copier le HTML</button>
+        <button data-act="copy-md">Copier le Markdown</button>
+        <hr>
+        <h6>Thème</h6>
+        <div class="seg" id="segTheme">
+          <button data-theme="light">Clair</button>
+          <button data-theme="dark">Sombre</button>
+          <button data-theme="blue">Nuit bleue</button>
+          <button data-theme="sepia">Sépia</button>
+          <button data-theme="auto">Auto (système)</button>
+        </div>
+        <h6>Police de l'éditeur</h6>
+        <div class="seg" id="segFont">
+          <button data-font="mono">Mono</button>
+          <button data-font="serif">Serif</button>
+          <button data-font="sans">Sans</button>
+        </div>
+        <h6>Taille du texte</h6>
+        <div class="seg" id="segSize">
+          <button data-size="-1">A&#8722;</button>
+          <button data-size="0">Réinitialiser</button>
+          <button data-size="1">A+</button>
+        </div>
+        <h6>Retour à la ligne</h6>
+        <div class="seg" id="segSauts">
+          <button data-sauts="on">Comme à l'écran</button>
+          <button data-sauts="off">Markdown strict</button>
+        </div>
+        <h6>Barre de mise en forme</h6>
+        <div class="seg" id="segLabels">
+          <button data-labels="off">Bulles au survol</button>
+          <button data-labels="on">Libellés visibles</button>
+        </div>
+        <h6>Largeur de colonne</h6>
+        <div class="seg" id="segCol">
+          <button data-col="36">Étroite</button>
+          <button data-col="46">Normale</button>
+          <button data-col="60">Large</button>
+        </div>
+        <hr>
+        <button data-act="sample">Charger le document d'exemple</button>
+        <button data-act="shortcuts">Raccourcis clavier<kbd>?</kbd></button>
+        <button data-act="about">À propos</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= barre de mise en forme ================= -->
+  <div class="toolbar" id="toolbar" role="toolbar" aria-label="Insertion Markdown">
+    <div class="tb-group" aria-label="Niveaux de titre">
+      <button class="tb lvl h1" data-ins="h1" data-label="Titre 1" title="Titre 1 (Ctrl/Cmd+Maj+1)">H1</button>
+      <button class="tb lvl h2" data-ins="h2" data-label="Titre 2" title="Titre 2 (Ctrl/Cmd+Maj+2)">H2</button>
+      <button class="tb lvl h3" data-ins="h3" data-label="Titre 3" title="Titre 3 (Ctrl/Cmd+Maj+3)">H3</button>
+      <button class="tb lvl h4" data-ins="h4" data-label="Titre 4" title="Titre 4 (Ctrl/Cmd+Maj+4)">H4</button>
+      <button class="tb lvl h5" data-ins="h5" data-label="Titre 5" title="Titre 5 (Ctrl/Cmd+Maj+5)">H5</button>
+      <button class="tb lvl h6" data-ins="h6" data-label="Titre 6" title="Titre 6 (Ctrl/Cmd+Maj+6)">H6</button>
+    </div>
+
+    <span class="sep"></span>
+
+    <div class="tb-group" aria-label="Style du texte">
+      <button class="tb" data-ins="bold" data-label="Gras"   title="Gras (Ctrl/Cmd+B)"><b>B</b></button>
+      <button class="tb" data-ins="italic" data-label="Italique" title="Italique (Ctrl/Cmd+I)"><i>I</i></button>
+      <button class="tb" data-ins="strike" data-label="Barré" title="Barré (Ctrl/Cmd+Maj+X)"><s>S</s></button>
+      <button class="tb" data-ins="mark" data-label="Surligné"   title="Surligné"><svg><use href="#i-mark"/></svg></button>
+      <button class="tb" data-ins="code" data-label="Code"   title="Code en ligne (Ctrl/Cmd+E)"><svg><use href="#i-code"/></svg></button>
+      <button class="tb" data-ins="codeblock" data-label="Bloc code" title="Bloc de code"><svg><use href="#i-codeblock"/></svg></button>
+      <button class="tb" data-ins="math" data-label="Formule" title="Formule mathématique — $…$ (Ctrl/Cmd+Maj+M)"><svg><use href="#i-math"/></svg></button>
+    </div>
+
+    <span class="sep"></span>
+
+    <div class="tb-group" aria-label="Listes">
+      <button class="tb" data-ins="ul" data-label="Puces"    title="Liste à puces"><svg><use href="#i-ul"/></svg></button>
+      <button class="tb" data-ins="ol" data-label="Numéros"    title="Liste numérotée"><svg><use href="#i-ol"/></svg></button>
+      <button class="tb" data-ins="task" data-label="Case"  title="Case à cocher"><svg><use href="#i-task"/></svg></button>
+      <button class="tb" data-ins="quote" data-label="Citation" title="Citation"><svg><use href="#i-quote"/></svg></button>
+      <button class="tb" data-ins="indent" data-label="Indenter" title="Indenter la ligne — imbriquer dans la liste (Tab)"><svg><use href="#i-indent"/></svg></button>
+      <button class="tb" data-ins="outdent" data-label="Désindenter" title="Désindenter la ligne — sortir d'un niveau de liste (Maj+Tab)"><svg><use href="#i-outdent"/></svg></button>
+    </div>
+
+    <span class="sep"></span>
+
+    <div class="tb-group" aria-label="Blocs">
+      <button class="tb" data-ins="table" data-label="Tableau"     title="Tableau"><svg><use href="#i-table"/></svg></button>
+      <button class="tb" data-ins="hr" data-label="Séparateur"        title="Ligne de séparation"><svg><use href="#i-hr"/></svg></button>
+    </div>
+
+    <span class="sep"></span>
+
+    <div class="tb-group" aria-label="Insertions">
+      <button class="tb" data-ins="link" data-label="Lien"     title="Lien (Ctrl/Cmd+K)"><svg><use href="#i-link"/></svg></button>
+      <button class="tb" data-ins="image" data-label="Image"    title="Image"><svg><use href="#i-image"/></svg></button>
+      <button class="tb" data-ins="footnote" data-label="Note" title="Note de bas de page"><svg><use href="#i-fn"/></svg></button>
+    </div>
+
+    <span class="tb-spacer"></span>
+
+    <div class="tb-group tb-table-size" id="tableSize" hidden>
+      <label>Colonnes <input type="number" id="tblCols" min="1" max="10" value="3"></label>
+      <label>Lignes <input type="number" id="tblRows" min="1" max="20" value="3"></label>
+      <button class="tb tb-text" data-ins="table-confirm">Insérer</button>
+    </div>
+  </div>
+
+  <!-- ================= zone principale ================= -->
+  <main class="main" id="main">
+    <section class="pane editor-pane">
+      <pre id="hl" aria-hidden="true"></pre>
+      <textarea id="editor" spellcheck="true" autocomplete="off" autocapitalize="sentences"
+                placeholder="Écris&#8230;"></textarea>
+    </section>
+    <section class="pane preview-pane" hidden>
+      <article id="preview"></article>
+    </section>
+  </main>
+
+  <!-- ================= barre d'etat ================= -->
+  <footer class="statusbar">
+    <span><b id="sWords">0</b> mots</span>
+    <span><b id="sChars">0</b> caractères</span>
+    <span class="hide-sm"><b id="sSent">0</b> phrases</span>
+    <span class="hide-sm"><b id="sPara">0</b> paragraphes</span>
+    <span class="spacer"></span>
+    <span id="sContexte" class="contexte"></span>
+    <span id="sModes"></span>
+    <span class="hide-sm">L<b id="sLine">1</b>:C<b id="sCol">1</b></span>
+    <span><b id="sTime">0</b>&#8239;min de lecture</span>
+  </footer>
+</div>
+
+<div class="modale" id="modale" hidden>
+  <div class="modale-fond"></div>
+  <div class="modale-boite" role="dialog" aria-modal="true" aria-labelledby="modaleTitre">
+    <button class="modale-fermer" id="modaleFermer" title="Fermer (Échap)">&#10005;</button>
+    <div id="modaleContenu"></div>
+  </div>
+</div>
+
+<div class="drop-hint">Déposer un fichier Markdown&#8230;</div>
+<div class="toast" id="toast"></div>
+<input type="file" id="fileInput" accept=".md,.markdown,.mdown,.txt,text/markdown,text/plain" hidden>
+
+<script>
+/* =========================================================================
+ * export-style.js — Feuille de style autonome injectee dans les fichiers
+ * HTML exportes. Independante de app.css : un export reste lisible meme
+ * ouvert seul, hors ligne, sur une autre machine.
+ * ========================================================================= */
+(function (global) {
+  'use strict';
+
+  global.EXPORT_CSS = [
+    ':root{',
+    '  --bg:#ffffff;--fg:#1b1b1b;--dim:#5f5f5f;--faint:#8a8a8a;--accent:#1c71d8;',
+    '  --border:rgba(0,0,0,.12);--code:rgba(0,0,0,.05);--mark:#fdf2a4;',
+    '  --serif:Iowan Old Style,"Palatino Linotype",Palatino,Georgia,serif;',
+    '  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Cantarell,Inter,system-ui,sans-serif;',
+    '  --mono:"SF Mono","JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;',
+    '}',
+    '@media (prefers-color-scheme:dark){:root{',
+    '  --bg:#1d1d1d;--fg:#e6e6e6;--dim:#a5a5a5;--faint:#727272;--accent:#78aeed;',
+    '  --border:rgba(255,255,255,.14);--code:rgba(255,255,255,.07);--mark:#6b5d17;}}',
+    '*{box-sizing:border-box}',
+    'body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);',
+    '  font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}',
+    'article{max-width:46rem;margin:0 auto;padding:4rem 1.5rem 6rem}',
+    'article>:first-child{margin-top:0}',
+    'h1,h2,h3,h4,h5,h6{margin:1.9em 0 .55em;line-height:1.25;font-weight:700;letter-spacing:-.01em}',
+    'h1{font-size:2.1em}h2{font-size:1.55em}h3{font-size:1.28em}h4{font-size:1.1em}',
+    'h5{font-size:1em;color:var(--dim)}',
+    'h6{font-size:.92em;color:var(--dim);text-transform:uppercase;letter-spacing:.05em}',
+    'p{margin:0 0 1.15em}',
+    'a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}',
+    'mark{background:var(--mark);color:inherit;padding:0 .15em;border-radius:2px}',
+    'img{max-width:100%;height:auto;border-radius:8px}',
+    'code{padding:.15em .38em;font-family:var(--mono);font-size:.87em;background:var(--code);border-radius:4px}',
+    'pre.code-block{position:relative;margin:0 0 1.3em;padding:1rem 1.1rem;overflow-x:auto;',
+    '  background:var(--code);border:1px solid var(--border);border-radius:8px;line-height:1.55}',
+    'pre.code-block code{padding:0;background:none;font-size:.86em}',
+    'pre.code-block[data-lang]::after{content:attr(data-lang);position:absolute;top:.5rem;right:.7rem;',
+    '  font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}',
+    'blockquote{margin:0 0 1.2em;padding:.1em 0 .1em 1.15em;border-left:3px solid var(--accent);',
+    '  color:var(--dim);font-style:italic}',
+    'blockquote p:last-child{margin-bottom:0}',
+    'ul,ol{margin:0 0 1.15em;padding-left:1.5em}li{margin:.28em 0}',
+    'li.task-item{list-style:none;margin-left:-1.35em}',
+    'li.task-item input{margin-right:.5em;accent-color:var(--accent)}',
+    'hr{height:1px;margin:2.2em 0;border:0;background:var(--border)}',
+    '.table-wrap{overflow-x:auto;margin:0 0 1.3em}',
+    'table{border-collapse:collapse;width:100%;font-size:.93em}',
+    'th,td{padding:.5em .8em;border:1px solid var(--border)}',
+    'th{background:var(--code);font-weight:700;text-align:left}',
+    'tbody tr:nth-child(even){background:rgba(127,127,127,.045)}',
+    '.math{padding:0 .2em;font-family:"STIX Two Math",Georgia,serif;font-style:italic}',
+    '.math-block{display:block;margin:1em 0;text-align:center;font-size:1.1em}',
+    '.footnotes{font-size:.9em;color:var(--dim)}',
+    '.fn-ref a,.fn-back{text-decoration:none}',
+    '@media print{body{background:#fff;color:#000}article{max-width:none;padding:0}',
+    '  a{color:#000}h1,h2,h3{break-after:avoid}pre,blockquote,table{break-inside:avoid}}'
+  ].join('\n');
+})(window);
+</script>
+<script>
+/* =========================================================================
+ * markdown.js — Parseur Markdown maison (aucune dependance)
+ * Deux passes : blocs (ligne par ligne) puis inline (un seul balayage
+ * tokenise, pour ne jamais re-scanner le balisage deja insere).
+ * ========================================================================= */
+(function (global) {
+  'use strict';
+
+  /* ---------- utilitaires ---------- */
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Neutralise javascript:, vbscript:, data: (sauf images) dans les URL.
+  function safeUrl(url) {
+    var u = (url || '').trim();
+    var lowered = u.replace(/[\x00-\x20]/g, '').toLowerCase();
+    if (/^(javascript|vbscript):/.test(lowered)) return '#';
+    if (/^data:/.test(lowered) && !/^data:image\/(png|jpe?g|gif|webp|svg\+xml);/.test(lowered)) return '#';
+    return u.replace(/"/g, '%22');
+  }
+
+  function slugify(s) {
+    return s.toLowerCase()
+      .replace(/<[^>]*>/g, '')
+      .replace(/[^\wÀ-ɏ\s-]/g, '')
+      .trim().replace(/\s+/g, '-') || 'section';
+  }
+
+  /* ---------- passe inline ---------- */
+
+  var INLINE = new RegExp([
+    '(`+)([\\s\\S]*?)\\1',                                  //  1,2   code
+    '\\$\\$([^$]+)\\$\\$',                                  //  3     maths bloc
+    '\\$([^$\\n]+)\\$',                                     //  4     maths inline
+    '!\\[([^\\]]*)\\]\\(((?:[^()\\s]|\\([^()\\s]*\\))+)(?:\\s+"([^"]*)")?\\)',   //  5,6,7 image
+    '\\[\\^([^\\]]+)\\]',                                   //  8     renvoi de note
+    '\\[([^\\]]*)\\]\\(((?:[^()\\s]|\\([^()\\s]*\\))*)(?:\\s+"([^"]*)")?\\)',    //  9,10,11 lien
+    '&lt;((?:https?|mailto):[^\\s&]+)&gt;',                 // 12     lien automatique
+    '\\*\\*\\*([\\s\\S]+?)\\*\\*\\*',                       // 13     gras + italique
+    '___([\\s\\S]+?)___',                                   // 14
+    '\\*\\*([\\s\\S]+?)\\*\\*',                             // 15     gras
+    '__([\\s\\S]+?)__',                                     // 16
+    '~~([\\s\\S]+?)~~',                                     // 17     barre
+    '==([\\s\\S]+?)==',                                     // 18     surligne
+    '\\*([^\\s*][\\s\\S]*?)\\*',                            // 19     italique
+    '(^|[\\s(])_([^\\s_][\\s\\S]*?)_(?=[\\s.,;:!?)]|$)'     // 20,21  italique
+  ].join('|'), 'gm');
+
+  function inline(src, ctx) {
+    var text = escapeHtml(src);
+
+    text = text.replace(INLINE, function (m, tick, code, math2, math1, alt, isrc, ititle,
+                                          fnote, ltext, lhref, ltitle, auto,
+                                          bi1, bi2, b1, b2, strike, mark, i1, pre, i2) {
+      if (tick !== undefined) return '<code>' + code.replace(/^ | $/g, '') + '</code>';
+      if (math2 !== undefined) return '<span class="math math-block">' + math2 + '</span>';
+      if (math1 !== undefined) return '<span class="math">' + math1 + '</span>';
+      if (alt !== undefined) {
+        return '<img src="' + safeUrl(isrc) + '" alt="' + alt + '"' +
+               (ititle ? ' title="' + ititle + '"' : '') + '>';
+      }
+      if (fnote !== undefined) {
+        var id = slugify(fnote);
+        var n = ctx.footnoteOrder.indexOf(id);
+        if (n === -1) { ctx.footnoteOrder.push(id); n = ctx.footnoteOrder.length - 1; }
+        return '<sup class="fn-ref" id="fnref-' + id + '"><a href="#fn-' + id + '">' + (n + 1) + '</a></sup>';
+      }
+      if (ltext !== undefined) {
+        var href = lhref;
+        if (!href && ctx.refs[ltext.toLowerCase()]) href = ctx.refs[ltext.toLowerCase()].href;
+        return '<a href="' + safeUrl(href) + '"' + (ltitle ? ' title="' + ltitle + '"' : '') +
+               ' rel="noopener noreferrer">' + ltext + '</a>';
+      }
+      if (auto !== undefined) return '<a href="' + safeUrl(auto) + '" rel="noopener noreferrer">' + auto + '</a>';
+      if (bi1 !== undefined || bi2 !== undefined) return '<strong><em>' + (bi1 || bi2) + '</em></strong>';
+      if (b1 !== undefined || b2 !== undefined) return '<strong>' + (b1 || b2) + '</strong>';
+      if (strike !== undefined) return '<del>' + strike + '</del>';
+      if (mark !== undefined) return '<mark>' + mark + '</mark>';
+      if (i1 !== undefined) return '<em>' + i1 + '</em>';
+      if (i2 !== undefined) return (pre || '') + '<em>' + i2 + '</em>';
+      return m;
+    });
+
+    // Retour a la ligne force : au moins deux espaces en fin de ligne.
+    text = text.replace(/ {2,}\n/g, '<br>\n');
+
+    // En Markdown strict, un retour a la ligne isole ne vaut qu'un espace.
+    // Dans un editeur de prose, c'est deroutant : on ecrit une ligne, elle se
+    // recolle a la precedente. L'option rend chaque retour effectif, sans
+    // toucher a ce qui se trouve dans du code en ligne.
+    if (ctx.sautsSimples) {
+      text = text.split(/(<code>[\s\S]*?<\/code>)/).map(function (part, i) {
+        return i % 2 ? part : part.replace(/([^>\n])\n/g, '$1<br>\n');
+      }).join('');
+    }
+    return text;
+  }
+
+  /* ---------- passe blocs ---------- */
+
+  var RE = {
+    fence:    /^(\s*)(`{3,}|~{3,})\s*([\w+-]*)\s*$/,
+    heading:  /^ {0,3}(#{1,6})\s+(.*?)\s*#*\s*$/,
+    hr:       /^ {0,3}((\*\s*){3,}|(-\s*){3,}|(_\s*){3,})$/,
+    quote:    /^ {0,3}>\s?(.*)$/,
+    ul:       /^(\s*)([-*+])\s+(.*)$/,
+    ol:       /^(\s*)(\d{1,9})[.)]\s+(.*)$/,
+    task:     /^\[([ xX])\]\s+(.*)$/,
+    tableSep: /^\s*\|?[\s:|-]*-[\s:|-]*\|?\s*$/,
+    setext1:  /^ {0,3}=+\s*$/,
+    setext2:  /^ {0,3}-+\s*$/,
+    refDef:   /^ {0,3}\[([^\]^]+)\]:\s*(\S+)(?:\s+"([^"]*)")?\s*$/,
+    footDef:  /^ {0,3}\[\^([^\]]+)\]:\s*(.*)$/
+  };
+
+  function indentOf(s) { return s.replace(/\t/g, '    ').match(/^ */)[0].length; }
+
+  function isBlockStart(l) {
+    return RE.fence.test(l) || RE.heading.test(l) || RE.hr.test(l) ||
+           RE.quote.test(l) || RE.ul.test(l) || RE.ol.test(l) || RE.footDef.test(l);
+  }
+
+  // Ancre de defilement : chaque bloc de premier niveau porte la ligne de
+  // source ou il commence, ce qui permet d'aligner l'apercu sur l'editeur.
+  function marquerLigne(html, n) {
+    return html.replace(/^<([a-z][\w-]*)/i, '<$1 data-line="' + n + '"');
+  }
+
+  function parse(lines, ctx, racine) {
+    var out = [], i = 0, ligneBloc = 0;
+
+    function push(html) {
+      out.push(racine ? marquerLigne(html, ligneBloc) : html);
+    }
+
+    while (i < lines.length) {
+      var line = lines[i];
+      ligneBloc = i;
+
+      if (!line.trim()) { i++; continue; }
+
+      /* bloc de code cloture */
+      var f = line.match(RE.fence);
+      if (f) {
+        var marker = f[2].charAt(0), buf = [];
+        i++;
+        while (i < lines.length) {
+          var closing = lines[i].match(RE.fence);
+          if (closing && closing[2].charAt(0) === marker) break;
+          buf.push(lines[i]); i++;
+        }
+        i++;
+        push('<pre class="code-block"' + (f[3] ? ' data-lang="' + escapeHtml(f[3]) + '"' : '') +
+                 '><code>' + escapeHtml(buf.join('\n')) + '</code></pre>');
+        continue;
+      }
+
+      /* bloc de code indente */
+      if (/^ {4}\S/.test(line)) {
+        var cbuf = [];
+        while (i < lines.length && (/^ {4}/.test(lines[i]) || !lines[i].trim())) { cbuf.push(lines[i].slice(4)); i++; }
+        while (cbuf.length && !cbuf[cbuf.length - 1].trim()) cbuf.pop();
+        push('<pre class="code-block"><code>' + escapeHtml(cbuf.join('\n')) + '</code></pre>');
+        continue;
+      }
+
+      /* regle horizontale */
+      if (RE.hr.test(line)) { push('<hr>'); i++; continue; }
+
+      /* titre ATX */
+      var h = line.match(RE.heading);
+      if (h) {
+        push('<h' + h[1].length + ' id="' + slugify(h[2]) + '">' + inline(h[2], ctx) + '</h' + h[1].length + '>');
+        i++; continue;
+      }
+
+      /* definition de note de bas de page */
+      var fd = line.match(RE.footDef);
+      if (fd) {
+        var fid = slugify(fd[1]), fbuf = [fd[2]];
+        i++;
+        while (i < lines.length && lines[i].trim() && indentOf(lines[i]) >= 2 && !RE.footDef.test(lines[i])) {
+          fbuf.push(lines[i].trim()); i++;
+        }
+        ctx.footnotes[fid] = parse(fbuf, ctx).join('\n');
+        continue;
+      }
+
+      /* definition de reference de lien */
+      var rd = line.match(RE.refDef);
+      if (rd) { ctx.refs[rd[1].toLowerCase()] = { href: rd[2], title: rd[3] }; i++; continue; }
+
+      /* citation (recursive, avec continuation paresseuse) */
+      if (RE.quote.test(line)) {
+        var qbuf = [];
+        while (i < lines.length) {
+          var qm = lines[i].match(RE.quote);
+          if (qm) { qbuf.push(qm[1]); i++; continue; }
+          if (lines[i].trim() && qbuf.length && !isBlockStart(lines[i])) { qbuf.push(lines[i]); i++; continue; }
+          break;
+        }
+        push('<blockquote>' + parse(qbuf, ctx).join('\n') + '</blockquote>');
+        continue;
+      }
+
+      /* tableau */
+      if (line.indexOf('|') !== -1 && i + 1 < lines.length &&
+          RE.tableSep.test(lines[i + 1]) && lines[i + 1].indexOf('-') !== -1) {
+        var cells = function (row) {
+          return row.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split('|').map(function (c) { return c.trim(); });
+        };
+        var head = cells(line);
+        var aligns = cells(lines[i + 1]).map(function (c) {
+          if (/^:.*:$/.test(c)) return 'center';
+          if (/:$/.test(c)) return 'right';
+          if (/^:/.test(c)) return 'left';
+          return '';
+        });
+        i += 2;
+        var rows = [];
+        while (i < lines.length && lines[i].trim() && lines[i].indexOf('|') !== -1) { rows.push(cells(lines[i])); i++; }
+        var th = head.map(function (c, n) {
+          return '<th' + (aligns[n] ? ' style="text-align:' + aligns[n] + '"' : '') + '>' + inline(c, ctx) + '</th>';
+        }).join('');
+        var tb = rows.map(function (r) {
+          return '<tr>' + head.map(function (_, n) {
+            return '<td' + (aligns[n] ? ' style="text-align:' + aligns[n] + '"' : '') + '>' + inline(r[n] || '', ctx) + '</td>';
+          }).join('') + '</tr>';
+        }).join('');
+        push('<div class="table-wrap"><table><thead><tr>' + th + '</tr></thead><tbody>' + tb + '</tbody></table></div>');
+        continue;
+      }
+
+      /* listes */
+      if (RE.ul.test(line) || RE.ol.test(line)) {
+        var res = parseList(lines, i, ctx);
+        push(res.html); i = res.next;
+        continue;
+      }
+
+      /* paragraphe et titres Setext */
+      var pbuf = [];
+      while (i < lines.length && lines[i].trim() && !isBlockStart(lines[i])) {
+        if (pbuf.length && (RE.setext1.test(lines[i]) || RE.setext2.test(lines[i]))) break;
+        pbuf.push(lines[i]); i++;
+      }
+      if (!pbuf.length) { i++; continue; }
+
+      if (i < lines.length && RE.setext1.test(lines[i])) {
+        push('<h1 id="' + slugify(pbuf.join(' ')) + '">' + inline(pbuf.join('\n'), ctx) + '</h1>'); i++;
+      } else if (i < lines.length && RE.setext2.test(lines[i])) {
+        push('<h2 id="' + slugify(pbuf.join(' ')) + '">' + inline(pbuf.join('\n'), ctx) + '</h2>'); i++;
+      } else {
+        push('<p>' + inline(pbuf.join('\n'), ctx) + '</p>');
+      }
+    }
+
+    return out;
+  }
+
+  function parseList(lines, start, ctx) {
+    var isUl = RE.ul.test(lines[start]);
+    var first = isUl ? lines[start].match(RE.ul) : lines[start].match(RE.ol);
+    var ordered = !isUl;
+    var baseIndent = indentOf(first[1]);
+    var startNum = ordered ? parseInt(first[2], 10) : 1;
+    var items = [], i = start, loose = false;
+
+    while (i < lines.length) {
+      var raw = lines[i];
+
+      if (!raw.trim()) {
+        var j = i + 1;
+        while (j < lines.length && !lines[j].trim()) j++;
+        if (j < lines.length && (RE.ul.test(lines[j]) || RE.ol.test(lines[j]) || indentOf(lines[j]) > baseIndent)) {
+          loose = true;
+          if (items.length) items[items.length - 1].push('');
+          i = j; continue;
+        }
+        break;
+      }
+
+      var isItem = RE.ul.test(raw) || RE.ol.test(raw);
+      var ind = indentOf(raw);
+
+      if (isItem && ind <= baseIndent + 1) {
+        if (ind < baseIndent) break;
+        if (ordered === RE.ul.test(raw) && items.length) break; // changement de type de liste
+        var m = RE.ul.test(raw) ? raw.match(RE.ul) : raw.match(RE.ol);
+        items.push([m[3]]);
+        i++;
+      } else if (items.length && (ind > baseIndent || !isItem)) {
+        items[items.length - 1].push(raw.replace(new RegExp('^ {0,' + (baseIndent + 2) + '}'), ''));
+        i++;
+      } else break;
+    }
+
+    var html = items.map(function (buf) {
+      var t = buf[0].match(RE.task);
+      var cls = '', checkbox = '';
+      if (t) {
+        cls = ' class="task-item"';
+        checkbox = '<input type="checkbox" disabled' + (t[1].toLowerCase() === 'x' ? ' checked' : '') + '> ';
+        buf = buf.slice(); buf[0] = t[2];
+      }
+      var inner = parse(buf.join('\n').split('\n'), ctx).join('\n');
+      if (!loose) inner = inner.replace(/^<p>([\s\S]*?)<\/p>/, '$1');
+      return '<li' + cls + '>' + checkbox + inner + '</li>';
+    }).join('\n');
+
+    return {
+      html: ordered
+        ? '<ol' + (startNum !== 1 ? ' start="' + startNum + '"' : '') + '>' + html + '</ol>'
+        : '<ul>' + html + '</ul>',
+      next: i
+    };
+  }
+
+  /* ---------- API publique ---------- */
+
+  function render(src, opts) {
+    opts = opts || {};
+    var ctx = {
+      refs: {}, footnotes: {}, footnoteOrder: [],
+      sautsSimples: !!opts.sautsSimples
+    };
+    var lines = String(src == null ? '' : src).replace(/\r\n?/g, '\n').replace(/\t/g, '    ').split('\n');
+    var html = parse(lines, ctx, true).join('\n');
+
+    if (ctx.footnoteOrder.length) {
+      html += '\n<hr class="fn-sep">\n<ol class="footnotes">' + ctx.footnoteOrder.map(function (id) {
+        var body = ctx.footnotes[id] || '<p><em>note manquante</em></p>';
+        var retour = ' <a class="fn-back" href="#fnref-' + id + '" title="Revenir au texte">&#8617;</a>';
+        // Le lien de retour se glisse DANS le dernier paragraphe : place apres,
+        // il formerait un bloc a lui seul et tomberait a la ligne.
+        body = /<\/p>\s*$/.test(body) ? body.replace(/<\/p>(\s*)$/, retour + '</p>$1') : body + retour;
+        return '<li id="fn-' + id + '">' + body + '</li>';
+      }).join('\n') + '</ol>';
+    }
+    return html;
+  }
+
+  global.Markdown = { render: render, escapeHtml: escapeHtml, slugify: slugify };
+})(window);
+</script>
+<script>
+/* =========================================================================
+ * highlight.js — Calque de coloration syntaxique de l'editeur.
+ * Contrainte absolue : le texte rendu doit etre STRICTEMENT identique a
+ * celui de la zone de saisie (aucun caractere ajoute ou retire), sinon
+ * le calque et le curseur se desalignent.
+ * ========================================================================= */
+(function (global) {
+  'use strict';
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function p(s) { return '<span class="hl-punct">' + s + '</span>'; }
+
+  /* Un seul balayage : le balisage insere n'est jamais reexamine. */
+  var INLINE = new RegExp([
+    '(`+)([^`]*)(\\1)',                                     //  1,2,3   code
+    '(!?\\[)([^\\]]*)(\\]\\()([^)]*)(\\))',                 //  4-8     lien / image
+    '(\\*\\*\\*|___)([^*_]+)(\\*\\*\\*|___)',               //  9,10,11 gras + italique
+    '(\\*\\*|__)([^*_]+)(\\*\\*|__)',                       // 12,13,14 gras
+    '(~~)([^~]+)(~~)',                                      // 15,16,17 barre
+    '(==)([^=]+)(==)',                                      // 18,19,20 surligne
+    '(\\*|_)([^*_\\s][^*_]*)(\\*|_)',                       // 21,22,23 italique
+    '(\\$)([^$]+)(\\$)'                                     // 24,25,26 maths
+  ].join('|'), 'g');
+
+  function inlineHl(escaped) {
+    return escaped.replace(INLINE, function (m, ct, cc, ct2, lb, lt, lm, lu, le,
+                                             bi1, bit, bi2, b1, bt, b2,
+                                             s1, st, s2, k1, kt, k2, i1, it, i2, d1, dt, d2) {
+      if (ct !== undefined) return '<span class="hl-code">' + ct + cc + ct2 + '</span>';
+      if (lb !== undefined) {
+        return p(lb) + '<span class="hl-link">' + lt + '</span>' + p(lm) +
+               '<span class="hl-url">' + lu + '</span>' + p(le);
+      }
+      if (bi1 !== undefined) return p(bi1) + '<span class="hl-strong hl-em">' + bit + '</span>' + p(bi2);
+      if (b1 !== undefined) return p(b1) + '<span class="hl-strong">' + bt + '</span>' + p(b2);
+      if (s1 !== undefined) return p(s1) + '<span class="hl-del">' + st + '</span>' + p(s2);
+      if (k1 !== undefined) return p(k1) + '<span class="hl-mark">' + kt + '</span>' + p(k2);
+      if (i1 !== undefined) return p(i1) + '<span class="hl-em">' + it + '</span>' + p(i2);
+      if (d1 !== undefined) return '<span class="hl-math">' + d1 + dt + d2 + '</span>';
+      return m;
+    });
+  }
+
+  function line(raw, state) {
+    var fence = raw.match(/^(\s*)(`{3,}|~{3,})(.*)$/);
+    if (fence) {
+      state.fence = !state.fence;
+      return esc(fence[1]) + '<span class="hl-fence">' + esc(fence[2] + fence[3]) + '</span>';
+    }
+    if (state.fence) return '<span class="hl-code">' + esc(raw) + '</span>';
+
+    var m;
+
+    // Titre ATX
+    if ((m = raw.match(/^( {0,3})(#{1,6})( +)(.*)$/))) {
+      return esc(m[1]) + p(esc(m[2]) + esc(m[3])) +
+             '<span class="hl-h hl-h' + m[2].length + '">' + inlineHl(esc(m[4])) + '</span>';
+    }
+
+    // Regle horizontale / soulignement Setext
+    if (/^ {0,3}((\*\s*){3,}|(-\s*){3,}|(_\s*){3,}|=+\s*)$/.test(raw) && raw.trim()) {
+      return '<span class="hl-rule">' + esc(raw) + '</span>';
+    }
+
+    // Citation (imbrication possible)
+    if ((m = raw.match(/^( {0,3})((?:>\s?)+)(.*)$/))) {
+      return esc(m[1]) + p(esc(m[2])) + '<span class="hl-quote">' + inlineHl(esc(m[3])) + '</span>';
+    }
+
+    // Note de bas de page / reference
+    if ((m = raw.match(/^( {0,3})(\[\^?[^\]]+\]:)(.*)$/))) {
+      return esc(m[1]) + '<span class="hl-url">' + esc(m[2]) + '</span>' + inlineHl(esc(m[3]));
+    }
+
+    // Element de liste (+ case a cocher)
+    if ((m = raw.match(/^(\s*)([-*+]|\d{1,9}[.)])( +)(.*)$/))) {
+      var rest = m[4], box = '';
+      var t = rest.match(/^(\[[ xX]\])( +)(.*)$/);
+      if (t) {
+        box = '<span class="hl-task' + (t[1][1] !== ' ' ? ' done' : '') + '">' + esc(t[1]) + '</span>' + esc(t[2]);
+        rest = t[3];
+      }
+      return esc(m[1]) + '<span class="hl-bullet">' + esc(m[2]) + '</span>' + esc(m[3]) +
+             box + inlineHl(esc(rest));
+    }
+
+    // Ligne de separation de tableau
+    if (/^\s*\|?[\s:|-]*-[\s:|-]*\|?\s*$/.test(raw) && raw.indexOf('|') !== -1) {
+      return '<span class="hl-punct">' + esc(raw) + '</span>';
+    }
+
+    // Ligne de tableau
+    if (raw.indexOf('|') !== -1 && /\|.*\|/.test(raw)) {
+      return esc(raw).split('|').map(function (c, n, a) {
+        return inlineHl(c) + (n < a.length - 1 ? p('|') : '');
+      }).join('');
+    }
+
+    return inlineHl(esc(raw));
+  }
+
+  /**
+   * @param {string} text    contenu integral de la zone de saisie
+   * @param {object} opts    { focus:boolean, from:number, to:number }
+   * @returns {string} HTML du calque, une balise par ligne
+   */
+  function render(text, opts) {
+    opts = opts || {};
+    var lines = text.split('\n');
+    var state = { fence: false };
+    var out = new Array(lines.length);
+
+    for (var i = 0; i < lines.length; i++) {
+      var dim = opts.focus && (i < opts.from || i > opts.to) ? ' dim' : '';
+      out[i] = '<span class="ed-line' + dim + '">' + line(lines[i], state) + '</span>';
+    }
+    // Le saut de ligne final evite que la derniere ligne soit tronquee.
+    return out.join('\n') + '\n';
+  }
+
+  global.Highlighter = { render: render };
+})(window);
+</script>
+<script>
+/* =========================================================================
+ * app.js — Calliope : logique de l'application
+ * ========================================================================= */
+(function () {
+  'use strict';
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  var ta       = $('editor'),
+      hl       = $('hl'),
+      preview  = $('preview'),
+      main     = $('main'),
+      pvPane   = document.querySelector('.preview-pane'),
+      menu     = $('menu'),
+      toastEl  = $('toast'),
+      fileIn   = $('fileInput'),
+      toolbar  = $('toolbar'),
+      tblPanel = $('tableSize'),
+      tipEl    = null,
+      menuRec  = $('menuRecents'),
+      listeRec = $('listeRecents');
+
+  var KEY = 'calliope';
+  var ANCIENNE_CLE = 'apostrophe-vanilla';   // nom du projet avant la version 1.3.0
+  var PREFS_V = 2;              // incrementer quand un reglage change de defaut
+
+  var FONTS = {
+    mono:  '"SF Mono", "JetBrains Mono", "Fira Mono", ui-monospace, Menlo, Consolas, monospace',
+    serif: 'Iowan Old Style, "Palatino Linotype", Palatino, "Source Serif Pro", Georgia, serif',
+    sans:  '-apple-system, BlinkMacSystemFont, "Segoe UI", Cantarell, Inter, system-ui, sans-serif'
+  };
+
+  var state = {
+    theme: 'auto', font: 'mono', size: 16, col: 46,
+    focus: false, hemingway: false, typewriter: false, split: false, toolbar: true, labels: true, sautsSimples: true,
+    name: 'Sans titre.md', dirty: false
+  };
+
+  var handle = null;      // FileSystemFileHandle si l'API est disponible
+  var previewTimer = null;
+
+  /* =====================================================================
+   * 1. Preferences persistantes
+   * ===================================================================== */
+
+  function loadPrefs() {
+    try {
+      var raw = localStorage.getItem(KEY + ':prefs');
+      if (raw) {
+        var prefs = JSON.parse(raw);
+        if (prefs.v !== PREFS_V) delete prefs.labels;   // reprend le nouveau defaut
+        delete prefs.v;
+        Object.assign(state, prefs);
+      }
+      var doc = localStorage.getItem(KEY + ':doc');
+      var name = localStorage.getItem(KEY + ':name');
+
+      // Reprise unique du travail laisse sous l'ancien nom du projet.
+      if (doc === null && localStorage.getItem(ANCIENNE_CLE + ':doc') !== null) {
+        doc = localStorage.getItem(ANCIENNE_CLE + ':doc');
+        name = localStorage.getItem(ANCIENNE_CLE + ':name') || name;
+        localStorage.setItem(KEY + ':doc', doc);
+        if (name) localStorage.setItem(KEY + ':name', name);
+        [':doc', ':name', ':prefs'].forEach(function (k) {
+          localStorage.removeItem(ANCIENNE_CLE + k);
+        });
+      }
+
+      if (doc !== null) ta.value = doc;
+      if (name) state.name = name;
+    } catch (e) { /* stockage indisponible : on continue sans */ }
+  }
+
+  function savePrefs() {
+    try {
+      localStorage.setItem(KEY + ':prefs', JSON.stringify({
+        v: PREFS_V,
+        theme: state.theme, font: state.font, size: state.size, col: state.col,
+        focus: state.focus, hemingway: state.hemingway, typewriter: state.typewriter,
+        split: state.split, toolbar: state.toolbar, labels: state.labels,
+        sautsSimples: state.sautsSimples
+      }));
+    } catch (e) {}
+  }
+
+  var docTimer = null;
+  function saveDoc() {
+    clearTimeout(docTimer);
+    docTimer = setTimeout(function () {
+      try {
+        localStorage.setItem(KEY + ':doc', ta.value);
+        localStorage.setItem(KEY + ':name', state.name);
+      } catch (e) {}
+    }, 400);
+  }
+
+  /* =====================================================================
+   * 2. Application des preferences
+   * ===================================================================== */
+
+  var mql = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function applyTheme() {
+    var t = state.theme === 'auto' ? (mql.matches ? 'dark' : 'light') : state.theme;
+    document.documentElement.setAttribute('data-theme', t);
+    mark('#segTheme', 'theme', state.theme);
+  }
+  mql.addEventListener('change', function () { if (state.theme === 'auto') applyTheme(); });
+
+  function applyLook() {
+    var r = document.documentElement.style;
+    r.setProperty('--ed-font', FONTS[state.font]);
+    document.body.dataset.edfont = state.font;   // pilote le garde-fou du calque
+    r.setProperty('--ed-size', state.size + 'px');
+    r.setProperty('--ed-col', state.col + 'rem');
+    mark('#segFont', 'font', state.font);
+    mark('#segCol', 'col', String(state.col));
+  }
+
+  function mark(sel, attr, value) {
+    document.querySelectorAll(sel + ' button').forEach(function (b) {
+      b.classList.toggle('on', b.dataset[attr] === value);
+    });
+  }
+
+  function applyModes() {
+    $('btnFocus').classList.toggle('on', state.focus);
+    $('btnHemingway').classList.toggle('on', state.hemingway);
+    $('btnTypewriter').classList.toggle('on', state.typewriter);
+    $('btnPreview').classList.toggle('on', state.split);
+    $('btnToolbar').classList.toggle('on', state.toolbar);
+    toolbar.hidden = !state.toolbar;
+    toolbar.classList.toggle('labels', state.labels);
+    document.querySelector('.headerbar').classList.toggle('labels', state.labels);
+    mark('#segLabels', 'labels', state.labels ? 'on' : 'off');
+    mark('#segSauts', 'sauts', state.sautsSimples ? 'on' : 'off');
+    document.body.classList.toggle('typewriter', state.typewriter);
+    main.classList.toggle('split', state.split);
+    pvPane.hidden = !state.split;
+
+    var badges = [];
+    if (state.focus) badges.push('Focus');
+    if (state.hemingway) badges.push('Hemingway');
+    if (state.typewriter) badges.push('Machine à écrire');
+    $('sModes').innerHTML = badges.map(function (b) {
+      return '<span class="badge">' + b + '</span>';
+    }).join(' ');
+  }
+
+  /* =====================================================================
+   * 3. Rendu
+   * ===================================================================== */
+
+  function caretLineIndex() {
+    var pos = ta.selectionStart;
+    var n = 0;
+    for (var i = 0; i < pos; i++) if (ta.value.charCodeAt(i) === 10) n++;
+    return n;
+  }
+
+  function paragraphRange(lines, idx) {
+    // Curseur sur une ligne vide : sans cela, plus rien ne resterait net et le
+    // mode aurait l'air casse. On accroche le paragraphe le plus proche.
+    if (!lines[idx] || !lines[idx].trim()) {
+      var av = idx - 1; while (av >= 0 && !lines[av].trim()) av--;
+      var ap = idx + 1; while (ap < lines.length && !lines[ap].trim()) ap++;
+      if (av < 0 && ap >= lines.length) return { from: idx, to: idx };
+      if (av < 0) idx = ap;
+      else if (ap >= lines.length) idx = av;
+      else idx = (idx - av) <= (ap - idx) ? av : ap;
+    }
+    var from = idx, to = idx;
+    while (from > 0 && lines[from - 1].trim()) from--;
+    while (to < lines.length - 1 && lines[to + 1].trim()) to++;
+    return { from: from, to: to };
+  }
+
+  function renderHighlight() {
+    var text = ta.value;
+    var opts = { focus: false, from: 0, to: 0 };
+    if (state.focus) {
+      var lines = text.split('\n');
+      var r = paragraphRange(lines, caretLineIndex());
+      opts = { focus: true, from: r.from, to: r.to };
+    }
+    hl.innerHTML = Highlighter.render(text, opts);
+    cacheLignes = null;
+    hl.scrollTop = ta.scrollTop;
+    hl.scrollLeft = ta.scrollLeft;
+  }
+
+  function renderPreview() {
+    if (!state.split) return;
+    preview.innerHTML = Markdown.render(ta.value, { sautsSimples: state.sautsSimples });
+    cacheAncres = null;
+  }
+
+  function schedulePreview() {
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(renderPreview, 120);
+  }
+
+  var WORD_RE = /[0-9A-Za-zÀ-ÖØ-öø-ÿ'’-]+/g;
+
+  function renderStats() {
+    var text = ta.value;
+    var words = text.match(WORD_RE);
+    var wc = words ? words.length : 0;
+    var sentences = text.replace(/\n+/g, ' ').split(/[.!?…]+[\s"”)]|[.!?…]+$/)
+      .filter(function (s) { return s.trim().length; }).length;
+    var paras = text.split(/\n\s*\n/).filter(function (s) { return s.trim().length; }).length;
+
+    $('sWords').textContent = wc.toLocaleString('fr-FR');
+    $('sChars').textContent = text.length.toLocaleString('fr-FR');
+    $('sSent').textContent = sentences;
+    $('sPara').textContent = paras;
+    $('sTime').textContent = Math.max(wc ? 1 : 0, Math.round(wc / 200));
+
+    var pos = ta.selectionStart;
+    var before = ta.value.slice(0, pos);
+    var nl = before.lastIndexOf('\n');
+    $('sLine').textContent = before.split('\n').length;
+    $('sCol').textContent = pos - nl;
+
+    majContexte();
+  }
+
+  function setDirty(d) {
+    state.dirty = d;
+    $('docState').textContent = d ? 'modifié' : 'enregistré';
+    $('docName').textContent = state.name;
+  }
+
+  function renderAll() {
+    renderHighlight();
+    schedulePreview();
+    renderStats();
+    if (state.typewriter) scrollTypewriter();
+  }
+
+  /* =====================================================================
+   * 4. Defilement
+   * ===================================================================== */
+
+  function scrollTypewriter() {
+    var el = lignesEditeur()[caretLineIndex()];
+    if (!el) return;
+    var target = el.offsetTop - ta.clientHeight / 2 + el.offsetHeight / 2;
+    ta.scrollTop = Math.max(0, target);
+    hl.scrollTop = ta.scrollTop;
+  }
+
+  /* --- Defilement synchronise, par ancres ---------------------------------
+   * L'editeur et l'apercu n'ont pas la meme hauteur : titres agrandis,
+   * marges de paragraphe, blocs de code encadres. Sur un long document
+   * l'ecart depasse 15 %, si bien qu'une simple regle de trois derive de
+   * plusieurs dizaines de lignes au milieu du texte.
+   * On aligne donc la LIGNE SOURCE affichee en haut d'un panneau sur le bloc
+   * correspondant de l'autre, en interpolant entre deux ancres data-line. */
+
+  var cacheLignes = null, cacheAncres = null;
+
+  function lignesEditeur() {
+    if (!cacheLignes) cacheLignes = hl.querySelectorAll('.ed-line');
+    return cacheLignes;
+  }
+
+  function ancresApercu() {
+    if (!cacheAncres) cacheAncres = preview.querySelectorAll('[data-line]');
+    return cacheAncres;
+  }
+
+  // Indice fractionnaire de la ligne source affichee en haut de l'editeur.
+  function ligneVisible() {
+    var l = lignesEditeur(), y = ta.scrollTop;
+    if (!l.length) return 0;
+    var lo = 0, hi = l.length - 1, res = 0;
+    while (lo <= hi) {                                  // recherche dichotomique
+      var m = (lo + hi) >> 1;
+      if (l[m].offsetTop <= y) { res = m; lo = m + 1; } else hi = m - 1;
+    }
+    var h = l[res].offsetHeight || 1;
+    return res + Math.max(0, Math.min(0.999, (y - l[res].offsetTop) / h));
+  }
+
+  function yApercuPourLigne(n) {
+    var a = ancresApercu();
+    if (!a.length) return null;
+    var i0 = -1;
+    for (var i = 0; i < a.length; i++) {
+      if (+a[i].dataset.line <= n) i0 = i; else break;
+    }
+    if (i0 === -1) return 0;
+    var n0 = +a[i0].dataset.line, y0 = a[i0].offsetTop, n1, y1;
+    if (i0 + 1 < a.length) { n1 = +a[i0 + 1].dataset.line; y1 = a[i0 + 1].offsetTop; }
+    else { n1 = lignesEditeur().length; y1 = preview.scrollHeight; }
+    var f = n1 > n0 ? (n - n0) / (n1 - n0) : 0;
+    return y0 + Math.max(0, Math.min(1, f)) * (y1 - y0);
+  }
+
+  function ligneDepuisApercu() {
+    var a = ancresApercu();
+    if (!a.length) return null;
+    var y = preview.scrollTop, i0 = -1;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i].offsetTop <= y + 1) i0 = i; else break;
+    }
+    if (i0 === -1) return 0;
+    var y0 = a[i0].offsetTop, n0 = +a[i0].dataset.line, y1, n1;
+    if (i0 + 1 < a.length) { y1 = a[i0 + 1].offsetTop; n1 = +a[i0 + 1].dataset.line; }
+    else { y1 = preview.scrollHeight; n1 = lignesEditeur().length; }
+    var f = y1 > y0 ? (y - y0) / (y1 - y0) : 0;
+    return n0 + Math.max(0, Math.min(1, f)) * (n1 - n0);
+  }
+
+  function yEditeurPourLigne(n) {
+    var l = lignesEditeur();
+    if (!l.length) return 0;
+    var i = Math.max(0, Math.min(l.length - 1, Math.floor(n)));
+    return l[i].offsetTop + (n - i) * (l[i].offsetHeight || 0);
+  }
+
+  function proportionnel(source, cible) {              // repli : document sans ancre
+    var max = source.scrollHeight - source.clientHeight;
+    var f = max > 0 ? source.scrollTop / max : 0;
+    return f * (cible.scrollHeight - cible.clientHeight);
+  }
+
+  /* Verrou anti-boucle : deplacer un panneau declenche l'evenement scroll de
+   * l'autre, qui voudrait repositionner le premier. On note donc quel panneau
+   * a la main pendant un court instant.
+   * Il est libere par setTimeout, jamais par requestAnimationFrame : celui-ci
+   * ne se declenche pas quand l'onglet passe en arriere-plan, ce qui figeait
+   * definitivement la synchronisation des qu'on changeait d'onglet. */
+  var meneur = null, meneurTimer = null;
+
+  function prendreLaMain(qui) {
+    meneur = qui;
+    clearTimeout(meneurTimer);
+    meneurTimer = setTimeout(function () { meneur = null; }, 150);
+  }
+
+  ta.addEventListener('scroll', function () {
+    hl.scrollTop = ta.scrollTop;
+    hl.scrollLeft = ta.scrollLeft;
+    if (!state.split || meneur === 'apercu') return;
+    prendreLaMain('editeur');
+    var y = yApercuPourLigne(ligneVisible());
+    preview.scrollTop = y === null ? proportionnel(ta, preview) : y;
+  });
+
+  preview.addEventListener('scroll', function () {
+    if (!state.split || meneur === 'editeur') return;
+    prendreLaMain('apercu');
+    var n = ligneDepuisApercu();
+    ta.scrollTop = n === null ? proportionnel(preview, ta) : yEditeurPourLigne(n);
+    hl.scrollTop = ta.scrollTop;
+  });
+
+  /* =====================================================================
+   * 5. Saisie
+   * ===================================================================== */
+
+  ta.addEventListener('input', function () { setDirty(true); renderAll(); saveDoc(); });
+
+  ['click', 'keyup', 'select'].forEach(function (ev) {
+    ta.addEventListener(ev, function () {
+      renderStats();
+      if (state.focus) renderHighlight();
+      if (state.typewriter) scrollTypewriter();
+    });
+  });
+
+  // Insertion respectant la pile d'annulation native.
+  function insert(text) {
+    ta.focus();
+    if (!document.execCommand || !document.execCommand('insertText', false, text)) {
+      var s = ta.selectionStart, e = ta.selectionEnd;
+      ta.setRangeText(text, s, e, 'end');
+    }
+    setDirty(true); renderAll(); saveDoc();
+  }
+
+  /* Bascule d'une marque Markdown.
+   * Les etoiles se comptent : deux pour le gras, une pour l'italique, trois
+   * pour les deux a la fois. L'ancienne version comparait betement le texte
+   * accole a la selection, si bien que mettre en italique un mot deja en gras
+   * y voyait une marque a retirer — et supprimait le gras.
+   * On compte donc les marqueurs presents avant de decider. */
+
+  function marqueursAutour(car) {
+    var s = ta.selectionStart, e = ta.selectionEnd, v = ta.value;
+    var avant = 0, apres = 0;
+    while (s - avant - 1 >= 0 && v.charAt(s - avant - 1) === car) avant++;
+    while (e + apres < v.length && v.charAt(e + apres) === car) apres++;
+    return Math.min(avant, apres);
+  }
+
+  function basculerMarque(car, nb) {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    var sel = ta.value.slice(s, e);
+
+    // La selection englobe elle-meme les marqueurs : on la ramene au contenu.
+    var m = sel.match(new RegExp('^(\\' + car + '{1,3})([\\s\\S]*?)\\1$'));
+    if (m && m[2]) {
+      ta.setSelectionRange(s + m[1].length, e - m[1].length);
+      s = ta.selectionStart; e = ta.selectionEnd; sel = m[2];
+    }
+
+    var n = marqueursAutour(car);
+    // Une seule etoile est ambigue : 1 ou 3 marqueurs valent italique.
+    var retirer = (car === '*' && nb === 1) ? (n % 2 === 1) : (n >= nb);
+
+    if (retirer) {
+      ta.setSelectionRange(s - nb, e + nb);
+      insert(sel);
+      ta.setSelectionRange(s - nb, s - nb + sel.length);
+    } else {
+      var marque = new Array(nb + 1).join(car);
+      insert(marque + sel + marque);
+      if (sel) ta.setSelectionRange(s + nb, e + nb);
+      else ta.setSelectionRange(s + nb, s + nb);
+    }
+    ta.focus();
+  }
+
+  var CONT_RE = /^(\s*)(?:([-*+])|(\d{1,9})([.)]))(\s+)(\[[ xX]\]\s+)?(.*)$/;
+
+  ta.addEventListener('keydown', function (e) {
+    var meta = e.metaKey || e.ctrlKey;
+
+    /* mode Hemingway : ni effacement ni annulation */
+    if (state.hemingway && !meta && (e.key === 'Backspace' || e.key === 'Delete')) {
+      e.preventDefault(); toast('Mode Hemingway : impossible d\'effacer'); return;
+    }
+    if (state.hemingway && meta && ['z', 'Z', 'x', 'y'].indexOf(e.key) !== -1) {
+      e.preventDefault(); toast('Mode Hemingway : annulation désactivée'); return;
+    }
+
+    /* raccourcis de formatage */
+    if (meta && !e.altKey) {
+      var k = e.key.toLowerCase();
+      if (k === 'b' && !e.shiftKey) { e.preventDefault(); basculerMarque('*', 2); return; }
+      if (k === 'i') { e.preventDefault(); basculerMarque('*', 1); return; }
+      if (k === 'e') { e.preventDefault(); basculerMarque('`', 1); return; }
+      if (k === 'k') {
+        e.preventDefault();
+        var s = ta.selectionStart, e2 = ta.selectionEnd, sel = ta.value.slice(s, e2);
+        insert('[' + sel + '](url)');
+        ta.setSelectionRange(s + sel.length + 3, s + sel.length + 6);
+        return;
+      }
+      if (e.shiftKey && k === 'x') { e.preventDefault(); basculerMarque('~', 2); return; }
+      if (e.shiftKey && k === 'm') { e.preventDefault(); INSERTIONS.math(); return; }
+      var digit = /^Digit([1-6])$/.exec(e.code || '');
+      if (digit && e.shiftKey) { e.preventDefault(); setHeading(+digit[1]); return; }
+    }
+
+    /* tabulation : indentation de liste ou 4 espaces */
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      var line = currentLine();
+      if (CONT_RE.test(line.text)) {
+        var pos = ta.selectionStart;
+        ta.setSelectionRange(line.start, line.start);
+        if (e.shiftKey) {
+          if (/^ {1,4}/.test(line.text)) {
+            var cut = line.text.match(/^ {1,4}/)[0].length;
+            ta.setSelectionRange(line.start, line.start + cut);
+            insert('');
+            ta.setSelectionRange(pos - cut, pos - cut);
+          } else ta.setSelectionRange(pos, pos);
+        } else {
+          insert('  ');
+          ta.setSelectionRange(pos + 2, pos + 2);
+        }
+      } else insert('    ');
+      return;
+    }
+
+    /* entree : poursuite automatique des listes et citations */
+    if (e.key === 'Enter' && !e.shiftKey && !meta) {
+      var cl = currentLine();
+      var m = cl.text.match(CONT_RE);
+      if (m && ta.selectionStart === ta.selectionEnd) {
+        if (!m[7].trim()) {                                // element vide : on sort de la liste
+          e.preventDefault();
+          ta.setSelectionRange(cl.start, cl.start + cl.text.length);
+          insert('');
+          return;
+        }
+        e.preventDefault();
+        var marker = m[2] ? m[2] : (parseInt(m[3], 10) + 1) + m[4];
+        var box = m[6] ? '[ ] ' : '';
+        insert('\n' + m[1] + marker + m[5] + box);
+        return;
+      }
+      var q = cl.text.match(/^(\s*(?:>\s?)+)(.*)$/);
+      if (q && ta.selectionStart === ta.selectionEnd) {
+        e.preventDefault();
+        insert(q[2].trim() ? '\n' + q[1] : '\n');
+        return;
+      }
+    }
+  });
+
+  function currentLine() {
+    var pos = ta.selectionStart;
+    var start = ta.value.lastIndexOf('\n', pos - 1) + 1;
+    var end = ta.value.indexOf('\n', pos);
+    if (end === -1) end = ta.value.length;
+    return { start: start, end: end, text: ta.value.slice(start, end) };
+  }
+
+  /* --------- contexte au curseur ---------
+   * Rien n'indiquait dans quoi l'on ecrivait : on tapait Entree dans une liste
+   * de taches sans savoir qu'elle allait se prolonger, ni comment en sortir.
+   * Les boutons concernes s'allument, et la barre d'etat nomme le contexte. */
+
+  var NOMS_CONTEXTE = {
+    h1: 'Titre 1', h2: 'Titre 2', h3: 'Titre 3', h4: 'Titre 4', h5: 'Titre 5', h6: 'Titre 6',
+    ul: 'Liste à puces', ol: 'Liste numérotée', task: 'Liste de tâches',
+    quote: 'Citation', codeblock: 'Bloc de code', table: 'Tableau'
+  };
+
+  // Contextes dont on sort par une ligne vide.
+  var SORTIE_PAR_ENTREE = { ul: 1, ol: 1, task: 1, quote: 1 };
+
+  function dansUnBlocDeCode(indice) {
+    var lignes = ta.value.split('\n'), ouvert = false;
+    for (var i = 0; i <= indice && i < lignes.length; i++) {
+      if (/^\s*(```|~~~)/.test(lignes[i])) ouvert = !ouvert;
+    }
+    return ouvert;
+  }
+
+  function blocCourant(ligne, indice) {
+    var m = ligne.match(/^ {0,3}(#{1,6})\s/);
+    if (m) return 'h' + m[1].length;
+    if (dansUnBlocDeCode(indice)) return 'codeblock';
+    if (/^\s*[-*+]\s+\[[ xX]\]\s/.test(ligne)) return 'task';
+    if (/^\s*[-*+]\s+/.test(ligne)) return 'ul';
+    if (/^\s*\d{1,9}[.)]\s+/.test(ligne)) return 'ol';
+    if (/^ {0,3}>/.test(ligne)) return 'quote';
+    if (/^\s*\|/.test(ligne) && /\|/.test(ligne.slice(1))) return 'table';
+    return null;
+  }
+
+  // Le curseur est-il entre deux marqueurs identiques sur la ligne ?
+  function dansMarque(ligne, colonne, marque) {
+    var i = 0, ouvert = -1;
+    while ((i = ligne.indexOf(marque, i)) !== -1) {
+      if (ouvert === -1) ouvert = i;
+      else {
+        if (colonne > ouvert && colonne < i + marque.length) return true;
+        ouvert = -1;
+      }
+      i += marque.length;
+    }
+    return false;
+  }
+
+  function marquesCourantes(ligne, colonne) {
+    var sansGras = ligne.replace(/\*\*/g, '\u0000\u0000');   // pour ne pas confondre * et **
+    return {
+      bold:   dansMarque(ligne, colonne, '**'),
+      italic: dansMarque(sansGras, colonne, '*'),
+      strike: dansMarque(ligne, colonne, '~~'),
+      mark:   dansMarque(ligne, colonne, '=='),
+      code:   dansMarque(ligne, colonne, '`'),
+      math:   dansMarque(ligne, colonne, '$')
+    };
+  }
+
+  function majContexte() {
+    var indice = caretLineIndex();
+    var ligne = ta.value.split('\n')[indice] || '';
+    var debut = ta.value.lastIndexOf('\n', ta.selectionStart - 1) + 1;
+    var colonne = ta.selectionStart - debut;
+
+    var bloc = blocCourant(ligne, indice);
+    var marques = marquesCourantes(ligne, colonne);
+
+    document.querySelectorAll('.tb[data-ins]').forEach(function (b) {
+      var a = b.dataset.ins;
+      b.classList.toggle('on', a === bloc || marques[a] === true);
+    });
+
+    var etiquette = $('sContexte');
+    if (!bloc) { etiquette.textContent = ''; return; }
+    etiquette.textContent = NOMS_CONTEXTE[bloc] +
+      (SORTIE_PAR_ENTREE[bloc] ? ' — Entrée sur une ligne vide pour en sortir' : '');
+  }
+
+  /* --------- selection de lignes --------- */
+
+  function selectedLines() {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    var start = ta.value.lastIndexOf('\n', s - 1) + 1;
+    var end = ta.value.indexOf('\n', e);
+    if (end === -1) end = ta.value.length;
+    return { start: start, end: end, text: ta.value.slice(start, end) };
+  }
+
+  // Applique une transformation a chaque ligne de la selection.
+  function transformLines(fn) {
+    var r = selectedLines();
+    var out = r.text.split('\n').map(fn).join('\n');
+    ta.setSelectionRange(r.start, r.end);
+    insert(out);
+    ta.setSelectionRange(r.start, r.start + out.length);
+    ta.focus();
+  }
+
+  // Insere un fragment et selectionne l'element a remplacer.
+  function insertSnippet(text, placeholder) {
+    var s = Math.min(ta.selectionStart, ta.selectionEnd);
+    insert(text);
+    if (placeholder) {
+      var i = text.indexOf(placeholder);
+      if (i !== -1) ta.setSelectionRange(s + i, s + i + placeholder.length);
+    }
+    ta.focus();
+  }
+
+  // Insere un bloc en garantissant une ligne vide avant.
+  function insertBlock(text, placeholder) {
+    var cl = currentLine();
+    insertSnippet((cl.text.trim() ? '\n\n' : '') + text + '\n', placeholder);
+  }
+
+  /* --------- transformations de ligne --------- */
+
+  function setHeading(level) {
+    transformLines(function (l) {
+      var m = l.match(/^ {0,3}(#{1,6})\s+(.*)$/);
+      var body = m ? m[2] : l.replace(/^\s+/, '');
+      if (m && m[1].length === level) return body;            // bascule : on retire
+      return new Array(level + 1).join('#') + ' ' + body;
+    });
+  }
+
+  function togglePrefix(kind) {
+    var lines = selectedLines().text.split('\n');
+    var re = { ul: /^(\s*)[-*+] +/, ol: /^(\s*)\d{1,9}[.)] +/,
+               task: /^(\s*)[-*+] +\[[ xX]\] +/, quote: /^(\s*)> ?/ }[kind];
+    var actives = lines.filter(function (l) { return re.test(l); }).length;
+    var remove = actives === lines.length;                    // tout est deja marque
+
+    var n = 0;
+    transformLines(function (l) {
+      if (remove) return l.replace(re, '$1');
+      if (kind !== 'quote' && !l.trim() && lines.length > 1) return l;
+      var body = l.replace(/^(\s*)(?:[-*+] +\[[ xX]\] +|[-*+] +|\d{1,9}[.)] +|> ?)/, '$1')
+                  .replace(/^\s+/, '');
+      n++;
+      if (kind === 'ul')    return '- ' + body;
+      if (kind === 'ol')    return n + '. ' + body;
+      if (kind === 'task')  return '- [ ] ' + body;
+      return '> ' + body;
+    });
+  }
+
+  // Indentation : deux espaces, l'unite d'imbrication des listes Markdown.
+  function decaler(sens) {
+    transformLines(function (l) {
+      if (sens > 0) return l.trim() ? '  ' + l : l;
+      return l.replace(/^ {1,2}/, '');
+    });
+  }
+
+  /* --------- insertions --------- */
+
+  function insertTable(cols, rows) {
+    cols = Math.max(1, Math.min(10, cols || 3));
+    rows = Math.max(1, Math.min(20, rows || 3));
+    var head = [], sep = [], body = [], i;
+    for (i = 1; i <= cols; i++) { head.push(' Colonne ' + i + ' '); sep.push(' --- '); }
+    var empty = '|' + new Array(cols + 1).join('   |');
+    for (i = 0; i < rows; i++) body.push(empty);
+    insertBlock('|' + head.join('|') + '|\n|' + sep.join('|') + '|\n' + body.join('\n'), 'Colonne 1');
+  }
+
+  /* Une reference de note ne veut rien dire ailleurs que dans une phrase.
+   * Plutot que de deviner ou commence le bloc des definitions — fragile des
+   * qu'une ligne parasite s'y glisse — on verifie directement que la ligne du
+   * curseur est bien de la prose, et sinon on rejoint la derniere qui en est.
+   *
+   * Ne sont pas de la prose : une ligne vide, une definition de note, une
+   * ligne faite uniquement de renvois, une regle horizontale, une ligne de
+   * tableau, et tout ce qui se trouve dans un bloc de code. */
+
+  function lignesDeCode(lignes) {
+    var dedans = {}, ouvert = false;
+    lignes.forEach(function (l, i) {
+      if (/^\s*(```|~~~)/.test(l)) { ouvert = !ouvert; dedans[i] = true; return; }
+      if (ouvert) dedans[i] = true;
+    });
+    return dedans;
+  }
+
+  function estProse(lignes, i, code) {
+    var l = lignes[i];
+    if (l === undefined || code[i] || !l.trim()) return false;
+    if (/^ {0,3}\[\^[^\]]+\]:/.test(l)) return false;              // definition de note
+    if (/^\s*(?:\[\^[^\]]+\]\s*)+$/.test(l)) return false;         // uniquement des renvois
+    if (/^ {0,3}(-{3,}|\*{3,}|_{3,})\s*$/.test(l)) return false;    // regle horizontale
+    if (/^\s*\|/.test(l)) return false;                            // ligne de tableau
+    return true;
+  }
+
+  function finDeLigne(lignes, i) {
+    return lignes.slice(0, i).join('\n').length + (i > 0 ? 1 : 0) + lignes[i].length;
+  }
+
+  function insertFootnote() {
+    var used = ta.value.match(/\[\^(\d+)\]/g) || [];
+    var max = 0;
+    used.forEach(function (u) { var v = parseInt(u.slice(2, -1), 10); if (v > max) max = v; });
+    var n = max + 1;
+    var reference = '[^' + n + ']';
+    var label = 'texte de la note';
+
+    // Une selection n'est pas remplacee : la marque se pose apres elle.
+    if (ta.selectionStart !== ta.selectionEnd) ta.setSelectionRange(ta.selectionEnd, ta.selectionEnd);
+
+    var lignes = ta.value.split('\n');
+    var code = lignesDeCode(lignes);
+    var ligneCurseur = ta.value.slice(0, ta.selectionStart).split('\n').length - 1;
+    var deplacee = false;
+
+    if (!estProse(lignes, ligneCurseur, code)) {
+      // La phrase la plus proche AU-DESSUS du curseur, faute de quoi la
+      // premiere en dessous : on reste la ou l'auteur avait la tete.
+      var j = ligneCurseur;
+      while (j >= 0 && !estProse(lignes, j, code)) j--;
+      if (j < 0) {
+        j = ligneCurseur;
+        while (j < lignes.length && !estProse(lignes, j, code)) j++;
+      }
+      if (j < 0 || j >= lignes.length) {
+        toast('Placez le curseur dans une phrase pour y poser la note');
+        return;
+      }
+      ta.setSelectionRange(finDeLigne(lignes, j), finDeLigne(lignes, j));
+      deplacee = true;
+    }
+
+    var pos = ta.selectionStart;
+    insertSnippet(reference);
+    var apresReference = pos + reference.length;
+
+    var finDoc = ta.value.length;
+    var separation = /\n\n$/.test(ta.value) ? '' : (/\n$/.test(ta.value) ? '\n' : '\n\n');
+    ta.setSelectionRange(finDoc, finDoc);
+    insert(separation + reference + ': ' + label);
+
+    // On rend la main la ou l'on ecrivait, et non trente lignes plus bas.
+    ta.setSelectionRange(apresReference, apresReference);
+    ta.focus();
+    toast(deplacee
+      ? 'Note ' + n + ' posée à la fin du texte : le curseur n\'était pas dans une phrase'
+      : 'Note ' + n + ' insérée — sa définition attend en bas du document');
+  }
+
+  var INSERTIONS = {
+    h1: function () { setHeading(1); },
+    h2: function () { setHeading(2); },
+    h3: function () { setHeading(3); },
+    h4: function () { setHeading(4); },
+    h5: function () { setHeading(5); },
+    h6: function () { setHeading(6); },
+
+    bold:   function () { basculerMarque('*', 2); },
+    italic: function () { basculerMarque('*', 1); },
+    strike: function () { basculerMarque('~', 2); },
+    mark:   function () { basculerMarque('=', 2); },
+    code:   function () { basculerMarque('`', 1); },
+
+    math: function () {
+      var sel = ta.value.slice(ta.selectionStart, ta.selectionEnd);
+      if (sel) basculerMarque('$', 1);
+      else insertSnippet('$E = mc^2$', 'E = mc^2');
+    },
+
+    indent:  function () { decaler(1); },
+    outdent: function () { decaler(-1); },
+
+    ul:    function () { togglePrefix('ul'); },
+    ol:    function () { togglePrefix('ol'); },
+    task:  function () { togglePrefix('task'); },
+    quote: function () { togglePrefix('quote'); },
+
+    codeblock: function () {
+      var sel = ta.value.slice(ta.selectionStart, ta.selectionEnd);
+      if (sel) insertBlock('```\n' + sel + '\n```');
+      else insertBlock('```langage\ncode\n```', 'langage');
+    },
+    hr: function () { insertBlock('---'); },
+
+    link: function () {
+      var s = ta.selectionStart;
+      var sel = ta.value.slice(s, ta.selectionEnd);
+      insertSnippet('[' + (sel || 'texte du lien') + '](url)', sel ? 'url' : 'texte du lien');
+    },
+    image: function () { insertSnippet('![description](image.png)', 'image.png'); },
+    footnote: insertFootnote
+  };
+
+  /* --------- barre de mise en forme --------- */
+
+  // Empeche la perte de la selection au clic sur un bouton.
+  toolbar.addEventListener('mousedown', function (e) {
+    if (e.target.tagName !== 'INPUT') e.preventDefault();
+  });
+
+  toolbar.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var act = b.dataset.ins;
+
+    if (act === 'table') {
+      if (tblPanel.hidden) {
+        tblPanel.hidden = false;
+        if (getComputedStyle(tblPanel).display === 'none') {   // ecran etroit
+          tblPanel.hidden = true;
+          insertTable(3, 3);
+        } else $('tblCols').focus();
+      } else tblPanel.hidden = true;
+      return;
+    }
+    if (act === 'table-confirm') {
+      insertTable(+$('tblCols').value, +$('tblRows').value);
+      tblPanel.hidden = true;
+      return;
+    }
+    if (INSERTIONS[act]) INSERTIONS[act]();
+  });
+
+  toolbar.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+      e.preventDefault();
+      insertTable(+$('tblCols').value, +$('tblRows').value);
+      tblPanel.hidden = true;
+    }
+  });
+
+  /* =====================================================================
+   * 6. Documents recents
+   * Un navigateur n'expose aucun chemin de fichier. Deux situations :
+   *  - avec l'API File System Access (Chrome, Edge), le descripteur du fichier
+   *    se range dans IndexedDB : le document se rouvre vraiment, apres une
+   *    demande d'autorisation ;
+   *  - sans elle (Safari, Firefox), on ne conserve que le nom, a titre
+   *    d'historique, et rouvrir passe par le selecteur.
+   * ===================================================================== */
+
+  var BASE = 'calliope', MAGASIN = 'descripteurs', MAX_RECENTS = 12;
+
+  function avecMagasin(action) {
+    return new Promise(function (ok, ko) {
+      if (typeof indexedDB === 'undefined') return ko(new Error('IndexedDB indisponible'));
+      var req = indexedDB.open(BASE, 1);
+      req.onupgradeneeded = function () {
+        if (!req.result.objectStoreNames.contains(MAGASIN)) req.result.createObjectStore(MAGASIN);
+      };
+      req.onerror = function () { ko(req.error); };
+      req.onsuccess = function () {
+        var db = req.result;
+        var tx = db.transaction(MAGASIN, 'readwrite');
+        var demande = action(tx.objectStore(MAGASIN));
+        tx.oncomplete = function () { db.close(); ok(demande ? demande.result : undefined); };
+        tx.onerror = function () { db.close(); ko(tx.error); };
+      };
+    });
+  }
+
+  function lireRecents() {
+    try { return JSON.parse(localStorage.getItem(KEY + ':recents') || '[]'); }
+    catch (e) { return []; }
+  }
+
+  function ecrireRecents(liste) {
+    try { localStorage.setItem(KEY + ':recents', JSON.stringify(liste.slice(0, MAX_RECENTS))); }
+    catch (e) {}
+    afficherRecents();
+  }
+
+  function memoriserRecent(nom, taille, descripteur) {
+    var liste = lireRecents().filter(function (e) { return e.nom !== nom; });
+    var entree = {
+      id: 'f' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      nom: nom, taille: taille || 0, date: Date.now(), accessible: false
+    };
+    liste.unshift(entree);
+
+    // Les entrees evincees emportent leur descripteur avec elles.
+    var gardees = liste.slice(0, MAX_RECENTS);
+    liste.slice(MAX_RECENTS).forEach(function (e) {
+      avecMagasin(function (m) { m.delete(e.id); }).catch(function () {});
+    });
+
+    if (descripteur && typeof indexedDB !== 'undefined') {
+      avecMagasin(function (m) { m.put(descripteur, entree.id); }).then(function () {
+        entree.accessible = true;
+        ecrireRecents(gardees);
+      }, function () { ecrireRecents(gardees); });
+    } else ecrireRecents(gardees);
+  }
+
+  function oublierRecent(id) {
+    ecrireRecents(lireRecents().filter(function (e) { return e.id !== id; }));
+    avecMagasin(function (m) { m.delete(id); }).catch(function () {});
+  }
+
+  function viderRecents() {
+    ecrireRecents([]);
+    avecMagasin(function (m) { m.clear(); }).catch(function () {});
+    toast('Liste des documents récents vidée');
+  }
+
+  function quand(t) {
+    var mn = Math.round((Date.now() - t) / 60000);
+    if (mn < 1) return 'à l\'instant';
+    if (mn < 60) return 'il y a ' + mn + ' min';
+    var h = Math.round(mn / 60);
+    if (h < 24) return 'il y a ' + h + ' h';
+    var j = Math.round(h / 24);
+    if (j === 1) return 'hier';
+    if (j < 7) return 'il y a ' + j + ' jours';
+    return new Date(t).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  }
+
+  function afficherRecents() {
+    var liste = lireRecents();
+    listeRec.textContent = '';
+    liste.forEach(function (e) {
+      var b = document.createElement('button');
+      b.className = 'recent' + (e.accessible ? '' : ' sans-acces');
+      b.dataset.id = e.id;
+      b.title = e.accessible
+        ? 'Rouvrir ' + e.nom
+        : e.nom + ' — ce navigateur ne peut pas le rouvrir sans passer par le sélecteur';
+
+      var nom = document.createElement('span');
+      nom.className = 'nom'; nom.textContent = e.nom;
+      var date = document.createElement('span');
+      date.className = 'quand'; date.textContent = quand(e.date);
+      var oubli = document.createElement('span');
+      oubli.className = 'oubli'; oubli.textContent = '\u00d7';
+      oubli.title = 'Retirer de la liste';
+      oubli.dataset.oubli = e.id;
+
+      b.appendChild(nom); b.appendChild(date); b.appendChild(oubli);
+      listeRec.appendChild(b);
+    });
+  }
+
+  function ouvrirRecent(entree) {
+    if (!entree.accessible) {
+      toast('Ce navigateur ne peut pas rouvrir un fichier sans le sélectionner');
+      openFile();
+      return;
+    }
+    avecMagasin(function (m) { return m.get(entree.id); }).then(function (h) {
+      if (!h) throw new Error('descripteur introuvable');
+      if (!h.queryPermission) return h;
+      return h.queryPermission({ mode: 'readwrite' }).then(function (etat) {
+        if (etat === 'granted') return h;
+        return h.requestPermission({ mode: 'readwrite' }).then(function (reponse) {
+          if (reponse !== 'granted') throw new Error('REFUS');
+          return h;
+        });
+      });
+    }).then(function (h) {
+      handle = h;
+      return h.getFile();
+    }).then(function (f) {
+      return f.text().then(function (t) {
+        loadText(t, f.name);
+        memoriserRecent(f.name, f.size, handle);
+      });
+    }).catch(function (err) {
+      if (err && err.message === 'REFUS') { toast('Autorisation refusée'); return; }
+      toast('« ' + entree.nom + ' » est introuvable — retiré de la liste');
+      oublierRecent(entree.id);
+    });
+  }
+
+  $('btnOpen').onclick = function (e) {
+    e.stopPropagation();
+    menu.classList.remove('open');
+    if (!lireRecents().length) { openFile(); return; }
+    afficherRecents();
+    menuRec.classList.toggle('open');
+  };
+
+  menuRec.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (e.target.dataset.oubli) { oublierRecent(e.target.dataset.oubli); return; }
+
+    var b = e.target.closest('button');
+    if (!b) return;
+    if (b.dataset.act === 'parcourir') { menuRec.classList.remove('open'); openFile(); return; }
+    if (b.dataset.act === 'vider') { menuRec.classList.remove('open'); viderRecents(); return; }
+    if (b.dataset.id) {
+      menuRec.classList.remove('open');
+      var entree = lireRecents().filter(function (x) { return x.id === b.dataset.id; })[0];
+      if (entree) ouvrirRecent(entree);
+    }
+  });
+
+  /* =====================================================================
+   * 7. Fichiers
+   * ===================================================================== */
+
+  function newDoc() {
+    if (state.dirty && !confirm('Le document a été modifié. Continuer et perdre les changements ?')) return;
+    ta.value = ''; state.name = 'Sans titre.md'; handle = null;
+    setDirty(false); renderAll(); saveDoc(); ta.focus();
+  }
+
+  function openFile() {
+    if (window.showOpenFilePicker) {
+      window.showOpenFilePicker({
+        types: [{ description: 'Markdown', accept: { 'text/markdown': ['.md', '.markdown', '.txt'] } }]
+      }).then(function (hs) {
+        handle = hs[0];
+        return handle.getFile();
+      }).then(function (f) {
+        return f.text().then(function (t) {
+          loadText(t, f.name);
+          memoriserRecent(f.name, f.size, handle);
+        });
+      })
+        .catch(function (err) { if (err && err.name !== 'AbortError') fileIn.click(); });
+    } else fileIn.click();
+  }
+
+  fileIn.addEventListener('change', function () {
+    var f = fileIn.files[0];
+    if (!f) return;
+    f.text().then(function (t) {
+      loadText(t, f.name);
+      memoriserRecent(f.name, f.size, null);
+    });
+    fileIn.value = '';
+  });
+
+  function loadText(text, name) {
+    ta.value = text;
+    state.name = name || 'Sans titre.md';
+    setDirty(false); renderAll(); saveDoc();
+    toast('Ouvert : ' + state.name);
+  }
+
+  function download(content, filename, mime) {
+    var blob = new Blob([content], { type: mime + ';charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function saveMd() {
+    var name = state.name.replace(/\.(md|markdown|txt)$/i, '') + '.md';
+    if (handle && handle.createWritable) {
+      handle.createWritable().then(function (w) {
+        return w.write(ta.value).then(function () { return w.close(); });
+      }).then(function () { setDirty(false); toast('Enregistré : ' + name); })
+        .catch(function () { download(ta.value, name, 'text/markdown'); setDirty(false); });
+      return;
+    }
+    if (window.showSaveFilePicker) {
+      window.showSaveFilePicker({
+        suggestedName: name,
+        types: [{ description: 'Markdown', accept: { 'text/markdown': ['.md'] } }]
+      }).then(function (h) {
+        handle = h; state.name = h.name;
+        return h.createWritable();
+      }).then(function (w) {
+        return w.write(ta.value).then(function () { return w.close(); });
+      }).then(function () {
+        setDirty(false);
+        memoriserRecent(state.name, ta.value.length, handle);
+        toast('Enregistré : ' + state.name);
+      })
+        .catch(function (err) {
+          if (err && err.name === 'AbortError') return;
+          download(ta.value, name, 'text/markdown'); setDirty(false);
+        });
+      return;
+    }
+    download(ta.value, name, 'text/markdown');
+    setDirty(false);
+    toast('Téléchargé : ' + name);
+  }
+
+  function saveAs() {
+    handle = null;
+    saveMd();
+  }
+
+  function firstHeading() {
+    var m = ta.value.match(/^ {0,3}#{1,6}\s+(.+)$/m);
+    return m ? m[1].trim() : state.name.replace(/\.[^.]+$/, '');
+  }
+
+  function exportHtml() {
+    var title = firstHeading();
+    var doc = [
+      '<!DOCTYPE html>',
+      '<html lang="fr">',
+      '<head>',
+      '<meta charset="utf-8">',
+      '<meta name="viewport" content="width=device-width, initial-scale=1">',
+      '<meta name="generator" content="Calliope 1.0.0">',
+      '<title>' + Markdown.escapeHtml(title) + '</title>',
+      '<style>',
+      window.EXPORT_CSS,
+      '</style>',
+      '</head>',
+      '<body><article>',
+      Markdown.render(ta.value, { sautsSimples: state.sautsSimples }),
+      '</article></body>',
+      '</html>'
+    ].join('\n');
+
+    var name = title.replace(/[^\wÀ-ɏ -]/g, '').trim() || 'document';
+    download(doc, name + '.html', 'text/html');
+    toast('Page HTML exportée');
+  }
+
+  function exportPdf() {
+    var wasSplit = state.split;
+    if (!wasSplit) { state.split = true; applyModes(); renderPreview(); }
+    setTimeout(function () {
+      window.print();
+      if (!wasSplit) { state.split = false; applyModes(); }
+    }, 120);
+  }
+
+  function copy(text, label) {
+    var done = function () { toast(label + ' copié dans le presse-papiers'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text, done); });
+    } else legacyCopy(text, done);
+  }
+
+  function legacyCopy(text, done) {
+    var t = document.createElement('textarea');
+    t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); done(); } catch (e) { toast('Copie impossible'); }
+    t.remove();
+  }
+
+  /* glisser-deposer */
+  var dragDepth = 0;
+  window.addEventListener('dragenter', function (e) {
+    if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types, 'Files') !== -1) {
+      dragDepth++; document.body.classList.add('dragging');
+    }
+  });
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('dragleave', function () {
+    if (--dragDepth <= 0) { dragDepth = 0; document.body.classList.remove('dragging'); }
+  });
+  window.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dragDepth = 0; document.body.classList.remove('dragging');
+    var f = e.dataTransfer && e.dataTransfer.files[0];
+    if (!f) return;
+
+    // Le descripteur doit etre reclame tout de suite : les elements deposes
+    // sont invalides des que ce gestionnaire rend la main.
+    var item = e.dataTransfer.items && e.dataTransfer.items[0];
+    var promesse = (item && item.getAsFileSystemHandle)
+      ? item.getAsFileSystemHandle().catch(function () { return null; })
+      : Promise.resolve(null);
+
+    if (state.dirty && !confirm('Remplacer le document en cours ?')) return;
+
+    promesse.then(function (h) {
+      handle = (h && h.kind === 'file') ? h : null;
+      return f.text().then(function (t) {
+        loadText(t, f.name);
+        memoriserRecent(f.name, f.size, handle);
+      });
+    });
+  });
+
+  /* =====================================================================
+   * 8. Interface
+   * ===================================================================== */
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { toastEl.classList.remove('show'); }, 2200);
+  }
+
+  var EXPLICATIONS = {
+    focus:      ['Mode Focus : seul le paragraphe du curseur reste net',
+                 'Mode Focus désactivé'],
+    hemingway:  ['Mode Hemingway : effacer et annuler sont bloqués, on corrige après',
+                 'Mode Hemingway désactivé'],
+    typewriter: ['Machine à écrire : la ligne en cours reste centrée à l\'écran',
+                 'Machine à écrire désactivée'],
+    split:      ['Aperçu affiché à droite, défilement synchronisé',
+                 'Aperçu masqué'],
+    toolbar:    ['Barre de mise en forme affichée',
+                 'Barre de mise en forme masquée']
+  };
+
+  function toggle(key) {
+    state[key] = !state[key];
+    applyModes(); savePrefs();
+    if (EXPLICATIONS[key]) toast(EXPLICATIONS[key][state[key] ? 0 : 1]);
+    if (key === 'split' && state.split) renderPreview();
+    renderHighlight();
+    if (state.typewriter) scrollTypewriter();
+    ta.focus();
+  }
+
+  $('btnNew').onclick        = newDoc;
+  $('btnSave').onclick       = saveMd;
+  $('btnFocus').onclick      = function () { toggle('focus'); };
+  $('btnHemingway').onclick  = function () { toggle('hemingway'); };
+  $('btnTypewriter').onclick = function () { toggle('typewriter'); };
+  $('btnPreview').onclick    = function () { toggle('split'); };
+  $('btnToolbar').onclick    = function () { toggle('toolbar'); };
+  $('btnFull').onclick       = toggleZen;
+
+  var NOMS_THEMES = {
+    light: 'clair', dark: 'sombre', blue: 'nuit bleue',
+    sepia: 'sépia', auto: 'auto (suit le système)'
+  };
+
+  // « auto » n'est pas dans la ronde : il reprend l'apparence du système, donc
+  // il ferait doublon avec « clair » ou « sombre » un clic sur deux. Il reste
+  // accessible dans le menu.
+  var RONDE_THEMES = ['light', 'dark', 'blue', 'sepia'];
+
+  $('btnTheme').onclick = function () {
+    var courant = state.theme === 'auto' ? (mql.matches ? 'dark' : 'light') : state.theme;
+    var i = RONDE_THEMES.indexOf(courant);
+    state.theme = RONDE_THEMES[(i + 1) % RONDE_THEMES.length];
+    applyTheme(); savePrefs();
+    toast('Thème : ' + NOMS_THEMES[state.theme]);
+  };
+
+  $('btnMenu').onclick = function (e) { e.stopPropagation(); menu.classList.toggle('open'); };
+  document.addEventListener('click', function (e) {
+    if (!menu.contains(e.target)) menu.classList.remove('open');
+    if (!menuRec.contains(e.target)) menuRec.classList.remove('open');
+  });
+
+  menu.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+
+    if (b.dataset.theme) { state.theme = b.dataset.theme; applyTheme(); savePrefs(); return; }
+    if (b.dataset.font)  { state.font = b.dataset.font; applyLook(); savePrefs(); return; }
+    if (b.dataset.col)   { state.col = +b.dataset.col; applyLook(); savePrefs(); return; }
+    if (b.dataset.labels) { state.labels = b.dataset.labels === 'on'; applyModes(); savePrefs(); return; }
+    if (b.dataset.sauts) {
+      state.sautsSimples = b.dataset.sauts === 'on';
+      applyModes(); savePrefs(); renderPreview();
+      toast(state.sautsSimples
+        ? 'Chaque retour à la ligne est rendu tel quel'
+        : 'Markdown strict : deux espaces en fin de ligne pour couper');
+      return;
+    }
+    if (b.dataset.size) {
+      var d = +b.dataset.size;
+      state.size = d === 0 ? 16 : Math.min(28, Math.max(12, state.size + d));
+      applyLook(); savePrefs(); return;
+    }
+
+    menu.classList.remove('open');
+    switch (b.dataset.act) {
+      case 'open':        openFile(); break;
+      case 'save':        saveMd(); break;
+      case 'save-as':     saveAs(); break;
+      case 'export-md':   saveMd(); break;
+      case 'export-html': exportHtml(); break;
+      case 'export-pdf':  exportPdf(); break;
+      case 'copy-html':   copy(Markdown.render(ta.value, { sautsSimples: state.sautsSimples }), 'HTML'); break;
+      case 'copy-md':     copy(ta.value, 'Markdown'); break;
+      case 'sample':
+        if (!state.dirty || confirm('Remplacer le document en cours ?')) {
+          loadText(SAMPLE, 'exemple.md');
+        }
+        break;
+      case 'shortcuts':   showShortcuts(); break;
+      case 'about':       showAbout(); break;
+    }
+  });
+
+  /* Mode sans distraction.
+   * Deux choses distinctes, qu'il ne faut pas confondre : masquer l'interface
+   * (toujours possible) et demander le plein ecran au navigateur (souvent
+   * refuse : page en cadre, reglage de securite, absence de geste utilisateur).
+   * L'ancienne version basculait la classe puis la rebasculait depuis
+   * l'evenement fullscreenchange, et la touche Echap relancait le plein ecran
+   * qu'elle venait de quitter. On pilote desormais un seul etat. */
+
+  function setZen(actif) {
+    document.body.classList.toggle('zen', actif);
+    document.body.classList.remove('zen-reveal');
+
+    if (actif) {
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().then(function () {
+          toast('Mode sans distraction — Échap pour revenir');
+        }, function () {
+          toast('Plein écran refusé par le navigateur : interface masquée seule');
+        });
+      } else toast('Mode sans distraction — Échap pour revenir');
+      document.addEventListener('mousemove', surveillerHaut);
+    } else {
+      document.removeEventListener('mousemove', surveillerHaut);
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(function () {});
+      }
+    }
+    ta.focus();
+  }
+
+  function toggleZen() { setZen(!document.body.classList.contains('zen')); }
+
+  // Pointeur sur le bord haut : la barre de titre revient.
+  function surveillerHaut(e) {
+    var bar = document.querySelector('.headerbar');
+    var seuil = document.body.classList.contains('zen-reveal') ? bar.offsetHeight + 14 : 6;
+    document.body.classList.toggle('zen-reveal', e.clientY <= seuil);
+  }
+
+  // Sortie du plein ecran par le navigateur (Echap natif, changement d'onglet) :
+  // on quitte le mode pour ne pas laisser une interface amputee.
+  document.addEventListener('fullscreenchange', function () {
+    if (!document.fullscreenElement && document.body.classList.contains('zen')) setZen(false);
+  });
+
+  /* raccourcis globaux */
+  document.addEventListener('keydown', function (e) {
+    var meta = e.metaKey || e.ctrlKey;
+
+    if (e.key === 'Escape') {
+      if (!modale.hidden) { fermerModale(); return; }
+      menu.classList.remove('open');
+      menuRec.classList.remove('open');
+      if (document.body.classList.contains('zen')) setZen(false);
+      return;
+    }
+    if (e.key === 'F11') { e.preventDefault(); toggleZen(); return; }
+    if (e.key === '?' && e.target !== ta) { e.preventDefault(); showShortcuts(); return; }
+    if (!meta) return;
+
+    var k = e.key.toLowerCase();
+    if (k === 's' && e.shiftKey) { e.preventDefault(); saveAs(); }
+    else if (k === 's') { e.preventDefault(); saveMd(); }
+    else if (k === 'b' && e.shiftKey) { e.preventDefault(); toggle('toolbar'); }
+    else if (k === 'o') { e.preventDefault(); openFile(); }
+    else if (k === 'n') { e.preventDefault(); newDoc(); }
+    else if (k === 'p' && e.shiftKey) { e.preventDefault(); exportPdf(); }
+    else if (k === 'p') { e.preventDefault(); toggle('split'); }
+    else if (k === 'd') { e.preventDefault(); toggle('focus'); }
+    else if (k === 'h') { e.preventDefault(); toggle('hemingway'); }
+    else if (k === 't') { e.preventDefault(); toggle('typewriter'); }
+  });
+
+  window.addEventListener('beforeunload', function (e) {
+    if (!state.dirty) return;
+    e.preventDefault();
+    e.returnValue = '';
+  });
+
+  /* =====================================================================
+   * Fenetres de dialogue
+   * Les boites natives du navigateur ignorent le theme, tronquent le texte
+   * et ne se mettent pas en forme. On affiche donc nos propres fenetres.
+   * ===================================================================== */
+
+  /* Fiche d'identite — recopiee depuis AppInfo.json, qui reste la source.
+   * Un fichier unique ne peut pas lire un JSON voisin hors ligne : ce bloc
+   * est donc regenere depuis AppInfo.json a chaque changement de version. */
+  var INFOS = {
+    nom: 'Calliope',
+    version: '1.0.0',
+    resume: 'Éditeur Markdown',
+    origine: 'Calliope, muse de l\'éloquence et de la poésie épique, la première des ' +
+             'neuf Muses, sœur de Clio.',
+    entreprise: 'EuropaSoft',
+    auteur: 'Yoann CRAMATTE',
+    annee: '2026',
+    licence: 'MIT',
+    contact: 'contact@europasoft.eu',
+    objetCourriel: 'Calliope',
+    ia: 'Claude Opus 5 (Anthropic)',
+    inspiration: 'Interface et modes inspirés d\'Apostrophe (GNOME) par Manuel Genovés, ' +
+                 'anciennement UberWriter par Wolf Vollprecht. Aucun code n\'en est repris : ' +
+                 'le parseur Markdown et le moteur de coloration sont écrits à la main.'
+  };
+
+  var modale = $('modale'), modaleContenu = $('modaleContenu');
+
+  function ouvrirModale(html) {
+    modaleContenu.innerHTML = html;
+    modale.hidden = false;
+    // Le focus doit rester en haut : viser un bouton du pied ferait defiler
+    // la fenetre des son ouverture.
+    modale.querySelector('.modale-boite').scrollTop = 0;
+    $('modaleFermer').focus();
+  }
+
+  function fermerModale() {
+    modale.hidden = true;
+    ta.focus();
+  }
+
+  $('modaleFermer').onclick = fermerModale;
+  modale.querySelector('.modale-fond').onclick = fermerModale;
+  modale.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-modale]');
+    if (!b) return;
+    if (b.dataset.modale === 'fermer') fermerModale();
+    if (b.dataset.modale === 'raccourcis') showShortcuts();
+    if (b.dataset.modale === 'apropos') showAbout();
+  });
+
+  function showAbout() {
+    ouvrirModale(
+      '<div class="apropos-tete">' +
+        '<div class="apropos-sceau">\u270e</div>' +
+        '<div>' +
+          '<h2>' + INFOS.nom + ' <span class="version">' + INFOS.version + '</span></h2>' +
+          '<p>' + INFOS.resume + '</p>' +
+        '</div>' +
+      '</div>' +
+
+      '<p class="apropos-citation">' + INFOS.origine + '</p>' +
+
+      '<table class="apropos-fiche">' +
+        '<tr><th>Dépendances</th><td>aucune : ni framework, ni bibliothèque, ni police distante</td></tr>' +
+        '<tr><th>Réseau</th><td>aucun appel — tout fonctionne hors ligne</td></tr>' +
+        '<tr><th>Construction</th><td>aucune : le fichier <i>est</i> le programme</td></tr>' +
+        '<tr><th>Auteur</th><td>' + INFOS.entreprise + ' — ' + INFOS.auteur + '</td></tr>' +
+        '<tr><th>Assistance IA</th><td>' + INFOS.ia + '</td></tr>' +
+        '<tr><th>Licence</th><td>' + INFOS.licence + ' · © ' + INFOS.annee + ' ' + INFOS.entreprise + '</td></tr>' +
+      '</table>' +
+
+      '<div class="apropos-retour">' +
+        '<b>Un défaut, une idée d\'amélioration ?</b> ' +
+        'Signalez-le par courriel à <a href="mailto:' + INFOS.contact +
+        '?subject=' + encodeURIComponent(INFOS.objetCourriel) + '">' + INFOS.contact + '</a>. ' +
+        'Chaque retour est lu.' +
+      '</div>' +
+
+      '<p class="apropos-note">' + INFOS.inspiration + '</p>' +
+
+      '<div class="modale-pied">' +
+        '<button data-modale="raccourcis">Raccourcis clavier</button>' +
+        '<button class="principal" data-modale="fermer">Fermer</button>' +
+      '</div>'
+    );
+  }
+
+  var RACCOURCIS = [
+    ['Fichier', [
+      ['Ctrl/Cmd+N', 'Nouveau document'],
+      ['Ctrl/Cmd+O', 'Ouvrir, ou dérouler les documents récents'],
+      ['Ctrl/Cmd+S', 'Enregistrer'],
+      ['Ctrl/Cmd+Maj+S', 'Enregistrer sous…'],
+      ['Ctrl/Cmd+Maj+P', 'Exporter en PDF']
+    ]],
+    ['Modes', [
+      ['Ctrl/Cmd+P', 'Aperçu côte à côte'],
+      ['Ctrl/Cmd+D', 'Focus — tout s\'estompe sauf le paragraphe courant'],
+      ['Ctrl/Cmd+H', 'Hemingway — effacer et annuler sont bloqués'],
+      ['Ctrl/Cmd+T', 'Machine à écrire — la ligne courante reste centrée'],
+      ['Ctrl/Cmd+Maj+B', 'Afficher ou masquer la barre de mise en forme'],
+      ['F11', 'Sans distraction — Échap pour revenir']
+    ]],
+    ['Mise en forme', [
+      ['Ctrl/Cmd+B', 'Gras'],
+      ['Ctrl/Cmd+I', 'Italique'],
+      ['Ctrl/Cmd+E', 'Code en ligne'],
+      ['Ctrl/Cmd+K', 'Lien'],
+      ['Ctrl/Cmd+Maj+X', 'Barré'],
+      ['Ctrl/Cmd+Maj+M', 'Formule mathématique'],
+      ['Ctrl/Cmd+Maj+1…6', 'Titre de niveau 1 à 6 — à bascule']
+    ]],
+    ['Édition', [
+      ['Tab', 'Indenter — imbriquer dans la liste'],
+      ['Maj+Tab', 'Désindenter'],
+      ['Entrée', 'Poursuit la liste ou la citation'],
+      ['Entrée ×2', 'Sort de la liste ou de la citation']
+    ]]
+  ];
+
+  function showShortcuts() {
+    var html = '<h2 style="margin:0 0 1.2rem;font-size:19px">Raccourcis clavier</h2>' +
+               '<div class="raccourcis">';
+    RACCOURCIS.forEach(function (groupe) {
+      html += '<h3>' + groupe[0] + '</h3><table>';
+      groupe[1].forEach(function (r) {
+        html += '<tr><td class="touche"><kbd>' + prettyKeys(r[0]) + '</kbd></td><td>' +
+                Markdown.escapeHtml(r[1]) + '</td></tr>';
+      });
+      html += '</table>';
+    });
+    html += '</div><div class="modale-pied">' +
+            '<button data-modale="apropos">À propos</button>' +
+            '<button class="principal" data-modale="fermer">Fermer</button></div>';
+    ouvrirModale(html);
+  }
+
+  /* =====================================================================
+   * 9. Bulles d'aide
+   * L'infobulle native est lente, non themee et tronquee par le defilement
+   * de la barre d'outils : on la remplace par un element unique flottant.
+   * ===================================================================== */
+
+  var MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
+  var tipTimer = null, tipTarget = null;
+
+  // « Ctrl/Cmd+Maj+1 » devient « ⌘⇧1 » sur Mac, « Ctrl+Maj+1 » ailleurs.
+  function prettyKeys(k) {
+    if (!MAC) return k.replace(/Ctrl\/Cmd/g, 'Ctrl');
+    return k.replace(/Ctrl\/Cmd\s*\+\s*/g, '\u2318')
+            .replace(/Maj\s*\+\s*/g, '\u21e7')
+            .replace(/\s*\+\s*/g, '\u2009');
+  }
+
+  function hideTip() {
+    clearTimeout(tipTimer);
+    tipTarget = null;
+    if (tipEl) tipEl.classList.remove('show');
+  }
+
+  function showTip(el) {
+    var raw = el.dataset.tip || '';
+    var m = raw.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+    var label = m ? m[1] : raw;
+    var keys = m ? prettyKeys(m[2]) : '';
+
+    tipEl.textContent = '';
+    var t = document.createElement('span');
+    t.textContent = label;
+    tipEl.appendChild(t);
+    if (keys) {
+      var k = document.createElement('span');
+      k.className = 'keys';
+      k.textContent = keys;
+      tipEl.appendChild(k);
+    }
+
+    tipEl.classList.add('show');
+    var r = el.getBoundingClientRect();
+    var w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+    var left = Math.min(Math.max(6, r.left + r.width / 2 - w / 2), window.innerWidth - w - 6);
+    var top = r.bottom + 6;
+    if (top + h > window.innerHeight - 6) top = r.top - h - 6;
+    tipEl.style.left = Math.round(left) + 'px';
+    tipEl.style.top = Math.round(top) + 'px';
+  }
+
+  function initTooltips() {
+    tipEl = document.createElement('div');
+    tipEl.className = 'tooltip';
+    tipEl.setAttribute('role', 'tooltip');
+    document.body.appendChild(tipEl);
+
+    document.querySelectorAll('.headerbar [title], .toolbar [title]').forEach(function (el) {
+      el.dataset.tip = el.getAttribute('title');
+      el.removeAttribute('title');          // sinon les deux bulles se superposent
+    });
+
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest ? e.target.closest('[data-tip]') : null;
+      if (el === tipTarget) return;
+      clearTimeout(tipTimer);
+      tipTarget = el;
+      if (!el) { if (tipEl) tipEl.classList.remove('show'); return; }
+      tipTimer = setTimeout(function () { if (tipTarget === el) showTip(el); }, 380);
+    });
+
+    ['mousedown', 'keydown', 'wheel', 'blur'].forEach(function (ev) {
+      window.addEventListener(ev, hideTip, true);
+    });
+    document.addEventListener('mouseleave', hideTip);
+  }
+
+  /* =====================================================================
+   * 10. Document d'exemple
+   * ===================================================================== */
+
+  var SAMPLE = [
+    '# Calliope',
+    '',
+    'Un éditeur Markdown **sans distraction**, écrit en *HTML, CSS et JavaScript purs*.',
+    'Aucune bibliothèque, aucun build, aucun appel réseau.',
+    '',
+    '## Les quatre modes',
+    '',
+    '1. **Focus** — tout s\'estompe sauf le paragraphe courant.',
+    '2. **Hemingway** — la touche retour arrière est désactivée : on écrit, on corrige après.',
+    '3. **Machine à écrire** — la ligne courante reste centrée verticalement.',
+    '4. **Aperçu** — le HTML se met à jour à chaque frappe, avec défilement synchronisé.',
+    '',
+    '> La première version de tout texte est toujours mauvaise.',
+    '> — attribué à Ernest Hemingway',
+    '',
+    '## Ce que le parseur comprend',
+    '',
+    '- [x] Titres, listes imbriquées et listes de tâches',
+    '- [x] `code en ligne`, blocs clôturés, tableaux',
+    '- [x] Liens, images, notes de bas de page[^1]',
+    '- [ ] Coloration syntaxique dans les blocs de code',
+    '',
+    '| Élément      | Raccourci        | État |',
+    '|--------------|:----------------:|-----:|',
+    '| Gras         | Cmd+B            |   OK |',
+    '| Italique     | Cmd+I            |   OK |',
+    '| Lien         | Cmd+K            |   OK |',
+    '',
+    '```js',
+    'const bonjour = (qui) => `Bonjour, ${qui} !`;',
+    'console.log(bonjour("monde"));',
+    '```',
+    '',
+    'On peut aussi ~~barrer~~, ==surligner== et écrire une formule $E = mc^2$.',
+    '',
+    '---',
+    '',
+    '[^1]: Les notes sont numérotées automatiquement, dans l\'ordre d\'apparition.'
+  ].join('\n');
+
+  /* =====================================================================
+   * 11. Demarrage
+   * ===================================================================== */
+
+  loadPrefs();
+  applyTheme();
+  applyLook();
+  applyModes();
+  initTooltips();
+  afficherRecents();
+  if (!ta.value) ta.value = SAMPLE;
+  setDirty(false);
+  renderAll();
+  renderPreview();
+  ta.focus();
+  ta.setSelectionRange(0, 0);
+  ta.scrollTop = 0;
+  hl.scrollTop = 0;
+})();
+</script>
+<script>
+/* =========================================================================
+ * Test d'alignement du calque — ouvrir la page avec #test-alignement
+ * Vérifie les deux invariants du calque de coloration : texte identique au
+ * caractère près, et métriques identiques (sinon le curseur dérive).
+ * Il s'exécute sur l'éditeur réel, pas sur une reconstitution.
+ * ========================================================================= */
+(function () {
+  'use strict';
+  if (location.hash !== '#test-alignement') return;
+
+  var ta = document.getElementById('editor'),
+      hl = document.getElementById('hl'),
+      pane = hl.parentNode;
+
+  // Le document en cours est mis de côté, stockage local compris.
+  var docSauve = ta.value;
+  var stockSauve = localStorage.getItem('calliope:doc');
+
+  var PROPS = ['position', 'top', 'left', 'right', 'bottom', 'width', 'height', 'boxSizing',
+    'margin', 'padding', 'fontFamily', 'fontSize', 'lineHeight', 'letterSpacing', 'wordSpacing',
+    'whiteSpace', 'overflowWrap', 'wordBreak', 'tabSize', 'textRendering', 'fontKerning',
+    'fontVariantLigatures', 'direction', 'textAlign', 'textIndent'];
+
+  var DOC = [
+    '# Titre de niveau 1', '## Titre de niveau 2', '### Titre 3',
+    '#### Titre 4', '##### Titre 5', '###### Titre 6',
+    'Un paragraphe avec **du gras**, de *l\'italique*, ***les deux***, du `code en ligne`, ' +
+      'un [lien](https://exemple.fr/une/adresse/assez/longue), une ![image](img.png), ' +
+      'du ==surligné==, du ~~barré~~ et une formule $E=mc^2$ sur une ligne assez longue ' +
+      'pour passer à la ligne toute seule dans la colonne.',
+    '- [ ] une tâche', '- [x] une tâche faite', '  - sous-liste indentée', '1. liste numérotée',
+    '> une citation qui elle aussi finit par passer à la ligne parce qu\'elle est longue',
+    '| colonne | autre |', '| --- | --- |', '| a | b |',
+    '```js', 'const x = 1 < 2 && "texte";', '```',
+    '[^1]: une note de bas de page', 'Texte final avec accents : élève, français, où.'
+  ].join('\n');
+
+  var ref = document.createElement('pre');
+  pane.appendChild(ref);
+
+  function calerReference() {
+    var c = getComputedStyle(hl);
+    PROPS.forEach(function (p) { ref.style[p] = c[p]; });
+    ref.style.fontWeight = '400';      // la zone de saisie n'a qu'une graisse
+    ref.style.fontStyle = 'normal';    // ... et un seul style
+    ref.style.visibility = 'hidden';
+    ref.style.overflow = 'hidden';
+    ref.style.zIndex = '0';
+  }
+
+  function ecrire(texte) {
+    ta.value = texte;
+    ta.dispatchEvent(new Event('input'));   // on passe par le rendu réel de l'application
+    ref.textContent = texte + '\n';
+  }
+
+  function rectAt(racine, i) {
+    var w = document.createTreeWalker(racine, NodeFilter.SHOW_TEXT), n, acc = 0;
+    while ((n = w.nextNode())) {
+      var len = n.nodeValue.length;
+      if (i < acc + len) {
+        var rg = document.createRange();
+        rg.setStart(n, i - acc); rg.setEnd(n, i - acc + 1);
+        return rg.getBoundingClientRect();
+      }
+      acc += len;
+    }
+    return null;
+  }
+
+  function ecartMax(texte) {
+    ecrire(texte);
+    var dx = 0, dy = 0;
+    for (var i = 0; i < texte.length; i++) {
+      if (texte.charAt(i) === '\n') continue;
+      var a = rectAt(hl, i), b = rectAt(ref, i);
+      if (!a || !b || !a.width || !b.width) continue;
+      dx = Math.max(dx, Math.abs(a.left - b.left));
+      dy = Math.max(dy, Math.abs(a.top - b.top));
+    }
+    return { dx: dx, dy: dy };
+  }
+
+  function ecartHauteur(motif, n) {
+    var l = [];
+    for (var i = 0; i < (n || 40); i++) l.push(motif.replace(/\{i\}/g, i));
+    ecrire(l.join('\n'));
+    return hl.scrollHeight - ta.scrollHeight;
+  }
+
+  function texteIdentique(texte) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = Highlighter.render(texte, { focus: false });
+    return tmp.textContent.replace(/\n$/, '') === texte;
+  }
+
+  var lignes = [], tout = true;
+  function ajoute(cas, mesure, valeur, seuil, unite) {
+    var ok = Math.abs(valeur) <= seuil;
+    tout = tout && ok;
+    lignes.push('<tr><td>' + cas + '</td><td>' + mesure + '</td><td class="n">' +
+      (typeof valeur === 'number' ? valeur.toFixed(2) : valeur) + ' ' + unite +
+      '</td><td class="' + (ok ? 'ok' : 'ko') + '">' + (ok ? 'OK' : 'ÉCHEC') + '</td></tr>');
+  }
+
+  ['mono', 'serif', 'sans'].forEach(function (f) {
+    document.querySelector('#segFont [data-font="' + f + '"]').click();
+    calerReference();
+    var e = ecartMax(DOC);
+    ajoute('police ' + f, 'décalage horizontal', e.dx, 0.6, 'px');
+    ajoute('police ' + f, 'décalage vertical', e.dy, 0.6, 'px');
+  });
+  document.querySelector('#segFont [data-font="mono"]').click();
+
+  [['12', '36'], ['16', '46'], ['28', '60']].forEach(function (v) {
+    document.documentElement.style.setProperty('--ed-size', v[0] + 'px');
+    document.documentElement.style.setProperty('--ed-col', v[1] + 'rem');
+    calerReference();
+    ajoute('mono ' + v[0] + 'px / colonne ' + v[1] + 'rem', 'décalage horizontal',
+           ecartMax(DOC).dx, 0.6, 'px');
+  });
+  document.documentElement.style.removeProperty('--ed-size');
+  document.documentElement.style.removeProperty('--ed-col');
+  calerReference();
+
+  [['titres répétés', '# Titre {i}'],
+   ['titres mélangés', '# T{i}\n## T{i}\n### T{i}\ntexte'],
+   ['lignes longues balisées', 'Une ligne assez longue pour passer à la ligne toute seule ' +
+     'dans la colonne, avec **du gras**, de *l\'italique* et un [lien](https://exemple.fr) numéro {i}.']
+  ].forEach(function (c) {
+    ajoute(c[0], 'hauteur calque − saisie', ecartHauteur(c[1]), 0, 'px');
+  });
+
+  ajoute('texte du calque', 'identique au caractère près', texteIdentique(DOC) ? 0 : 1, 0, '');
+
+  // Le document de l'utilisateur est remis en place, stockage compris.
+  ref.remove();
+  ta.value = docSauve;
+  ta.dispatchEvent(new Event('input'));
+  setTimeout(function () {
+    if (stockSauve === null) localStorage.removeItem('calliope:doc');
+    else localStorage.setItem('calliope:doc', stockSauve);
+  }, 600);
+
+  var style = document.createElement('style');
+  style.textContent =
+    '#rapport-test{position:fixed;inset:5vh 5vw;z-index:300;overflow:auto;padding:1.5rem;' +
+    'background:var(--view);color:var(--fg);border:1px solid var(--border);border-radius:12px;' +
+    'box-shadow:0 12px 48px rgba(0,0,0,.35);font-family:var(--ui-font);font-size:13px}' +
+    '#rapport-test h2{margin:0 0 .4rem;font-size:17px}' +
+    '#rapport-test p{margin:0 0 1rem;color:var(--fg-dim);max-width:46rem;line-height:1.6}' +
+    '#rapport-test table{border-collapse:collapse}' +
+    '#rapport-test th,#rapport-test td{padding:.35em .8em;border:1px solid var(--border);text-align:left}' +
+    '#rapport-test th{background:var(--code-bg)}' +
+    '#rapport-test td.n{text-align:right;font-variant-numeric:tabular-nums}' +
+    '#rapport-test .ok{color:#1a7f4b;font-weight:700}#rapport-test .ko{color:#a51d2d;font-weight:700}' +
+    '#rapport-test .verdict{margin-top:1rem;padding:.7em 1em;border-radius:8px;font-weight:700}' +
+    '#rapport-test .verdict.ok{background:rgba(26,127,75,.12);color:#1a7f4b}' +
+    '#rapport-test .verdict.ko{background:rgba(165,29,45,.12);color:#a51d2d}' +
+    '#rapport-test button{margin-top:1rem;padding:.5em 1em;font:inherit;cursor:pointer;' +
+    'color:var(--fg);background:transparent;border:1px solid var(--border);border-radius:6px}';
+  document.head.appendChild(style);
+
+  var panneau = document.createElement('div');
+  panneau.id = 'rapport-test';
+  panneau.innerHTML =
+    '<h2>Test d\'alignement du calque de coloration</h2>' +
+    '<p>Une zone de saisie n\'a qu\'une fonte et une hauteur de ligne. Si le calque modifie ' +
+    'les métriques du texte, ou si sa largeur utile diffère, le curseur se désaligne du texte ' +
+    'affiché, cumulativement. Chaque caractère coloré est comparé au même texte rendu sans ' +
+    'coloration — c\'est-à-dire là où le navigateur place réellement le curseur.</p>' +
+    '<table><thead><tr><th>Cas</th><th>Mesure</th><th>Valeur</th><th>Résultat</th></tr></thead>' +
+    '<tbody>' + lignes.join('') + '</tbody></table>' +
+    '<div class="verdict ' + (tout ? 'ok' : 'ko') + '">' +
+    (tout ? 'Alignement conforme : le curseur suit exactement le texte affiché.'
+          : 'Désalignement détecté — le curseur dérive par rapport au texte affiché.') + '</div>' +
+    '<button onclick="location.hash=\'\';location.reload()">Revenir à l\'éditeur</button>';
+  document.body.appendChild(panneau);
+
+  window.__resultatTest = tout;
+})();
+</script>
+
+</body>
+</html>
