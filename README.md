@@ -1,5 +1,17 @@
 # Calliope
 
+### ▶ [Ouvrir l'application](https://yoann-cramatte.github.io/calliope/Calliope.html)
+
+**Rien à télécharger, rien à inscrire.** Le lien ouvre l'éditeur directement dans votre
+navigateur : vous pouvez écrire dans la seconde. Votre navigateur proposera aussi de
+l'**installer** comme un logiciel — icône au dock, fenêtre propre, fonctionnement hors
+ligne ensuite.
+
+Rien de ce que vous écrivez ne quitte votre machine : l'application ne fait aucun appel
+réseau, et il n'y a aucun serveur derrière.
+
+---
+
 Éditeur Markdown sans distraction, écrit **entièrement en HTML, CSS et JavaScript purs**.
 Interface et modes inspirés de l'application GNOME
 [Apostrophe](https://flathub.org/en/apps/org.gnome.gitlab.somas.Apostrophe), réimplémentés
@@ -16,8 +28,15 @@ Le parseur Markdown et le moteur de coloration syntaxique sont écrits à la mai
 
 ## Lancer
 
-Double-cliquer sur `Calliope.html`. C'est tout : **un seul fichier**, aucune ressource
-externe, aucun dossier compagnon. On peut le copier, l'envoyer par courriel ou le poser
+Trois façons, au choix :
+
+1. **En ligne** — [yoann-cramatte.github.io/calliope](https://yoann-cramatte.github.io/calliope/Calliope.html),
+   rien à installer ; le navigateur proposera de l'ajouter à vos applications.
+2. **Hors ligne** — télécharger `Calliope.html` et le double-cliquer.
+3. **Servi en local** — voir plus bas, utile pour l'enregistrement direct des fichiers.
+
+Dans les trois cas c'est **un seul fichier**, aucune ressource externe, aucun dossier
+compagnon. On peut le copier, l'envoyer par courriel ou le poser
 sur une clé — il s'ouvre partout, hors ligne.
 
 Pour le servir en HTTP (utile pour l'API fichiers de Chrome, qui permet de réécrire un
