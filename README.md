@@ -7,8 +7,9 @@ navigateur : vous pouvez écrire dans la seconde. Votre navigateur proposera aus
 l'**installer** comme un logiciel — icône au dock, fenêtre propre, fonctionnement hors
 ligne ensuite.
 
-Rien de ce que vous écrivez ne quitte votre machine : l'application ne fait aucun appel
-réseau, et il n'y a aucun serveur derrière.
+Rien de ce que vous écrivez ne quitte votre machine : le seul échange réseau est le
+chargement de l'application elle-même depuis son site, et il n'y a aucun serveur qui
+reçoive vos textes.
 
 ---
 
@@ -39,6 +40,10 @@ Dans les trois cas c'est **un seul fichier**, aucune ressource externe, aucun do
 compagnon. On peut le copier, l'envoyer par courriel ou le poser
 sur une clé — il s'ouvre partout, hors ligne.
 
+Seule exception, facultative : en ligne, un petit fichier `sw.js` posé à côté permet à
+l'application **installée** de s'ouvrir sans connexion. Copié seul, `Calliope.html`
+s'en passe et fonctionne exactement pareil.
+
 Pour le servir en HTTP (utile pour l'API fichiers de Chrome, qui permet de réécrire un
 fichier en place) :
 
@@ -58,6 +63,10 @@ propre, sans barre d'adresse, icône dans le dock ou le menu Démarrer.
 |---|---|
 | Servi en **https** ou sur **localhost** | Installable — Chrome et Edge proposent « Installer » dans la barre d'adresse ; Safari (macOS 14+) propose « Ajouter au Dock » ; Android et iOS, « Ajouter à l'écran d'accueil » |
 | Ouvert en **`file://`** (double-clic) | Pleinement utilisable, mais **non installable** : les navigateurs réservent l'installation aux origines sûres |
+
+Une fois installé depuis le lien en ligne, Calliope s'ouvre **sans connexion** : le
+fichier `sw.js` garde l'application en cache et la met à jour en arrière-plan quand le
+réseau revient (la nouvelle version est prise au lancement suivant).
 
 L'icône d'onglet, elle, s'affiche partout, y compris en `file://`.
 

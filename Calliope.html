@@ -3513,7 +3513,16 @@ body.zen .toolbar { display: none; }
    * L'installation exige une origine sure : elle fonctionne en https et sur
    * localhost, jamais en file:// — un fichier ouvert par double-clic peut
    * s'utiliser, pas s'installer.
+   *
+   * Servi en http(s), Calliope enregistre sw.js s'il est present a cote :
+   * l'application installee s'ouvre alors hors ligne. Absent (fichier copie
+   * seul), l'echec est silencieux et rien ne change.
    * ===================================================================== */
+
+  function enregistrerHorsLigne() {
+    if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  }
 
   var LOGO =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
@@ -3601,6 +3610,7 @@ body.zen .toolbar { display: none; }
   applyModes();
   initTooltips();
   preparerInstallation();
+  enregistrerHorsLigne();
   afficherRecents();
   if (!ta.value) ta.value = SAMPLE;
   setDirty(false);
