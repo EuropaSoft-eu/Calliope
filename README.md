@@ -97,9 +97,17 @@ Les agents IA qui pilotent un navigateur peuvent utiliser Calliope directement :
 - **Garde-fou** : `ecrire()` refuse d'écraser un document modifié non enregistré, sauf
   `{ remplacer: true }` — que le guide réserve à l'accord de l'utilisateur.
 
-Exemple de demande à un agent : *« Lis ce PDF et mets-en le contenu en Markdown dans
-Calliope, sous le nom compte-rendu.md. »* L'agent lit le PDF lui-même (Calliope ne lit
-pas les PDF), puis appelle `calliope.ecrire(markdown, 'compte-rendu.md')`.
+Calliope sert ainsi de **réceptacle** : l'utilisateur confie à l'agent une image, une
+photo, un PDF, une page web, un enregistrement ou une simple consigne, et lui demande
+d'en faire un document Markdown — description, transcription, résumé, compte rendu.
+L'agent analyse la source avec ses propres capacités (Calliope n'analyse pas les
+fichiers), puis écrit le résultat avec `calliope.ecrire(markdown, 'nom.md')`.
+
+Exemples de demandes :
+
+- *« Décris cette photo dans Calliope, sous le nom photo-chantier.md. »*
+- *« Fais le compte rendu de ce PDF dans Calliope. »*
+- *« Recopie le tableau de cette capture d'écran en Markdown dans Calliope. »*
 
 Pour modifier le guide : éditer le bloc `#guide-agents` puis recopier son contenu dans
 `llms.txt`.
@@ -246,7 +254,7 @@ et masque l'interface malgré tout.
 
 ## Structure
 
-Tout tient dans `Calliope.html` (~131 Ko), en sections délimitées et commentées :
+Tout tient dans `Calliope.html` (~152 Ko), en sections délimitées et commentées :
 
 ```
 <style>            thèmes, mise en page, styles d'aperçu et d'impression
@@ -256,8 +264,16 @@ markup             barre de titre, barre de mise en forme, éditeur, aperçu, ba
                    coloration · logique de l'application · test de régression
 ```
 
-Le projet garde à côté `AppInfo.json` (identité et changelog) et ce `README.md` — ce
-sont des fichiers de projet, pas des fichiers de l'application.
+À côté, deux sortes de fichiers :
+
+| Fichier | Rôle |
+|---|---|
+| `index.html` | Redirige l'adresse courte du site vers `Calliope.html` |
+| `sw.js` | Hors ligne de l'application installée — en ligne seulement, facultatif |
+| `llms.txt` | Guide pour les agents IA, copie du bloc `#guide-agents` |
+| `AppInfo.json` | Identité et historique des versions (fichier de projet) |
+| `README.md` | Ce document (fichier de projet) |
+| `.memoire/` | Journal de suivi des modifications (fichier de projet) |
 
 ### Tests
 
@@ -292,13 +308,6 @@ Deux invariants à ne jamais casser :
 
 La hiérarchie des titres est donc portée par la **couleur seule**, jamais par la taille.
 
-### Tests
-
-`tests/alignement.html` — à ouvrir dans le navigateur. La page reconstruit l'éditeur,
-compare la position de **chaque caractère** coloré à celle du même texte rendu sans
-coloration (c'est-à-dire là où le navigateur place réellement le curseur), sur les
-trois polices, trois tailles et trois largeurs de colonne, et vérifie les deux
-invariants. 13 mesures, verdict vert ou rouge.
 
 ## Signaler un défaut, proposer une amélioration
 

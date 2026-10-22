@@ -1133,11 +1133,27 @@ Sans JavaScript : la zone d'édition est le `<textarea id="editor">` (libellé �
 Markdown »). Taper ou coller dedans suffit ; l'aperçu et la sauvegarde locale suivent.
 Enregistrer : bouton « Enregistrer » ou Ctrl/Cmd+S.
 
-## Transformer un PDF ou une autre source en Markdown
+## Calliope comme réceptacle : transformer n'importe quelle source en Markdown
 
-Calliope ne lit pas les PDF. Lisez vous-même la source, rédigez le Markdown, puis
-appelez `calliope.ecrire(markdown, 'nom.md')`. Conservez la structure : titres `#`,
-listes, tableaux, notes de bas de page.
+Calliope sert de réceptacle à ce que l'utilisateur vous confie : image, photo,
+capture d'écran, PDF, document bureautique, page web, enregistrement audio, texte
+collé, ou simple consigne. Calliope n'analyse pas ces fichiers lui-même : c'est
+vous qui les lisez, puis vous écrivez le résultat dans Calliope.
+
+1. Analysez la source avec vos propres capacités (lecture, vision, transcription).
+2. Rédigez en Markdown ce que l'utilisateur demande : description, transcription,
+   résumé, compte rendu, extraction de tableau, traduction…
+3. Appelez `calliope.ecrire(markdown, 'nom.md')`, ou `calliope.ajouter(markdown)`
+   pour compléter le document en cours.
+4. Proposez ensuite à l'utilisateur d'enregistrer (`calliope.enregistrer()`).
+
+Conseils :
+
+- Structurez : titres `#`, listes, tableaux, notes de bas de page pour les sources.
+- Image : décrivez-la en texte. Pour l'afficher aussi, utilisez `![description](url)`
+  avec une adresse en ligne, ou une petite image en `data:image/png;base64,…`
+  (les images lourdes alourdissent beaucoup le fichier `.md`).
+- Indiquez la source d'origine (nom du fichier, adresse, date) en tête du document.
 
 ## Markdown accepté
 

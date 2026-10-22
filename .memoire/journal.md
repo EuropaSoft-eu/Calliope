@@ -2,6 +2,13 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-22 — README corrigé, guide agents élargi
+
+- README : section « Tests » en double (renvoyait à `tests/alignement.html`, inexistant) supprimée ; la bonne reste `Calliope.html#test-alignement`.
+- README « Structure » : taille de `Calliope.html` actualisée, tableau des fichiers compagnons.
+- Guide agents (bloc `#guide-agents` + `llms.txt`, synchronisés) : section PDF remplacée par « Calliope comme réceptacle » — toute source (image, PDF, web, audio, consigne) analysée par l'agent puis écrite en Markdown.
+- Vérifié : image `data:image/png;base64` rendue dans l'aperçu.
+
 ## 2026-10-22 — Guide et interface pour agents IA
 
 - `Calliope.html` : bloc `<script type="text/markdown" id="guide-agents">` en tête du `<body>` (inerte, invisible) + commentaire dans `<head>` qui y renvoie.
@@ -11,7 +18,7 @@ Mémoire de suivi : une entrée par modification, la plus récente en haut.
 - `textarea#editor` : `aria-label="Document Markdown"` (lisible par l'arbre d'accessibilité des agents).
 - Testé en http et file:// : tous les appels OK, aucune erreur JS.
 - Non fait : WebMCP (`navigator.modelContext`), proposition encore en cours — à réévaluer.
-- Constat hors sujet : le README décrit deux sections « Tests », dont une renvoie à `tests/alignement.html`, absent du dépôt.
+- Constat (corrigé ensuite) : section « Tests » en double dans le README.
 
 ## 2026-10-22 — Bouton « Installer »
 
