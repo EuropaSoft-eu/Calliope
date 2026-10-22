@@ -2,6 +2,17 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-22 — Guide et interface pour agents IA
+
+- `Calliope.html` : bloc `<script type="text/markdown" id="guide-agents">` en tête du `<body>` (inerte, invisible) + commentaire dans `<head>` qui y renvoie.
+- `llms.txt` (racine) : copie exacte du guide. **À resynchroniser à chaque modification du bloc.**
+- Section 11 bis : `window.calliope` gelé — `version`, `lire`, `nom`, `ecrire(texte, nom, {remplacer})`, `inserer`, `ajouter`, `html`, `enregistrer`, `aide`.
+- `ecrire()` : refuse si document modifié (sauf `remplacer: true`), remet `handle` à null pour ne pas réécrire l'ancien fichier, laisse le document « modifié ».
+- `textarea#editor` : `aria-label="Document Markdown"` (lisible par l'arbre d'accessibilité des agents).
+- Testé en http et file:// : tous les appels OK, aucune erreur JS.
+- Non fait : WebMCP (`navigator.modelContext`), proposition encore en cours — à réévaluer.
+- Constat hors sujet : le README décrit deux sections « Tests », dont une renvoie à `tests/alignement.html`, absent du dépôt.
+
 ## 2026-10-22 — Bouton « Installer »
 
 - En-tête : bouton `#btnInstall` (icône `i-install`), masqué par défaut. Menu : entrée `#menuInstall`.
@@ -37,6 +48,7 @@ Mémoire de suivi : une entrée par modification, la plus récente en haut.
 | Fichier | Rôle |
 |---|---|
 | `Calliope.html` | L'application entière (HTML, CSS, JS, un seul fichier) |
+| `llms.txt` | Guide pour agents IA (copie du bloc `#guide-agents`) |
 | `sw.js` | Service worker : hors ligne de l'app installée (mode en ligne seulement) |
 | `index.html` | Redirection vers `Calliope.html` (adresse courte du site) |
 | `AppInfo.json` | Métadonnées de l'application |

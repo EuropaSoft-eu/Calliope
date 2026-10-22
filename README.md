@@ -84,6 +84,26 @@ L'icône d'onglet, elle, s'affiche partout, y compris en `file://`.
 > document. Sur macOS, se faire sa propre icône passe par *Lire les informations* puis
 > un collage d'image.
 
+## Assistants et agents IA
+
+Les agents IA qui pilotent un navigateur peuvent utiliser Calliope directement :
+
+- **Mode d'emploi intégré** : un bloc `<script type="text/markdown" id="guide-agents">`
+  en tête de `Calliope.html` (invisible à l'écran) explique l'application à un agent.
+  Le même texte est publié en [`llms.txt`](llms.txt) à la racine du site, convention
+  proposée pour les IA (llmstxt.org) — non standardisée, tous les agents ne la lisent pas.
+- **Interface `window.calliope`** : `lire()`, `ecrire(texte, nom)`, `inserer(texte)`,
+  `ajouter(texte)`, `html()`, `enregistrer()`, `aide()`.
+- **Garde-fou** : `ecrire()` refuse d'écraser un document modifié non enregistré, sauf
+  `{ remplacer: true }` — que le guide réserve à l'accord de l'utilisateur.
+
+Exemple de demande à un agent : *« Lis ce PDF et mets-en le contenu en Markdown dans
+Calliope, sous le nom compte-rendu.md. »* L'agent lit le PDF lui-même (Calliope ne lit
+pas les PDF), puis appelle `calliope.ecrire(markdown, 'compte-rendu.md')`.
+
+Pour modifier le guide : éditer le bloc `#guide-agents` puis recopier son contenu dans
+`llms.txt`.
+
 ## Fonctionnalités
 
 ### Les quatre modes

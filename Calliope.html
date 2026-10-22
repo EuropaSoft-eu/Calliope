@@ -10,6 +10,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Calliope">
 <meta name="application-name" content="Calliope">
+<!-- Assistants et agents IA : le mode d'emploi de cette page est dans
+     <script type="text/markdown" id="guide-agents">, en tête du <body>, et
+     s'obtient aussi par window.calliope.aide(). -->
 <!-- Icône, icône Apple et manifeste sont posés au démarrage à partir du logo
      vectoriel unique : voir la section « Identité visuelle et installation ». -->
 <style>
@@ -1104,6 +1107,57 @@ body.zen .toolbar { display: none; }
 </style>
 </head>
 <body>
+<script type="text/markdown" id="guide-agents">
+# Calliope — guide pour les assistants et agents IA
+
+Calliope est un éditeur Markdown qui tourne entièrement dans le navigateur.
+Aucun serveur : le texte reste sur l'appareil de l'utilisateur.
+
+## Agir sur le document
+
+Si vous pouvez exécuter du JavaScript dans la page, utilisez `window.calliope` :
+
+| Appel | Effet |
+|---|---|
+| `calliope.lire()` | Renvoie le Markdown du document en cours |
+| `calliope.nom()` | Renvoie le nom du fichier (ex. `Sans titre.md`) |
+| `calliope.ecrire(texte, nom)` | Remplace le document par `texte`, nommé `nom`. Renvoie `{ ok: false, raison }` si le document en cours a des modifications non enregistrées |
+| `calliope.ecrire(texte, nom, { remplacer: true })` | Remplace même s'il y a des modifications non enregistrées — **à faire seulement avec l'accord de l'utilisateur** |
+| `calliope.inserer(texte)` | Insère `texte` à l'emplacement du curseur (annulable par Ctrl/Cmd+Z) |
+| `calliope.ajouter(texte)` | Ajoute `texte` à la fin du document |
+| `calliope.html()` | Renvoie le rendu HTML du document |
+| `calliope.enregistrer()` | Enregistre le fichier `.md` (boîte d'enregistrement ou téléchargement) |
+| `calliope.aide()` | Renvoie ce guide |
+
+Sans JavaScript : la zone d'édition est le `<textarea id="editor">` (libellé « Document
+Markdown »). Taper ou coller dedans suffit ; l'aperçu et la sauvegarde locale suivent.
+Enregistrer : bouton « Enregistrer » ou Ctrl/Cmd+S.
+
+## Transformer un PDF ou une autre source en Markdown
+
+Calliope ne lit pas les PDF. Lisez vous-même la source, rédigez le Markdown, puis
+appelez `calliope.ecrire(markdown, 'nom.md')`. Conservez la structure : titres `#`,
+listes, tableaux, notes de bas de page.
+
+## Markdown accepté
+
+- Titres `#` à `######` (et soulignés `===` / `---`)
+- `**gras**`, `*italique*`, `~~barré~~`, `==surligné==`, `` `code` ``
+- Blocs de code clôturés ```` ```langage ````, blocs indentés
+- Citations `>`, imbriquées
+- Listes `-`, `1.`, imbriquées, tâches `- [ ]` / `- [x]`
+- Tableaux avec alignement `|:---|:---:|---:|`
+- Liens `[texte](url)`, liens de référence, images `![alt](url)`
+- Notes de bas de page `[^1]` … `[^1]: texte`
+- Formules `$…$` et `$$…$$` (rendu typographique, pas de LaTeX complet)
+- Le HTML brut n'est pas interprété (il est affiché tel quel)
+
+## Bon usage
+
+- Ne pas écraser un document modifié sans demander à l'utilisateur.
+- Calliope n'envoie rien sur le réseau ; ne pas proposer d'y téléverser des données
+  sensibles ailleurs sans accord.
+</script>
 
 <!-- ================= icones ================= -->
 <svg style="display:none" aria-hidden="true">
@@ -1293,7 +1347,7 @@ body.zen .toolbar { display: none; }
   <main class="main" id="main">
     <section class="pane editor-pane">
       <pre id="hl" aria-hidden="true"></pre>
-      <textarea id="editor" spellcheck="true" autocomplete="off" autocapitalize="sentences"
+      <textarea id="editor" aria-label="Document Markdown" spellcheck="true" autocomplete="off" autocapitalize="sentences"
                 placeholder="Écris&#8230;"></textarea>
     </section>
     <section class="pane preview-pane" hidden>
@@ -3688,6 +3742,42 @@ body.zen .toolbar { display: none; }
     };
     img.src = LOGO_URL;
   }
+
+  /* =====================================================================
+   * 11 bis. Interface pour les assistants et agents IA
+   *
+   * Un agent qui pilote le navigateur peut taper dans l'editeur, mais c'est
+   * lent et fragile. window.calliope lui donne des appels directs ; le mode
+   * d'emploi est le bloc #guide-agents, seule source, aussi publie en
+   * llms.txt a la racine du site. ecrire() refuse d'ecraser un document
+   * modifie sans { remplacer: true } : un agent ne doit pas perdre le
+   * travail de l'utilisateur sans son accord.
+   * ===================================================================== */
+
+  window.calliope = Object.freeze({
+    version: INFOS.version,
+    lire: function () { return ta.value; },
+    nom: function () { return state.name; },
+    ecrire: function (texte, nom, options) {
+      if (state.dirty && !(options && options.remplacer)) {
+        return { ok: false, raison: 'Le document en cours a des modifications non enregistrées. ' +
+                                    'Demandez à l\'utilisateur, puis passez { remplacer: true }.' };
+      }
+      handle = null;                          // nouveau document : ne pas reecrire l'ancien fichier
+      loadText(String(texte), nom ? String(nom) : 'Sans titre.md');
+      setDirty(true);
+      return { ok: true };
+    },
+    inserer: function (texte) { insert(String(texte)); return { ok: true }; },
+    ajouter: function (texte) {
+      ta.setSelectionRange(ta.value.length, ta.value.length);
+      insert(String(texte));
+      return { ok: true };
+    },
+    html: function () { return Markdown.render(ta.value, { sautsSimples: state.sautsSimples }); },
+    enregistrer: function () { saveMd(); return { ok: true }; },
+    aide: function () { return $('guide-agents').textContent.trim(); }
+  });
 
   /* =====================================================================
    * 12. Demarrage
