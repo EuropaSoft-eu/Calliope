@@ -229,6 +229,9 @@ body {
 .btn.on     { background: var(--accent-bg); color: var(--accent); }
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
 .btn svg { width: 16px; height: 16px; fill: currentColor; }
+.btn[hidden], .menu button[hidden] { display: none; }
+.installer-etapes { margin: 0 0 1rem; padding-left: 1.4rem; line-height: 1.7; }
+.installer-adresse { word-break: break-all; }
 
 .sep { width: 1px; height: 20px; background: var(--border); margin: 0 3px; }
 
@@ -1113,6 +1116,7 @@ body.zen .toolbar { display: none; }
   <symbol id="i-typewriter" viewBox="0 0 16 16"><path d="M2 3h12v1.5H2Zm2 3.2h8v1.5H4ZM2 9.4h12v1.5H2Zm2 3.1h8V14H4Z"/></symbol>
   <symbol id="i-theme" viewBox="0 0 16 16"><path d="M8 1.2A6.8 6.8 0 1 0 8 14.8Zm0 1.6v10.4a5.2 5.2 0 0 1 0-10.4Z"/></symbol>
   <symbol id="i-full" viewBox="0 0 16 16"><path d="M2 2h5v1.6H3.6V7H2Zm7 0h5v5h-1.6V3.6H9Zm3.4 7H14v5H9v-1.6h3.4ZM2 9h1.6v3.4H7V14H2Z"/></symbol>
+  <symbol id="i-install" viewBox="0 0 16 16"><path d="M7.2 1.5h1.6v6.1l2-2 1.1 1.1L8 10.6 4.1 6.7l1.1-1.1 2 2ZM2 9.5h1.6v3.4h8.8V9.5H14v5H2Z"/></symbol>
   <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2 3.6h12v1.6H2Zm0 3.6h12v1.6H2Zm0 3.6h12v1.6H2Z"/></symbol>
   <symbol id="i-format" viewBox="0 0 16 16"><path d="M2 2.5h12v2.4H9.2v8.6H6.8V4.9H2Z"/></symbol>
   <symbol id="i-ul" viewBox="0 0 16 16"><path d="M2 3.2h1.8V5H2Zm3.6.1H14v1.6H5.6ZM2 7.1h1.8v1.8H2Zm3.6.1H14v1.6H5.6ZM2 11h1.8v1.8H2Zm3.6.1H14v1.6H5.6Z"/></symbol>
@@ -1163,6 +1167,7 @@ body.zen .toolbar { display: none; }
     </div>
     <span class="spacer"></span>
 
+    <button class="btn" id="btnInstall" data-label="Installer" title="Installer Calliope comme une application" hidden><svg><use href="#i-install"/></svg></button>
     <button class="btn" id="btnPreview" data-label="Aperçu" title="Aperçu du rendu à droite, défilement synchronisé (Ctrl/Cmd+P)"><svg><use href="#i-split"/></svg></button>
     <button class="btn" id="btnTheme" data-label="Thème"   title="Changer de thème"><svg><use href="#i-theme"/></svg></button>
     <button class="btn hide-sm" id="btnFull" data-label="Sans distraction" title="Masque toute l'interface et passe en plein écran (F11, Échap pour revenir)"><svg><use href="#i-full"/></svg></button>
@@ -1220,6 +1225,7 @@ body.zen .toolbar { display: none; }
         <hr>
         <button data-act="sample">Charger le document d'exemple</button>
         <button data-act="shortcuts">Raccourcis clavier<kbd>?</kbd></button>
+        <button data-act="install" id="menuInstall">Installer l'application&#8230;</button>
         <button data-act="about">À propos</button>
       </div>
     </div>
@@ -3156,6 +3162,7 @@ body.zen .toolbar { display: none; }
         }
         break;
       case 'shortcuts':   showShortcuts(); break;
+      case 'install':     installer(); break;
       case 'about':       showAbout(); break;
     }
   });
@@ -3259,6 +3266,7 @@ body.zen .toolbar { display: none; }
     annee: '2026',
     licence: 'MIT',
     contact: 'contact@europasoft.eu',
+    adresse: 'https://yoann-cramatte.github.io/calliope/Calliope.html',
     objetCourriel: 'Calliope',
     ia: 'Claude Opus 5 (Anthropic)',
     inspiration: 'Interface et modes inspirés d\'Apostrophe (GNOME) par Manuel Genovés, ' +
@@ -3306,7 +3314,7 @@ body.zen .toolbar { display: none; }
 
       '<table class="apropos-fiche">' +
         '<tr><th>Dépendances</th><td>aucune : ni framework, ni bibliothèque, ni police distante</td></tr>' +
-        '<tr><th>Réseau</th><td>aucun appel — tout fonctionne hors ligne</td></tr>' +
+        '<tr><th>Réseau</th><td>aucun envoi : vos textes restent sur l\'appareil, l\'application installée fonctionne hors ligne</td></tr>' +
         '<tr><th>Construction</th><td>aucune : le fichier <i>est</i> le programme</td></tr>' +
         '<tr><th>Auteur</th><td>' + INFOS.entreprise + ' — ' + INFOS.auteur + '</td></tr>' +
         '<tr><th>Assistance IA</th><td>' + INFOS.ia + '</td></tr>' +
@@ -3524,6 +3532,87 @@ body.zen .toolbar { display: none; }
     navigator.serviceWorker.register('sw.js').catch(function () {});
   }
 
+  /* Bouton « Installer ».
+   * Chrome, Edge et Android annoncent l'installation par l'evenement
+   * beforeinstallprompt : on le garde et le bouton declenche la vraie boite
+   * du navigateur. Safari (iPhone, iPad, Mac) et Firefox n'ont pas cet
+   * evenement : le bouton affiche alors les gestes a faire. Deja lance
+   * comme application, Calliope masque bouton et entree de menu. */
+
+  var invitationInstall = null;
+  var IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) ||
+            (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+  var SAFARI = /Safari/.test(navigator.userAgent) &&
+               !/Chrome|Chromium|CriOS|Edg|FxiOS|Firefox|OPR/.test(navigator.userAgent);
+
+  function dejaInstalle() {
+    return window.navigator.standalone === true ||
+           (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+  }
+
+  function majBoutonInstall() {
+    var installe = dejaInstalle();
+    var enLigne = /^https?:$/.test(location.protocol);
+    $('btnInstall').hidden = installe || !(invitationInstall || (enLigne && (IOS || SAFARI)));
+    $('menuInstall').hidden = installe;
+  }
+
+  function guideInstallation() {
+    var etapes;
+    if (!/^https?:$/.test(location.protocol)) {
+      return ouvrirModale(
+        '<h2 style="margin:0 0 1rem;font-size:19px">Installer Calliope</h2>' +
+        '<p>Ouvert depuis un fichier, Calliope s\'utilise normalement mais ne peut pas ' +
+        's\'installer : les navigateurs réservent l\'installation aux sites en ligne.</p>' +
+        '<p>Ouvrez la version en ligne, puis utilisez le bouton « Installer » :<br>' +
+        '<a class="installer-adresse" href="' + INFOS.adresse + '" target="_blank" rel="noopener">' +
+        INFOS.adresse + '</a></p>' +
+        '<div class="modale-pied"><button class="principal" data-modale="fermer">Fermer</button></div>');
+    }
+    if (IOS) {
+      etapes = ['Ouvrez cette page dans <b>Safari</b> (ou Chrome, Edge sur iOS 16.4 et plus).',
+                'Touchez le bouton <b>Partager</b> (carré avec une flèche vers le haut).',
+                'Choisissez <b>Sur l\'écran d\'accueil</b>, puis <b>Ajouter</b>.'];
+    } else if (SAFARI) {
+      etapes = ['Dans la barre des menus, ouvrez <b>Fichier</b>.',
+                'Choisissez <b>Ajouter au Dock</b> (Safari 17 et plus, macOS Sonoma et plus).'];
+    } else if (/Firefox/.test(navigator.userAgent) && !/Android/.test(navigator.userAgent)) {
+      etapes = ['Firefox sur ordinateur ne sait pas installer les applications web.',
+                'Ouvrez cette page dans <b>Chrome</b>, <b>Edge</b> ou <b>Safari</b> pour l\'installer — ' +
+                'ou continuez simplement ici, dans un onglet.'];
+    } else {
+      etapes = ['Ouvrez le menu du navigateur (⋮ ou …).',
+                'Choisissez <b>Installer Calliope</b> ou <b>Ajouter à l\'écran d\'accueil</b>.',
+                'Si l\'option n\'apparaît pas, Calliope est peut-être déjà installé sur cet appareil.'];
+    }
+    ouvrirModale(
+      '<h2 style="margin:0 0 1rem;font-size:19px">Installer Calliope</h2>' +
+      '<p>Installé, Calliope s\'ouvre dans sa propre fenêtre, depuis une icône, même sans ' +
+      'connexion. Rien à télécharger depuis un magasin d\'applications.</p>' +
+      '<ol class="installer-etapes"><li>' + etapes.join('</li><li>') + '</li></ol>' +
+      '<div class="modale-pied"><button class="principal" data-modale="fermer">Fermer</button></div>');
+  }
+
+  function installer() {
+    if (!invitationInstall) return guideInstallation();
+    var inv = invitationInstall;
+    invitationInstall = null;                 // une invitation ne sert qu'une fois
+    inv.prompt();
+    inv.userChoice.then(majBoutonInstall, majBoutonInstall);
+  }
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();                       // on garde la main : c'est le bouton qui propose
+    invitationInstall = e;
+    majBoutonInstall();
+  });
+  window.addEventListener('appinstalled', function () {
+    invitationInstall = null;
+    majBoutonInstall();
+    toast('Calliope est installé');
+  });
+  $('btnInstall').onclick = installer;
+
   var LOGO =
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">' +
       '<rect width="64" height="64" rx="14" fill="#1c71d8"/>' +
@@ -3611,6 +3700,7 @@ body.zen .toolbar { display: none; }
   initTooltips();
   preparerInstallation();
   enregistrerHorsLigne();
+  majBoutonInstall();
   afficherRecents();
   if (!ta.value) ta.value = SAMPLE;
   setDirty(false);

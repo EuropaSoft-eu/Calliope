@@ -59,6 +59,15 @@ Le fichier déclare un manifeste d'application, fabriqué au démarrage à parti
 logo. Là où c'est possible, Calliope s'installe donc comme un logiciel : fenêtre
 propre, sans barre d'adresse, icône dans le dock ou le menu Démarrer.
 
+Un bouton **Installer** (flèche vers le bas, en haut à droite) invite à le faire :
+
+- **Chrome, Edge, Android** : il ouvre directement la boîte d'installation du navigateur ;
+- **iPhone, iPad, Safari sur Mac** : il affiche les deux ou trois gestes à faire ;
+- **ouvert depuis un fichier** : il donne l'adresse de la version en ligne.
+
+Le bouton disparaît quand Calliope tourne déjà comme application. L'entrée
+*Menu → Installer l'application…* reste disponible partout ailleurs.
+
 | Contexte | Résultat |
 |---|---|
 | Servi en **https** ou sur **localhost** | Installable — Chrome et Edge proposent « Installer » dans la barre d'adresse ; Safari (macOS 14+) propose « Ajouter au Dock » ; Android et iOS, « Ajouter à l'écran d'accueil » |

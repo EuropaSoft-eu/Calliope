@@ -2,6 +2,18 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-22 — Bouton « Installer »
+
+- En-tête : bouton `#btnInstall` (icône `i-install`), masqué par défaut. Menu : entrée `#menuInstall`.
+- Section 11 de `Calliope.html` : `installer()`, `guideInstallation()`, `majBoutonInstall()`, `dejaInstalle()`.
+- Chrome/Edge/Android : capture `beforeinstallprompt`, le bouton lance la vraie boîte d'installation.
+- iOS/iPadOS, Safari Mac, Firefox, autres : fenêtre avec les gestes à faire.
+- `file://` : bouton masqué, l'entrée de menu renvoie vers `INFOS.adresse`.
+- Déjà lancé comme application : bouton et entrée de menu masqués.
+- `INFOS.adresse` = adresse en ligne. **À modifier si le dépôt passe sous l'organisation EuropaSoft ou sur un domaine propre.**
+- Fiche « À propos », ligne Réseau corrigée.
+- Testé (Chromium) : Chrome en ligne, iPhone simulé, file://, mode application ; aucune erreur JS. Non testé sur vrais appareils iOS/Mac.
+
 ## 2026-10-22 — Application installable et utilisable hors ligne (PWA)
 
 - Constat : manifeste déjà généré au démarrage (URL blob) ; test Chromium → installable, aucune erreur.
