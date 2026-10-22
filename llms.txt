@@ -1,0 +1,65 @@
+# Calliope — guide pour les assistants et agents IA
+
+Calliope est un éditeur Markdown qui tourne entièrement dans le navigateur.
+Aucun serveur : le texte reste sur l'appareil de l'utilisateur.
+
+## Agir sur le document
+
+Si vous pouvez exécuter du JavaScript dans la page, utilisez `window.calliope` :
+
+| Appel | Effet |
+|---|---|
+| `calliope.lire()` | Renvoie le Markdown du document en cours |
+| `calliope.nom()` | Renvoie le nom du fichier (ex. `Sans titre.md`) |
+| `calliope.ecrire(texte, nom)` | Remplace le document par `texte`, nommé `nom`. Renvoie `{ ok: false, raison }` si le document en cours a des modifications non enregistrées |
+| `calliope.ecrire(texte, nom, { remplacer: true })` | Remplace même s'il y a des modifications non enregistrées — **à faire seulement avec l'accord de l'utilisateur** |
+| `calliope.inserer(texte)` | Insère `texte` à l'emplacement du curseur (annulable par Ctrl/Cmd+Z) |
+| `calliope.ajouter(texte)` | Ajoute `texte` à la fin du document |
+| `calliope.html()` | Renvoie le rendu HTML du document |
+| `calliope.enregistrer()` | Enregistre le fichier `.md` (boîte d'enregistrement ou téléchargement) |
+| `calliope.aide()` | Renvoie ce guide |
+
+Sans JavaScript : la zone d'édition est le `<textarea id="editor">` (libellé « Document
+Markdown »). Taper ou coller dedans suffit ; l'aperçu et la sauvegarde locale suivent.
+Enregistrer : bouton « Enregistrer » ou Ctrl/Cmd+S.
+
+## Calliope comme réceptacle : transformer n'importe quelle source en Markdown
+
+Calliope sert de réceptacle à ce que l'utilisateur vous confie : image, photo,
+capture d'écran, PDF, document bureautique, page web, enregistrement audio, texte
+collé, ou simple consigne. Calliope n'analyse pas ces fichiers lui-même : c'est
+vous qui les lisez, puis vous écrivez le résultat dans Calliope.
+
+1. Analysez la source avec vos propres capacités (lecture, vision, transcription).
+2. Rédigez en Markdown ce que l'utilisateur demande : description, transcription,
+   résumé, compte rendu, extraction de tableau, traduction…
+3. Appelez `calliope.ecrire(markdown, 'nom.md')`, ou `calliope.ajouter(markdown)`
+   pour compléter le document en cours.
+4. Proposez ensuite à l'utilisateur d'enregistrer (`calliope.enregistrer()`).
+
+Conseils :
+
+- Structurez : titres `#`, listes, tableaux, notes de bas de page pour les sources.
+- Image : décrivez-la en texte. Pour l'afficher aussi, utilisez `![description](url)`
+  avec une adresse en ligne, ou une petite image en `data:image/png;base64,…`
+  (les images lourdes alourdissent beaucoup le fichier `.md`).
+- Indiquez la source d'origine (nom du fichier, adresse, date) en tête du document.
+
+## Markdown accepté
+
+- Titres `#` à `######` (et soulignés `===` / `---`)
+- `**gras**`, `*italique*`, `~~barré~~`, `==surligné==`, `` `code` ``
+- Blocs de code clôturés ```` ```langage ````, blocs indentés
+- Citations `>`, imbriquées
+- Listes `-`, `1.`, imbriquées, tâches `- [ ]` / `- [x]`
+- Tableaux avec alignement `|:---|:---:|---:|`
+- Liens `[texte](url)`, liens de référence, images `![alt](url)`
+- Notes de bas de page `[^1]` … `[^1]: texte`
+- Formules `$…$` et `$$…$$` (rendu typographique, pas de LaTeX complet)
+- Le HTML brut n'est pas interprété (il est affiché tel quel)
+
+## Bon usage
+
+- Ne pas écraser un document modifié sans demander à l'utilisateur.
+- Calliope n'envoie rien sur le réseau ; ne pas proposer d'y téléverser des données
+  sensibles ailleurs sans accord.
