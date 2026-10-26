@@ -2,9 +2,9 @@
   "app": {
     "name": "Calliope",
     "id": "com.europasoft.calliope",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "tagline": "Éditeur Markdown sans distraction, en HTML/CSS/JS pur",
-    "description": "Calliope est un éditeur Markdown sans distraction qui tourne dans n'importe quel navigateur, sans installation : coloration syntaxique dans l'éditeur avec une couleur propre à chaque niveau de titre, barre de mise en forme (titres, listes, cases à cocher, tableaux, blocs de code, liens, images, notes), mode Focus, mode Hemingway, mode Machine à écrire, aperçu HTML en direct, ouverture et enregistrement de fichiers, statistiques de texte, thèmes clair/sombre/sépia et export Markdown/HTML/PDF. Aucune dépendance externe, aucun build, aucun appel réseau : le parseur Markdown et le moteur de coloration sont écrits à la main.",
+    "description": "Calliope est un éditeur Markdown sans distraction qui tourne dans n'importe quel navigateur, sans installation : coloration syntaxique dans l'éditeur avec une couleur propre à chaque niveau de titre, barre de mise en forme (titres, listes, cases à cocher, tableaux, blocs de code, liens, images, notes), mode Focus, mode Hemingway, mode Machine à écrire, trois vues (lecture, lecture + édition côte à côte, édition), ouverture et enregistrement de fichiers, statistiques de texte, thèmes clair/sombre/sépia et export Markdown/HTML/PDF. Aucune dépendance externe, aucun build, aucun appel réseau : le parseur Markdown et le moteur de coloration sont écrits à la main.",
     "naming": "Calliope, muse de l'éloquence et de la poésie épique, sœur de Clio — dans la lignée des noms mythologiques des projets EuropaSoft."
   },
   "company": "EuropaSoft",
@@ -29,6 +29,17 @@
     "fichiers": "Calliope.html — application entière : structure, feuille de style, parseur Markdown, moteur de coloration et test de régression"
   },
   "changelog": [
+    {
+      "version": "1.2.0",
+      "date": "2026-10-26",
+      "changes": [
+        "Sélecteur à trois vues dans la barre de titre : Lecture (rendu seul), Lecture + Édition (brut et rendu côte à côte), Édition (brut seul) ; il remplace le bouton Aperçu",
+        "Un fichier ouvert s'affiche d'office en Lecture + Édition, un document neuf en Édition ; la vue n'est plus un réglage mémorisé",
+        "En Lecture + Édition, un clic dans le rendu place le curseur sur la ligne correspondante ; en Lecture, un double-clic bascule en Lecture + Édition sur ce passage",
+        "Ctrl/Cmd+P fait tourner les trois vues",
+        "Adresse en ligne corrigée après le transfert du dépôt : europasoft-eu.github.io/Calliope"
+      ]
+    },
     {
       "version": "1.1.0",
       "date": "2026-08-21",

@@ -10,7 +10,7 @@
  * suivant. Aucune requête ne sort de l'origine du site.
  * ========================================================================= */
 
-var CACHE = 'calliope-v1';
+var CACHE = 'calliope-v2';
 var FICHIERS = ['./', './index.html', './Calliope.html'];
 
 self.addEventListener('install', function (e) {
