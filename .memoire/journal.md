@@ -2,6 +2,15 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-26 — Lien 404 corrigé, README allégé
+
+- Cause du 404 : dépôt transféré vers `EuropaSoft-eu/Calliope` ; GitHub Pages ne redirige pas l'ancienne adresse `yoann-cramatte.github.io/calliope`. Le site est publié sur `https://europasoft-eu.github.io/Calliope/` (API GitHub : `has_pages: true`, dernier déploiement réussi sur `efb2ed0`).
+- PWA vérifiée en local sous `/Calliope/` (Chromium) : installable, `sw.js` enregistré, aucune erreur JS.
+- Adresse corrigée : `README.md` (2 liens) et `INFOS.adresse` dans `Calliope.html`.
+- README réécrit (326 → ~95 lignes) : confidentialité, autonomie/portabilité, installation PWA, fonctionnalités condensées. Micro-serveur Python retiré du README.
+- Partie technique déplacée dans `DEVELOPPEMENT.md` (structure, tests, coloration, défilement, PWA, guide agents, serveur local).
+- Vérifié : aucun appel réseau dans `Calliope.html` (pas de fetch, XHR, beacon, cookie, script externe) → affirmations « aucun pistage » fondées.
+
 ## 2026-10-22 — README corrigé, guide agents élargi
 
 - README : section « Tests » en double (renvoyait à `tests/alignement.html`, inexistant) supprimée ; la bonne reste `Calliope.html#test-alignement`.
@@ -59,5 +68,6 @@ Mémoire de suivi : une entrée par modification, la plus récente en haut.
 | `sw.js` | Service worker : hors ligne de l'app installée (mode en ligne seulement) |
 | `index.html` | Redirection vers `Calliope.html` (adresse courte du site) |
 | `AppInfo.json` | Métadonnées de l'application |
-| `README.md` | Présentation et mode d'emploi |
+| `README.md` | Présentation pour l'utilisateur |
+| `DEVELOPPEMENT.md` | Notes techniques pour qui modifie le code |
 | `LICENSE` | Licence |

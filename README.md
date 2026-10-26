@@ -1,326 +1,89 @@
 # Calliope
 
-### ▶ [Ouvrir l'application](https://yoann-cramatte.github.io/calliope/Calliope.html)
+### ▶ [Ouvrir l'application](https://europasoft-eu.github.io/Calliope/Calliope.html)
 
-**Rien à télécharger, rien à inscrire.** Le lien ouvre l'éditeur directement dans votre
-navigateur : vous pouvez écrire dans la seconde. Votre navigateur proposera aussi de
-l'**installer** comme un logiciel — icône au dock, fenêtre propre, fonctionnement hors
-ligne ensuite.
-
-Rien de ce que vous écrivez ne quitte votre machine : le seul échange réseau est le
-chargement de l'application elle-même depuis son site, et il n'y a aucun serveur qui
-reçoive vos textes.
-
----
-
-Éditeur Markdown sans distraction, écrit **entièrement en HTML, CSS et JavaScript purs**.
-Interface et modes inspirés de l'application GNOME
-[Apostrophe](https://flathub.org/en/apps/org.gnome.gitlab.somas.Apostrophe), réimplémentés
-de zéro pour le navigateur.
+Éditeur de texte Markdown, sobre et sans distraction, qui fonctionne entièrement dans
+votre navigateur. **Rien à télécharger, rien à inscrire** : le lien ouvre l'éditeur et
+vous écrivez dans la seconde.
 
 > *Calliope, muse de l'éloquence et de la poésie épique, sœur de Clio.*
 
-- **Zéro dépendance** : ni framework, ni bibliothèque, ni CDN.
-- **Zéro build** : pas de npm, pas de bundler, pas d'étape de compilation.
-- **Zéro réseau** : tout fonctionne hors ligne, y compris en `file://`.
+## Vos textes restent chez vous
 
-Le parseur Markdown et le moteur de coloration syntaxique sont écrits à la main
-(≈ 440 lignes de JavaScript) — c'est le cœur du projet.
+- **Aucun compte**, aucune inscription.
+- **Aucun serveur** ne reçoit vos textes : ils ne quittent jamais votre appareil.
+- **Aucun pistage**, aucune publicité, aucun cookie tiers.
+- Le seul échange réseau est le chargement de l'application elle-même depuis son site.
+  Ensuite, tout se passe sur votre machine.
 
-## Lancer
+## Autonome et portable
 
-Trois façons, au choix :
+- **Un seul fichier** : `Calliope.html` contient toute l'application.
+- **Zéro dépendance** : ni framework, ni bibliothèque, ni ressource externe.
+- **Hors ligne** : téléchargé, il s'ouvre d'un double-clic, sans connexion.
+- **Portable** : copiez-le sur une clé USB, envoyez-le par courriel — il fonctionne
+  partout où il y a un navigateur.
 
-1. **En ligne** — [yoann-cramatte.github.io/calliope](https://yoann-cramatte.github.io/calliope/Calliope.html),
-   rien à installer ; le navigateur proposera de l'ajouter à vos applications.
-2. **Hors ligne** — télécharger `Calliope.html` et le double-cliquer.
-3. **Servi en local** — voir plus bas, utile pour l'enregistrement direct des fichiers.
+## L'installer comme une application
 
-Dans les trois cas c'est **un seul fichier**, aucune ressource externe, aucun dossier
-compagnon. On peut le copier, l'envoyer par courriel ou le poser
-sur une clé — il s'ouvre partout, hors ligne.
+Ouvert depuis [le lien en ligne](https://europasoft-eu.github.io/Calliope/Calliope.html),
+Calliope s'installe comme un logiciel : fenêtre propre, icône sur le bureau ou l'écran
+d'accueil, **fonctionnement hors ligne** ensuite. Le bouton **Installer** (en haut à
+droite) vous guide.
 
-Seule exception, facultative : en ligne, un petit fichier `sw.js` posé à côté permet à
-l'application **installée** de s'ouvrir sans connexion. Copié seul, `Calliope.html`
-s'en passe et fonctionne exactement pareil.
-
-Pour le servir en HTTP (utile pour l'API fichiers de Chrome, qui permet de réécrire un
-fichier en place) :
-
-```bash
-python3 -m http.server 8765
-```
-
-Puis ouvrir `http://localhost:8765/Calliope.html`.
-
-## Installer comme une application
-
-Le fichier déclare un manifeste d'application, fabriqué au démarrage à partir de son
-logo. Là où c'est possible, Calliope s'installe donc comme un logiciel : fenêtre
-propre, sans barre d'adresse, icône dans le dock ou le menu Démarrer.
-
-Un bouton **Installer** (flèche vers le bas, en haut à droite) invite à le faire :
-
-- **Chrome, Edge, Android** : il ouvre directement la boîte d'installation du navigateur ;
-- **iPhone, iPad, Safari sur Mac** : il affiche les deux ou trois gestes à faire ;
-- **ouvert depuis un fichier** : il donne l'adresse de la version en ligne.
-
-Le bouton disparaît quand Calliope tourne déjà comme application. L'entrée
-*Menu → Installer l'application…* reste disponible partout ailleurs.
-
-| Contexte | Résultat |
+| Appareil | Comment faire |
 |---|---|
-| Servi en **https** ou sur **localhost** | Installable — Chrome et Edge proposent « Installer » dans la barre d'adresse ; Safari (macOS 14+) propose « Ajouter au Dock » ; Android et iOS, « Ajouter à l'écran d'accueil » |
-| Ouvert en **`file://`** (double-clic) | Pleinement utilisable, mais **non installable** : les navigateurs réservent l'installation aux origines sûres |
+| **Chrome, Edge** (ordinateur) | Bouton *Installer* de Calliope, ou icône d'installation dans la barre d'adresse |
+| **Android** | Bouton *Installer*, ou menu du navigateur → *Ajouter à l'écran d'accueil* |
+| **iPhone, iPad** | Safari → bouton *Partager* → *Sur l'écran d'accueil* |
+| **Mac** (Safari, macOS 14 et plus) | Menu *Fichier* → *Ajouter au Dock* |
 
-Une fois installé depuis le lien en ligne, Calliope s'ouvre **sans connexion** : le
-fichier `sw.js` garde l'application en cache et la met à jour en arrière-plan quand le
-réseau revient (la nouvelle version est prise au lancement suivant).
+Une fois installée, l'application se met à jour d'elle-même quand une nouvelle version
+est publiée.
 
-L'icône d'onglet, elle, s'affiche partout, y compris en `file://`.
+> Ouvert par double-clic (fichier téléchargé), Calliope fonctionne pleinement mais ne
+> peut pas s'installer : les navigateurs réservent l'installation aux sites en ligne.
 
-> **À savoir** : l'icône du fichier `.html` dans le Finder ou l'Explorateur ne peut pas
-> être changée depuis le fichier lui-même — c'est une propriété du système, pas du
-> document. Sur macOS, se faire sa propre icône passe par *Lire les informations* puis
-> un collage d'image.
+## Ce qu'on peut faire
 
-## Assistants et agents IA
+- **Quatre modes d'écriture** : *Focus* (seul le paragraphe en cours reste net),
+  *Hemingway* (pas de retour arrière), *Machine à écrire* (ligne centrée), *Aperçu*
+  (rendu en direct, défilement synchronisé).
+- **Barre de mise en forme** : titres, gras, italique, listes, cases à cocher,
+  citations, tableaux, liens, images, notes de bas de page, formules. Chaque bouton
+  indique son raccourci clavier.
+- **Coloration dans l'éditeur**, avec une couleur par niveau de titre.
+- **Ouvrir, enregistrer** des fichiers `.md` ; sur Chrome et Edge, le fichier est
+  réécrit en place. Liste des **documents récents**.
+- **Sauvegarde automatique** locale : rien n'est perdu si l'onglet se ferme.
+- **Export** en page HTML autonome ou en **PDF**.
+- **Quatre thèmes** (clair, sombre, nuit bleue, sépia), choix de la police, de la
+  taille et de la largeur de colonne.
+- **Mode sans distraction** (`F11`) : seul le texte reste à l'écran.
 
-Les agents IA qui pilotent un navigateur peuvent utiliser Calliope directement :
+## Pour les assistants IA
 
-- **Mode d'emploi intégré** : un bloc `<script type="text/markdown" id="guide-agents">`
-  en tête de `Calliope.html` (invisible à l'écran) explique l'application à un agent.
-  Le même texte est publié en [`llms.txt`](llms.txt) à la racine du site, convention
-  proposée pour les IA (llmstxt.org) — non standardisée, tous les agents ne la lisent pas.
-- **Interface `window.calliope`** : `lire()`, `ecrire(texte, nom)`, `inserer(texte)`,
-  `ajouter(texte)`, `html()`, `enregistrer()`, `aide()`.
-- **Garde-fou** : `ecrire()` refuse d'écraser un document modifié non enregistré, sauf
-  `{ remplacer: true }` — que le guide réserve à l'accord de l'utilisateur.
-
-Calliope sert ainsi de **réceptacle** : l'utilisateur confie à l'agent une image, une
-photo, un PDF, une page web, un enregistrement ou une simple consigne, et lui demande
-d'en faire un document Markdown — description, transcription, résumé, compte rendu.
-L'agent analyse la source avec ses propres capacités (Calliope n'analyse pas les
-fichiers), puis écrit le résultat avec `calliope.ecrire(markdown, 'nom.md')`.
-
-Exemples de demandes :
-
-- *« Décris cette photo dans Calliope, sous le nom photo-chantier.md. »*
-- *« Fais le compte rendu de ce PDF dans Calliope. »*
-- *« Recopie le tableau de cette capture d'écran en Markdown dans Calliope. »*
-
-Pour modifier le guide : éditer le bloc `#guide-agents` puis recopier son contenu dans
-`llms.txt`.
-
-## Fonctionnalités
-
-### Les quatre modes
-
-| Mode | Raccourci | Effet |
-|---|---|---|
-| **Focus** | `Cmd/Ctrl + D` | Tout s'estompe sauf le paragraphe où se trouve le curseur |
-| **Hemingway** | `Cmd/Ctrl + H` | Retour arrière, suppression et annulation désactivés |
-| **Machine à écrire** | `Cmd/Ctrl + T` | La ligne courante reste centrée verticalement |
-| **Aperçu** | `Cmd/Ctrl + P` | Rendu HTML en direct, défilement synchronisé |
-
-Chaque mode annonce son effet quand on l'active, et sa bulle d'aide décrit ce qu'il fait.
-
-### Défilement synchronisé
-
-L'aperçu est plus haut que l'éditeur — titres agrandis, marges, blocs encadrés :
-sur un long document l'écart atteint 17 %. Un simple pourcentage décalerait donc la
-lecture de plusieurs dizaines de lignes. Chaque bloc de l'aperçu porte donc sa **ligne
-de source** (`data-line`), et les deux panneaux s'alignent sur la ligne réellement
-affichée en haut, en interpolant entre deux ancres. Le lien fonctionne dans les deux
-sens.
-
-### Barre de mise en forme
-
-Une barre d'insertion (masquable, `Cmd/Ctrl + Maj + B`) donne accès en un clic à :
-
-| Groupe | Boutons |
-|---|---|
-| Titres | `H1` `H2` `H3` `H4` `H5` `H6` — à bascule : un second clic retire le titre |
-| Texte | gras, italique, barré, surligné, code en ligne, bloc de code, **formule** |
-| Listes | à puces, numérotée, **case à cocher**, citation — à bascule également — plus indenter / désindenter |
-| Blocs | **tableau** (nombre de colonnes et de lignes au choix), ligne de séparation |
-| Insertions | lien, image, note de bas de page (numérotée automatiquement) |
-
-La note de bas de page pose sa référence dans le texte et prépare sa définition en fin
-de document ; le curseur reste où l'on écrivait. La référence n'est jamais posée dans
-le bloc des définitions — sinon une note finirait par en écraser une autre.
-
-Chaque bouton affiche au survol une **bulle** avec son nom et son raccourci, mis en
-forme selon la plateforme (`⌘⇧1` sur macOS, `Ctrl+Maj+1` ailleurs). Le menu principal
-propose aussi le mode **« Libellés visibles »**, actif par défaut : le nom s'inscrit
-alors en permanence sous chaque icône, dans la barre de mise en forme comme dans la
-barre de titre.
-
-Les boutons s'appliquent à toutes les lignes sélectionnées : sélectionner trois lignes
-et cliquer sur « liste numérotée » produit `1.` `2.` `3.`. Après une insertion, le
-texte à remplacer est déjà sélectionné — le tableau met « Colonne 1 » en surbrillance,
-il n'y a plus qu'à taper.
-
-### Savoir où l'on écrit
-
-Les boutons de la barre **s'allument** selon l'endroit du curseur : dans une liste de
-tâches, le bouton *Case* est actif ; dans une citation, le bouton *Citation* l'est.
-Un bouton allumé se reclique pour **sortir** du contexte et revenir au texte normal.
-La barre d'état nomme ce contexte et rappelle, pour les listes et les citations,
-qu'une ligne vide suivie d'`Entrée` en fait sortir — sans quoi chaque `Entrée`
-prolonge la liste sans qu'on sache comment s'en échapper.
-
-### Couleur par niveau de titre
-
-Chaque niveau de `#` à `######` a sa propre couleur **dans l'éditeur**, reprise sur
-les boutons `H1`…`H6` de la barre, pour repérer la structure d'un coup d'œil. Les trois
-thèmes ont leur palette.
-
-> Ces couleurs ne sortent jamais de l'éditeur : l'aperçu, l'export HTML, l'export PDF
-> et le fichier `.md` restent strictement neutres.
-
-### Édition
-
-- Coloration syntaxique **dans** l'éditeur (calque superposé à la zone de saisie,
-  aligné au pixel près) : titres, gras, italique, code, liens, citations, listes,
-  tâches, tableaux, formules.
-- Poursuite automatique des listes, listes de tâches et citations à la touche `Entrée`
-  (une deuxième `Entrée` sur un élément vide sort de la liste).
-- `Tab` / `Maj+Tab` : indentation et désindentation d'un élément de liste.
-- Mise en forme : `Cmd+B` gras, `Cmd+I` italique, `Cmd+E` code, `Cmd+K` lien,
-  `Cmd+Maj+X` barré, `Cmd+Maj+1…6` niveau de titre.
-- Les raccourcis passent par `insertText`, donc `Cmd+Z` annule normalement.
-
-Tout ce que le document d'exemple mentionne a son bouton. Restent accessibles au
-clavier seulement, faute d'usage assez courant pour occuper la barre : le gras
-italique combiné (`Cmd+B` puis `Cmd+I`), les liens de référence, les titres soulignés
-façon Setext et le retour à la ligne forcé (deux espaces en fin de ligne).
-
-### Markdown pris en charge
-
-Titres ATX et Setext · gras / italique / barré / surligné · code en ligne et blocs
-clôturés (avec étiquette de langage) · blocs indentés · citations imbriquées et
-continuation paresseuse · listes à puces, numérotées, imbriquées et listes de tâches ·
-tableaux avec alignement · liens, liens de référence, liens automatiques, images ·
-notes de bas de page numérotées automatiquement · règles horizontales · retours à la
-ligne forcés · formules `$…$` et `$$…$$` (rendu typographique, sans moteur LaTeX).
-
-### Retour à la ligne
-
-En Markdown strict, un retour à la ligne isolé ne vaut qu'un espace : la ligne suivante
-se recolle au paragraphe. C'est la spécification, mais dans un éditeur de prose c'est
-déroutant — on écrit une ligne, elle disparaît dans la précédente. Par défaut, Calliope
-rend donc **chaque retour tel qu'il apparaît à l'écran**. Le menu propose le
-comportement strict pour qui veut un fichier portable au sens littéral.
-Listes, tableaux, code en ligne et blocs de code ne sont pas concernés.
-
-**Sécurité** : tout le HTML source est échappé (pas de HTML brut injecté) et les URL
-en `javascript:`, `vbscript:` ou `data:` non-image sont neutralisées.
-
-### Fichiers et export
-
-- **Ouvrir** (`Cmd/Ctrl + O`) : sélecteur de fichier, ou glisser-déposer sur la fenêtre.
-- **Documents récents** : le bouton *Ouvrir* déroule les douze derniers fichiers
-  travaillés, avec leur date relative. Sur Chrome et Edge, le **descripteur** du
-  fichier est conservé dans IndexedDB : un clic rouvre vraiment le document depuis le
-  disque, après une demande d'autorisation du navigateur. Safari et Firefox n'exposent
-  pas cette API — les entrées y restent un historique de noms, signalé comme tel, et
-  renvoient vers le sélecteur. Un fichier déplacé ou supprimé est signalé, et son
-  entrée se retire d'elle-même.
-- **Enregistrer** (`Cmd/Ctrl + S`) : quand le navigateur expose l'API *File System Access*
-  (Chrome, Edge), le fichier ouvert est **réécrit en place**, sans boîte de dialogue.
-  Sinon, le document est téléchargé sous son nom.
-- **Enregistrer sous…** (`Cmd/Ctrl + Maj + S`) : choisit un nouvel emplacement.
-- Sauvegarde automatique locale : le document en cours et le nom du fichier survivent
-  à la fermeture de l'onglet.
-- Export **page HTML autonome** : le document embarque sa propre feuille de style,
-  claire et sombre, et s'ouvre seul n'importe où.
-- Export **PDF** via la boîte d'impression (`Cmd/Ctrl + Maj + P`).
-- Copie du Markdown ou du HTML dans le presse-papiers.
-
-### Apparence
-
-Quatre thèmes — **clair**, **sombre**, **nuit bleue**, **sépia** — que le bouton de la
-barre de titre fait défiler. Le réglage **Auto**, qui reprend l'apparence du système,
-reste dans le menu : l'inclure dans la rotation reviendrait à afficher deux fois la
-même chose. Police de l'éditeur mono / serif / sans · taille de texte réglable ·
-largeur de colonne étroite / normale / large.
-
-**Mode sans distraction** (`F11`, `Échap` pour sortir) : toute l'interface disparaît,
-le texte occupe l'écran entier. La barre de titre n'est qu'escamotée — amener le
-pointeur sur le bord haut la fait revenir. Le plein écran du navigateur est demandé en
-prime ; s'il est refusé (page en cadre, réglage de sécurité), l'application le signale
-et masque l'interface malgré tout.
-
-## Structure
-
-Tout tient dans `Calliope.html` (~152 Ko), en sections délimitées et commentées :
-
-```
-<style>            thèmes, mise en page, styles d'aperçu et d'impression
-<svg>              jeu d'icônes
-markup             barre de titre, barre de mise en forme, éditeur, aperçu, barre d'état
-<script> ×5        feuille de style des exports · parseur Markdown · moteur de
-                   coloration · logique de l'application · test de régression
-```
-
-À côté, deux sortes de fichiers :
-
-| Fichier | Rôle |
-|---|---|
-| `index.html` | Redirige l'adresse courte du site vers `Calliope.html` |
-| `sw.js` | Hors ligne de l'application installée — en ligne seulement, facultatif |
-| `llms.txt` | Guide pour les agents IA, copie du bloc `#guide-agents` |
-| `AppInfo.json` | Identité et historique des versions (fichier de projet) |
-| `README.md` | Ce document (fichier de projet) |
-| `.memoire/` | Journal de suivi des modifications (fichier de projet) |
-
-### Tests
-
-Ouvrir `Calliope.html#test-alignement`. Le test s'exécute sur l'**éditeur réel** :
-il compare la position de chaque caractère coloré à celle du même texte rendu sans
-coloration — c'est-à-dire là où le navigateur place réellement le curseur — sur les
-trois polices, trois tailles et trois largeurs de colonne, et vérifie les deux
-invariants ci-dessous. Treize mesures, verdict vert ou rouge. Le document en cours et
-sa sauvegarde locale sont mis de côté puis restaurés.
-
-### Comment fonctionne la coloration dans l'éditeur
-
-Une zone de saisie ne peut pas contenir de HTML. L'éditeur superpose donc deux
-calques exactement alignés : un `<pre>` coloré en dessous, et le `<textarea>` au-dessus
-avec `color: transparent` et un `caret-color` visible. Les deux partagent police,
-taille, interlignage, retour à la ligne et marges, et leurs défilements sont
-synchronisés.
-
-Deux invariants à ne jamais casser :
-
-1. **Le texte du calque est strictement identique à celui de la zone de saisie**, au
-   caractère près. Toute la coloration se fait en un seul balayage de regex, avec une
-   fonction de remplacement, pour que le balisage inséré ne soit jamais réexaminé par
-   les motifs suivants.
-2. **Le calque ne modifie aucune métrique du texte.** Une zone de saisie n'a qu'une
-   fonte, une graisse et une hauteur de ligne : tout ce qui change la taille, l'avance
-   des glyphes ou la largeur utile décale le curseur, cumulativement. Sont donc
-   interdits `font-size`, `letter-spacing`, `text-transform`, les marges en ligne — et
-   la barre de défilement de la zone de saisie est masquée, faute de quoi ses 11 px
-   feraient couper les lignes plus tôt que dans le calque. Le gras et l'italique ne
-   sont conservés qu'en police à chasse fixe, où les variantes gardent la même avance.
-
-La hiérarchie des titres est donc portée par la **couleur seule**, jamais par la taille.
-
+Un assistant IA qui pilote le navigateur peut lire et écrire dans Calliope, par
+exemple pour transformer une photo, un PDF ou une page web en document Markdown. Son
+mode d'emploi est publié dans [`llms.txt`](llms.txt).
 
 ## Signaler un défaut, proposer une amélioration
 
 Par courriel à **contact@europasoft.eu**, ou en ouvrant une *issue* sur ce dépôt.
-Préciser le navigateur et, si possible, le fragment de Markdown qui pose problème.
+Préciser le navigateur et, si possible, le texte qui pose problème.
 
-## Nom
+Pour modifier le code : voir [`DEVELOPPEMENT.md`](DEVELOPPEMENT.md).
+
+## Nom et inspiration
 
 **Calliope** — muse de l'éloquence et de la poésie épique, la première des neuf Muses,
 sœur de Clio. Dans la lignée des noms mythologiques des projets EuropaSoft
 (Clio, Morphée, Oralia, Poséidon).
 
+Interface et modes inspirés de l'application GNOME
+[Apostrophe](https://flathub.org/en/apps/org.gnome.gitlab.somas.Apostrophe), réécrits
+de zéro pour le navigateur : aucun code n'en est repris.
+
 ## Licence
 
-MIT — EuropaSoft, Yoann CRAMATTE. Aucun code de l'application GNOME originale
-n'est réutilisé : implémentation entièrement indépendante.
+MIT — EuropaSoft, Yoann CRAMATTE.
