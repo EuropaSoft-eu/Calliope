@@ -90,6 +90,19 @@ La hiérarchie des titres est donc portée par la **couleur seule**, jamais par 
 Ces couleurs ne sortent jamais de l'éditeur : aperçu, exports et fichier `.md` restent
 neutres.
 
+## Vues : lecture, lecture + édition, édition
+
+`state.vue` vaut `lecture`, `double` ou `edition` ; `state.split` en dérive (aperçu
+visible). Tout passe par `setVue()`. La vue **n'est pas mémorisée** dans les
+préférences, c'est voulu : un fichier ouvert (`loadText`, donc aussi
+`calliope.ecrire`) arrive en `double`, un document neuf (`newDoc`) en `edition`, le
+démarrage en `double` s'il y a du texte. `Ctrl/Cmd+P` fait tourner les vues.
+
+- En `double`, un clic dans le rendu (sans sélection en cours) place le curseur sur
+  la ligne source du bloc (`data-line`).
+- En `lecture`, un double-clic bascule en `double`, curseur sur la ligne.
+- En `lecture`, barre de mise en forme masquée et outils d'écriture désactivés.
+
 ## Défilement synchronisé
 
 L'aperçu est plus haut que l'éditeur — titres agrandis, marges, blocs encadrés :

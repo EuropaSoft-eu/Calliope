@@ -233,6 +233,7 @@ body {
 .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -1px; }
 .btn svg { width: 16px; height: 16px; fill: currentColor; }
 .btn[hidden], .menu button[hidden] { display: none; }
+.btn:disabled { opacity: .35; pointer-events: none; }
 .installer-etapes { margin: 0 0 1rem; padding-left: 1.4rem; line-height: 1.7; }
 .installer-adresse { word-break: break-all; }
 
@@ -305,6 +306,18 @@ body {
   background: var(--view);
 }
 .main.split { grid-template-columns: 1fr 1fr; }
+.main.split.lecture { grid-template-columns: 1fr; }
+.main.lecture .editor-pane { display: none; }
+.main.lecture .pane + .pane { border-left: 0; }
+
+/* selecteur de vue : lecture / lecture + edition / edition */
+.vue-seg {
+  display: inline-flex;
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 1px);
+}
 
 .pane { position: relative; min-width: 0; overflow: hidden; }
 .pane + .pane { border-left: 1px solid var(--border); }
@@ -594,6 +607,7 @@ body.zen.zen-reveal .headerbar { transform: translateY(0); }
 /* ---------- ecrans etroits ---------- */
 @media (max-width: 760px) {
   .main.split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .main.split.lecture { grid-template-rows: 1fr; }
   .pane + .pane { border-left: 0; border-top: 1px solid var(--border); }
   .hide-sm { display: none; }
   #hl, #editor, #preview { padding: 1.75rem 1.1rem; }
@@ -1180,6 +1194,8 @@ Conseils :
   <symbol id="i-open" viewBox="0 0 16 16"><path d="M1.5 3.5A1.5 1.5 0 0 1 3 2h3l1.4 1.5H13A1.5 1.5 0 0 1 14.5 5v.5h-13Zm0 2h13.2l-1.5 7.1a1.5 1.5 0 0 1-1.5 1.2H3.3a1.5 1.5 0 0 1-1.5-1.2Z"/></symbol>
   <symbol id="i-save" viewBox="0 0 16 16"><path d="M7.3 1h1.4v7.2l2.3-2.3 1 1L8 11l-4-4 1-1 2.3 2.3ZM2.5 12h11v2.5h-11Z"/></symbol>
   <symbol id="i-new" viewBox="0 0 16 16"><path d="M3.5 1.5h6L13 5v9.5H3.5Zm5.5 1v3h3ZM7.3 7h1.4v2h2v1.4h-2v2H7.3v-2h-2V9h2Z"/></symbol>
+  <symbol id="i-lire" viewBox="0 0 16 16"><path d="M1.2 3.1c2.3-.7 4.6-.4 6.1.9v9.7c-1.5-1.1-3.8-1.4-6.1-.8Zm13.6 0c-2.3-.7-4.6-.4-6.1.9v9.7c1.5-1.1 3.8-1.4 6.1-.8Z"/></symbol>
+  <symbol id="i-editer" viewBox="0 0 16 16"><path d="M11.3 1.6 14.4 4.7 5.8 13.3H2.7v-3.1Z"/></symbol>
   <symbol id="i-split" viewBox="0 0 16 16"><path d="M1.5 2.5h13v11h-13Zm1.4 1.4v8.2h4V3.9Zm5.4 0v8.2h4.3V3.9Z"/></symbol>
   <symbol id="i-focus" viewBox="0 0 16 16"><path d="M8 3.2c-3 0-5.5 2-6.6 4.8C2.5 10.8 5 12.8 8 12.8s5.5-2 6.6-4.8C13.5 5.2 11 3.2 8 3.2Zm0 8a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm0-1.6a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2Z"/></symbol>
   <symbol id="i-hemingway" viewBox="0 0 16 16"><path d="M6 2.5h8v11H6L1 8Zm6.9 3-1-1L10 6.4 8.1 4.5l-1 1L9 7.4 7.1 9.3l1 1L10 8.4l1.9 1.9 1-1L11 7.4Z"/></symbol>
@@ -1238,7 +1254,11 @@ Conseils :
     <span class="spacer"></span>
 
     <button class="btn" id="btnInstall" data-label="Installer" title="Installer Calliope comme une application" hidden><svg><use href="#i-install"/></svg></button>
-    <button class="btn" id="btnPreview" data-label="Aperçu" title="Aperçu du rendu à droite, défilement synchronisé (Ctrl/Cmd+P)"><svg><use href="#i-split"/></svg></button>
+    <div class="vue-seg" id="segVue" role="group" aria-label="Vue du document">
+      <button class="btn" data-vue="lecture" data-label="Lecture" title="Lecture — le document mis en forme, sans les symboles Markdown (Ctrl/Cmd+P pour changer de vue)"><svg><use href="#i-lire"/></svg></button>
+      <button class="btn" data-vue="double" data-label="Lecture + Édition" title="Lecture + Édition — texte brut à gauche, rendu à droite, défilement synchronisé (Ctrl/Cmd+P pour changer de vue)"><svg><use href="#i-split"/></svg></button>
+      <button class="btn" data-vue="edition" data-label="Édition" title="Édition — texte brut seul (Ctrl/Cmd+P pour changer de vue)"><svg><use href="#i-editer"/></svg></button>
+    </div>
     <button class="btn" id="btnTheme" data-label="Thème"   title="Changer de thème"><svg><use href="#i-theme"/></svg></button>
     <button class="btn hide-sm" id="btnFull" data-label="Sans distraction" title="Masque toute l'interface et passe en plein écran (F11, Échap pour revenir)"><svg><use href="#i-full"/></svg></button>
 
@@ -1967,7 +1987,7 @@ Conseils :
 
   var state = {
     theme: 'auto', font: 'mono', size: 16, col: 46,
-    focus: false, hemingway: false, typewriter: false, split: false, toolbar: true, labels: true, sautsSimples: true,
+    focus: false, hemingway: false, typewriter: false, split: false, vue: 'edition', toolbar: true, labels: true, sautsSimples: true,
     name: 'Sans titre.md', dirty: false
   };
 
@@ -1985,6 +2005,7 @@ Conseils :
         var prefs = JSON.parse(raw);
         if (prefs.v !== PREFS_V) delete prefs.labels;   // reprend le nouveau defaut
         delete prefs.v;
+        delete prefs.split;   // la vue n'est plus memorisee : elle s'impose a l'ouverture
         Object.assign(state, prefs);
       }
       var doc = localStorage.getItem(KEY + ':doc');
@@ -2012,7 +2033,7 @@ Conseils :
         v: PREFS_V,
         theme: state.theme, font: state.font, size: state.size, col: state.col,
         focus: state.focus, hemingway: state.hemingway, typewriter: state.typewriter,
-        split: state.split, toolbar: state.toolbar, labels: state.labels,
+        toolbar: state.toolbar, labels: state.labels,
         sautsSimples: state.sautsSimples
       }));
     } catch (e) {}
@@ -2063,15 +2084,20 @@ Conseils :
     $('btnFocus').classList.toggle('on', state.focus);
     $('btnHemingway').classList.toggle('on', state.hemingway);
     $('btnTypewriter').classList.toggle('on', state.typewriter);
-    $('btnPreview').classList.toggle('on', state.split);
+    mark('#segVue', 'vue', state.vue);
+    // En lecture seule, les outils d'ecriture n'ont rien sur quoi agir.
+    ['btnToolbar', 'btnFocus', 'btnHemingway', 'btnTypewriter'].forEach(function (id) {
+      $(id).disabled = state.vue === 'lecture';
+    });
     $('btnToolbar').classList.toggle('on', state.toolbar);
-    toolbar.hidden = !state.toolbar;
+    toolbar.hidden = !state.toolbar || state.vue === 'lecture';
     toolbar.classList.toggle('labels', state.labels);
     document.querySelector('.headerbar').classList.toggle('labels', state.labels);
     mark('#segLabels', 'labels', state.labels ? 'on' : 'off');
     mark('#segSauts', 'sauts', state.sautsSimples ? 'on' : 'off');
     document.body.classList.toggle('typewriter', state.typewriter);
     main.classList.toggle('split', state.split);
+    main.classList.toggle('lecture', state.vue === 'lecture');
     pvPane.hidden = !state.split;
 
     var badges = [];
@@ -2953,7 +2979,8 @@ Conseils :
   function newDoc() {
     if (state.dirty && !confirm('Le document a été modifié. Continuer et perdre les changements ?')) return;
     ta.value = ''; state.name = 'Sans titre.md'; handle = null;
-    setDirty(false); renderAll(); saveDoc(); ta.focus();
+    setDirty(false); renderAll(); saveDoc();
+    setVue('edition', true);
   }
 
   function openFile() {
@@ -2987,6 +3014,9 @@ Conseils :
     ta.value = text;
     state.name = name || 'Sans titre.md';
     setDirty(false); renderAll(); saveDoc();
+    ta.setSelectionRange(0, 0);
+    ta.scrollTop = 0; hl.scrollTop = 0; preview.scrollTop = 0;
+    setVue('double', true);
     toast('Ouvert : ' + state.name);
   }
 
@@ -3069,11 +3099,11 @@ Conseils :
   }
 
   function exportPdf() {
-    var wasSplit = state.split;
-    if (!wasSplit) { state.split = true; applyModes(); renderPreview(); }
+    var avant = state.vue;
+    if (avant === 'edition') setVue('double', true);
     setTimeout(function () {
       window.print();
-      if (!wasSplit) { state.split = false; applyModes(); }
+      if (avant === 'edition') setVue('edition', true);
     }, 120);
   }
 
@@ -3145,17 +3175,88 @@ Conseils :
                  'Mode Hemingway désactivé'],
     typewriter: ['Machine à écrire : la ligne en cours reste centrée à l\'écran',
                  'Machine à écrire désactivée'],
-    split:      ['Aperçu affiché à droite, défilement synchronisé',
-                 'Aperçu masqué'],
     toolbar:    ['Barre de mise en forme affichée',
                  'Barre de mise en forme masquée']
   };
+
+  /* Trois vues : lecture (rendu seul), double (brut + rendu), edition (brut
+   * seul). Elles ne sont pas un reglage : un fichier ouvert arrive en vue
+   * double, un document neuf en edition ; le selecteur change en cours de
+   * route. */
+  var VUES = ['edition', 'double', 'lecture'];
+  var EXPLICATIONS_VUE = {
+    lecture: 'Lecture : double-cliquez sur un passage pour le modifier',
+    double:  'Lecture + Édition : un clic dans le rendu place le curseur sur la ligne',
+    edition: 'Édition : texte brut seul'
+  };
+
+  function setVue(vue, discret) {
+    var avant = state.vue;
+    state.vue = vue;
+    state.split = vue !== 'edition';
+    applyModes();
+    renderPreview();
+    renderHighlight();
+    cacheLignes = null; cacheAncres = null;
+    // Le panneau qui reapparait se cale sur celui qui etait affiche.
+    if (avant === 'lecture' && vue !== 'lecture') {
+      prendreLaMain('apercu');
+      var n = ligneDepuisApercu();
+      if (n !== null) { ta.scrollTop = yEditeurPourLigne(n); hl.scrollTop = ta.scrollTop; }
+    } else if (avant === 'edition' && vue !== 'edition') {
+      prendreLaMain('editeur');
+      var y = yApercuPourLigne(ligneVisible());
+      if (y !== null) preview.scrollTop = y;
+    }
+    if (!discret) toast(EXPLICATIONS_VUE[vue]);
+    if (vue !== 'lecture') ta.focus();
+  }
+
+  function vueSuivante() {
+    setVue(VUES[(VUES.indexOf(state.vue) + 1) % VUES.length]);
+  }
+
+  // Place le curseur au debut d'une ligne source et la montre dans l'editeur.
+  function placerCurseurLigne(n) {
+    var lignes = ta.value.split('\n'), pos = 0;
+    for (var i = 0; i < n && i < lignes.length; i++) pos += lignes[i].length + 1;
+    pos = Math.min(pos, ta.value.length);
+    ta.focus({ preventScroll: true });
+    ta.setSelectionRange(pos, pos);
+    prendreLaMain('apercu');
+    ta.scrollTop = Math.max(0, yEditeurPourLigne(n) - ta.clientHeight / 3);
+    hl.scrollTop = ta.scrollTop;
+    renderHighlight();
+  }
+
+  function ligneCliquee(e) {
+    if (e.target.closest('a, input, button')) return null;
+    var bloc = e.target.closest('[data-line]');
+    return bloc ? +bloc.dataset.line : null;
+  }
+
+  preview.addEventListener('click', function (e) {
+    if (state.vue !== 'double') return;
+    var sel = window.getSelection();
+    if (sel && !sel.isCollapsed) return;     // on selectionne pour copier
+    var n = ligneCliquee(e);
+    if (n !== null) placerCurseurLigne(n);
+  });
+
+  preview.addEventListener('dblclick', function (e) {
+    if (state.vue !== 'lecture') return;
+    var n = ligneCliquee(e);
+    if (n === null) return;
+    var sel = window.getSelection();
+    if (sel) sel.removeAllRanges();
+    setVue('double', true);
+    placerCurseurLigne(n);
+  });
 
   function toggle(key) {
     state[key] = !state[key];
     applyModes(); savePrefs();
     if (EXPLICATIONS[key]) toast(EXPLICATIONS[key][state[key] ? 0 : 1]);
-    if (key === 'split' && state.split) renderPreview();
     renderHighlight();
     if (state.typewriter) scrollTypewriter();
     ta.focus();
@@ -3166,7 +3267,10 @@ Conseils :
   $('btnFocus').onclick      = function () { toggle('focus'); };
   $('btnHemingway').onclick  = function () { toggle('hemingway'); };
   $('btnTypewriter').onclick = function () { toggle('typewriter'); };
-  $('btnPreview').onclick    = function () { toggle('split'); };
+  $('segVue').addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b) setVue(b.dataset.vue);
+  });
   $('btnToolbar').onclick    = function () { toggle('toolbar'); };
   $('btnFull').onclick       = toggleZen;
 
@@ -3304,7 +3408,7 @@ Conseils :
     else if (k === 'o') { e.preventDefault(); openFile(); }
     else if (k === 'n') { e.preventDefault(); newDoc(); }
     else if (k === 'p' && e.shiftKey) { e.preventDefault(); exportPdf(); }
-    else if (k === 'p') { e.preventDefault(); toggle('split'); }
+    else if (k === 'p') { e.preventDefault(); vueSuivante(); }
     else if (k === 'd') { e.preventDefault(); toggle('focus'); }
     else if (k === 'h') { e.preventDefault(); toggle('hemingway'); }
     else if (k === 't') { e.preventDefault(); toggle('typewriter'); }
@@ -3327,7 +3431,7 @@ Conseils :
    * est donc regenere depuis AppInfo.json a chaque changement de version. */
   var INFOS = {
     nom: 'Calliope',
-    version: '1.1.0',
+    version: '1.2.0',
     resume: 'Éditeur Markdown',
     origine: 'Calliope, muse de l\'éloquence et de la poésie épique, la première des ' +
              'neuf Muses, sœur de Clio.',
@@ -3416,7 +3520,7 @@ Conseils :
       ['Ctrl/Cmd+Maj+P', 'Exporter en PDF']
     ]],
     ['Modes', [
-      ['Ctrl/Cmd+P', 'Aperçu côte à côte'],
+      ['Ctrl/Cmd+P', 'Changer de vue — édition, lecture + édition, lecture'],
       ['Ctrl/Cmd+D', 'Focus — tout s\'estompe sauf le paragraphe courant'],
       ['Ctrl/Cmd+H', 'Hemingway — effacer et annuler sont bloqués'],
       ['Ctrl/Cmd+T', 'Machine à écrire — la ligne courante reste centrée'],
@@ -3548,7 +3652,7 @@ Conseils :
     '1. **Focus** — tout s\'estompe sauf le paragraphe courant.',
     '2. **Hemingway** — la touche retour arrière est désactivée : on écrit, on corrige après.',
     '3. **Machine à écrire** — la ligne courante reste centrée verticalement.',
-    '4. **Aperçu** — le HTML se met à jour à chaque frappe, avec défilement synchronisé.',
+    '4. **Lecture** — en haut à droite, trois vues : le rendu seul, le brut et le rendu côte à côte, ou le brut seul.',
     '',
     '> La première version de tout texte est toujours mauvaise.',
     '> — attribué à Ernest Hemingway',
@@ -3811,7 +3915,7 @@ Conseils :
   if (!ta.value) ta.value = SAMPLE;
   setDirty(false);
   renderAll();
-  renderPreview();
+  setVue(ta.value.trim() ? 'double' : 'edition', true);
   ta.focus();
   ta.setSelectionRange(0, 0);
   ta.scrollTop = 0;

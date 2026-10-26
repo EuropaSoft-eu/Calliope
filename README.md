@@ -46,9 +46,12 @@ est publiée.
 
 ## Ce qu'on peut faire
 
-- **Quatre modes d'écriture** : *Focus* (seul le paragraphe en cours reste net),
-  *Hemingway* (pas de retour arrière), *Machine à écrire* (ligne centrée), *Aperçu*
-  (rendu en direct, défilement synchronisé).
+- **Trois vues**, en haut à droite : *Lecture* (le document mis en forme, sans
+  aucun `#` ni `*`), *Lecture + Édition* (texte brut et rendu côte à côte, défilement
+  synchronisé), *Édition* (texte brut seul). Un fichier ouvert s'affiche d'office en
+  *Lecture + Édition* ; un double-clic sur un passage en *Lecture* permet de le modifier.
+- **Trois modes d'écriture** : *Focus* (seul le paragraphe en cours reste net),
+  *Hemingway* (pas de retour arrière), *Machine à écrire* (ligne centrée).
 - **Barre de mise en forme** : titres, gras, italique, listes, cases à cocher,
   citations, tableaux, liens, images, notes de bas de page, formules. Chaque bouton
   indique son raccourci clavier.

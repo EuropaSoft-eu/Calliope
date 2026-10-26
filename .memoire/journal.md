@@ -2,6 +2,17 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-26 — Trois vues : Lecture / Lecture + Édition / Édition (v1.2.0)
+
+- Bouton `#btnPreview` remplacé par le sélecteur `#segVue` (icônes `i-lire`, `i-split`, `i-editer`).
+- `state.vue` (`lecture` | `double` | `edition`), `state.split` dérivé ; fonction `setVue()` + `vueSuivante()` (Ctrl/Cmd+P).
+- Vue non mémorisée (demande de Yoann : « d'office ») : fichier ouvert → `double`, nouveau → `edition`, démarrage → `double` si texte. `split` retiré des préférences.
+- Clic dans le rendu (vue double) → curseur sur la ligne `data-line` ; double-clic en lecture → bascule en double sur la ligne.
+- En lecture : barre de mise en forme masquée, Format/Focus/Hemingway/Machine désactivés.
+- Export PDF adapté ; `sw.js` cache `calliope-v2` ; version 1.2.0 (INFOS + AppInfo.json).
+- Testé Chromium (Playwright) : 3 vues, Ctrl+P, ouverture, nouveau, clic/double-clic, mobile 390 px, test d'alignement 13/13, aucune erreur JS.
+- Écarté volontairement : édition directe dans le rendu (WYSIWYG) — risque d'abîmer le Markdown, contraire au principe zéro dépendance.
+
 ## 2026-10-26 — Lien 404 corrigé, README allégé
 
 - Cause du 404 : dépôt transféré vers `EuropaSoft-eu/Calliope` ; GitHub Pages ne redirige pas l'ancienne adresse `yoann-cramatte.github.io/calliope`. Le site est publié sur `https://europasoft-eu.github.io/Calliope/` (API GitHub : `has_pages: true`, dernier déploiement réussi sur `efb2ed0`).
