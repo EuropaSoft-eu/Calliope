@@ -2,6 +2,15 @@
 
 Mémoire de suivi : une entrée par modification, la plus récente en haut.
 
+## 2026-10-27 — Nouveau logo : plume (v1.2.1)
+
+- Ancien logo (C blanc monoligne sur carré bleu) jugé « vraiment moche » par Yoann. Trois pistes présentées (plume, C Didot sur papier, C Didot sur encre) ; **plume retenue**.
+- `dessinLogo(plein)` dans la section 11 : version arrondie (`LOGO`, onglet + À propos) et version pleine sans transparence, dessin réduit à 84 % (`LOGO_PLEIN_URL`) pour apple-touch-icon et icônes du manifeste (zone sûre maskable).
+- Couleurs : fond dégradé `#3a3f9e` → `#1d1f5c`, plume `#f6efe1`, trait d'or `#e8b96a`.
+- `sw.js` cache `calliope-v3` ; version 1.2.1.
+- Testé : installable (aucune erreur Chromium), icônes rendues en carré arrondi, cercle et 96 px, fenêtre À propos OK, aucune erreur JS.
+- Branche distante `claude/gracious-archimedes-4yic6g` : suppression bloquée par le proxy de session, à supprimer à la main sur GitHub.
+
 ## 2026-10-26 — Trois vues : Lecture / Lecture + Édition / Édition (v1.2.0)
 
 - Bouton `#btnPreview` remplacé par le sélecteur `#segVue` (icônes `i-lire`, `i-split`, `i-editer`).
